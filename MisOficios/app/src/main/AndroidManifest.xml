@@ -9,7 +9,7 @@
             android:roundIcon="@mipmap/misoficios_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".NuevoOficio"
+        <activity android:name=".Fragmentos.NuevoOficio"
                   android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

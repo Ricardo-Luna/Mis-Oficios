@@ -1,15 +1,9 @@
-package com.example.ricky.misoficios
+package com.example.ricky.misoficios.Fragmentos
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
-import com.example.ricky.misoficios.Fragmentos.*
-import kotlinx.android.synthetic.main.frg_nuevooficio1.*
+import com.example.ricky.misoficios.R
 
 class NuevoOficio : AppCompatActivity() {
 
@@ -51,7 +45,8 @@ class NuevoOficio : AppCompatActivity() {
           }
 
 
-              supportFragmentManager.beginTransaction().replace(R.id.relativeLayoutOficios,
+              supportFragmentManager.beginTransaction().replace(
+                  R.id.relativeLayoutOficios,
                   fragment
               ).addToBackStack(null).commit()
 

@@ -1,4 +1,4 @@
-package com.example.ricky.misoficios
+package com.example.ricky.misoficios.Fragmentos
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,12 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.example.ricky.misoficios.Modelos.Empleados
 import com.example.ricky.misoficios.Modelos.buildEmpleado
-import com.example.ricky.misoficios.Modelos.buildEmpleadosGrupo
-import com.example.ricky.misoficios.adaptador.AdapterGrupos
+import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.adaptador.AdapterListaEmpleados
-import com.example.ricky.misoficios.adaptador.AdapterListaEmpleadosAdd
 
 
 class NwGrupo : Fragment() {

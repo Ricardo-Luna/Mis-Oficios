@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/placeholder">
-    <activity android:id="@+id/nuevoOficio" android:name="com.example.ricky.misoficios.NuevoOficio"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation" app:startDestination="@id/crearOficio">
+    <activity android:id="@+id/nuevoOficio" android:name="com.example.ricky.misoficios.Fragmentos.NuevoOficio"
               android:label="frg_nuevooficio1" tools:layout="@layout/frg_nuevooficio1"/>
     <fragment android:id="@+id/createDoc22" android:name="com.example.ricky.misoficios.Fragmentos.CreateDoc2"
               android:label="CreateDoc2"/>

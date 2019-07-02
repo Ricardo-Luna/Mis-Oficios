@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        tools:context=".NuevoOficio">
+        tools:context=".Fragmentos.NuevoOficio">
 
     <ScrollView
             android:layout_width="407dp"
