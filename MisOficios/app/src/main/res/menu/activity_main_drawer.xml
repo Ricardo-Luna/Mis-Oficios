@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/rrr"
+                android:title="Mis Oficios"/>
+        <item
+                android:id="@+id/nav_grupos"
+                android:icon="@drawable/rr"
+                android:title="Grupos"/>
+
+
+    </group>
+
+    <item android:title="Carpetas">
+        <menu>
+            <item
+                    android:id="@+id/recibidos"
+                    android:icon="@drawable/recieved"
+                    android:title="Recibidos"/>
+            <item
+                    android:id="@+id/nav_send"
+                    android:icon="@drawable/sent"
+                    android:title="Enviados"/>
+            <item
+                    android:id="@+id/borradores"
+                    android:icon="@drawable/draft"
+                    android:title="Borradores"/>
+        </menu>
+
+    </item>
+
+</menu>

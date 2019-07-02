@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="400dp"
+            android:layout_height="642dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+            <TextView
+                    android:text="Importancia"
+                    android:layout_width="132dp"
+                    android:layout_height="match_parent" android:id="@+id/textView8"/>
+            <Spinner
+                    android:layout_width="255dp"
+                    android:layout_height="wrap_content" android:id="@+id/SpnImportancia" android:layout_weight="1"
+                    android:entries="@array/Importancia"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="520dp">
+            <TextView
+                    android:text="Copia digital para: "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView13"/>
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/spinnerOficioNuevo"
+
+
+            />
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="156dp"/>
+            <TextView
+                    android:text="No existe cdp. Archivo, todo documento queda guardado en el sistema para cualquier referencia al mismo."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView14"/>
+        </LinearLayout>
+        <android.support.constraint.ConstraintLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/linearLayout5" android:layout_marginBottom="0dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/next" android:id="@+id/nxt2"
+                    app:layout_constraintTop_toTopOf="@+id/cncl2"
+                    app:layout_constraintBottom_toBottomOf="@+id/cancel1"
+                    app:layout_constraintVertical_bias="1.0" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.95"
+                    android:background="@android:color/transparent"
+            />
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/cancel"
+                    android:id="@+id/cncl2"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="@+id/nxt2"
+                    android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.80"
+                    app:layout_constraintVertical_bias="0.1"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/back"
+                    android:id="@+id/backOficios" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                    app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"
+                    android:background="#FFFFFF"/>
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
