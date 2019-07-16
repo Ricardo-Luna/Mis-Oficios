@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.example.ricky.misoficios.Fragmentos.*
+import io.reactivex.disposables.CompositeDisposable
 
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //loadData()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.setBackgroundColor(Color.parseColor("#3f4d60"))
@@ -162,4 +163,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
 }

@@ -34,15 +34,20 @@ import com.example.ricky.misoficios.R
             val folio : TextView = itemView.findViewById(R.id.txtFolio)
             val imagenMensaje : ImageView = itemView.findViewById(R.id.imgAlerta)
 
+           // val codigo : TextView =
             asunto.text = data.asunto
             destinatario.text = data.destinatario
             remitente.text = data.remitente
             fecha.text = data.fecha
-            folio.text = data.folio
+            folio.text = data.codigo
 
-            imagenMensaje.setOnClickListener {
-                Snackbar.make(itemView, "Mostrará el mensaje completo", Snackbar.LENGTH_SHORT).show()
-            }
+                if (data.importancia.toInt()==1){
+                    imagenMensaje.setImageResource(R.drawable.icons8_info_127px)
+                }
+                if (data.importancia.toInt()==2){
+                    imagenMensaje.setImageResource(R.drawable.icons8_high_priority_127px)
+                }
+
 
             imagenMensaje.setOnClickListener {
                 Snackbar.make(itemView, "Aquí se muestra la importancia del mensaje", Snackbar.LENGTH_SHORT).show()

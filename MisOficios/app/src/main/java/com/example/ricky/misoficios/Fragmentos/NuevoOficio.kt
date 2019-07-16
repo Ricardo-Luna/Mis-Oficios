@@ -13,18 +13,13 @@ class NuevoOficio : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nuevo_oficio)
-
-
         displayFragment(-1)
         val ib = findViewById<Button>(R.id.btn_Siguiente)
 
         ib.setOnClickListener { it
         displayFragment(it.id)
         }
-
     }
-
-
       fun displayFragment(id: Int)
       {
 
@@ -37,7 +32,6 @@ class NuevoOficio : AppCompatActivity() {
               {
                  CreateDoc2()
               }
-
 
               else ->{
                   CreateDoc()

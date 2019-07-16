@@ -7,13 +7,13 @@ lateinit var empleadosGrupo: ArrayList<EmpleadosGrupo>
 
 fun buildOficios() : ArrayList<Oficios>{
     oficios = ArrayList()
-    oficios.add(Oficios("Revisar app", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ))
-    oficios.add(Oficios("Urgente", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ))
-    oficios.add(Oficios("Mock data", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ))
-    oficios.add(Oficios("Bottom Text", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ))
-    oficios.add(Oficios("Kilroy was here", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ))
-    oficios.add(Oficios("Sin asunto", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ))
-    oficios.add(Oficios("Publicar de a huevo", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ))
+    oficios.add(Oficios("Revisar app", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018", "000/2019",2 ))
+    oficios.add(Oficios("Urgente", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ,"01/2019",1))
+    oficios.add(Oficios("Mock data", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018","02/2019",2 ))
+    oficios.add(Oficios("Bottom Text", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ,"03/2019",1))
+    oficios.add(Oficios("Kilroy was here", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ,"04/2019",2))
+    oficios.add(Oficios("Sin asunto", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018" ,"05/2019",1))
+    oficios.add(Oficios("Publicar de a huevo", "Ricardo del pasado", "yo mero", "miercoles 19 de diciembre de 2018 1:25:00 p. m.", "9999/2018","06/2019",2 ))
 
     return oficios
 }
