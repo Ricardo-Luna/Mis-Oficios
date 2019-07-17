@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //loadData()
+        loadData()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.setBackgroundColor(Color.parseColor("#3f4d60"))
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .setAction("Action", null).show()
             val intent = Intent(baseContext, NuevoOficio::class.java)
             startActivity(intent)
-3
+
         }
 
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        val inflater = menuInflater
+        //val inflater = menuInflater
         menuInflater.inflate(R.menu.main, menu)
         return true
     }

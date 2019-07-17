@@ -44,7 +44,7 @@ class CreateDoc : Fragment()
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val vista = inflater.inflate(R.layout.frg_nuevooficio1, container, false)
+        val vista = inflater.inflate(R.layout.frg_crear_oficio, container, false)
 
 
         return vista

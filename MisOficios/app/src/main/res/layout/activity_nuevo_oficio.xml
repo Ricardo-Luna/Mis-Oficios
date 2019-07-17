@@ -6,15 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Fragmentos.NuevoOficio">
-
-
-    <RelativeLayout
-            android:layout_width="395dp"
-            android:layout_height="643dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/relativeLayoutOficios">
-
-    </RelativeLayout>
+    <fragment
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:name="com.example.ricky.misoficios.Fragmentos.CreateDoc"
+            android:id="@+id/fragment2" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" tools:layout="@layout/frg_crear_oficio"/>
 </android.support.constraint.ConstraintLayout>
