@@ -12,7 +12,7 @@ import retrofit2.http.Path
 interface MisOficiosAPI {
 
 
-    @GET("http://localhost:50577/api/Documentos/{IdUsuarioPropietario}/{inicio}/{fin}")
+    @GET("Documentos/{IdUsuarioPropietario}/1/19")
     fun getDocumentos(@Path("IdUsuarioPropietario") IdUsuarioPropietario : String) : Call<List<Oficios>>
 
 

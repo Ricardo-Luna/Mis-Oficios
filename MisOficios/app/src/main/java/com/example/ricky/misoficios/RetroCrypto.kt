@@ -18,7 +18,7 @@ data class RetroCrypto (
 
 private fun initRecyclerView() {
 
-//Use a layout manager to position your items to look like a standard ListView//
+
 
 
 
