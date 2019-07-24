@@ -1,6 +1,7 @@
 package com.example.ricky.misoficios.adaptador
 
 import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import android.widget.TextView
 import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.R
 
- class AdapterOficios(var list: ArrayList <Oficios>): RecyclerView.Adapter<AdapterOficios.ViewHolder>(){
+ class AdapterOficios(var list: ArrayList <Oficios>, var  fragmentManager: FragmentManager?): RecyclerView.Adapter<AdapterOficios.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)

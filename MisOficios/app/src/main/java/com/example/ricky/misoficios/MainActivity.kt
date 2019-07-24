@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         loadData()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
