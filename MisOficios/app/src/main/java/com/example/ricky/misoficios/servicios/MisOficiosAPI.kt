@@ -19,10 +19,4 @@ interface MisOficiosAPI {
 
 
 
-
-
-
-//http://localhost:50577/api/Documentos/f65c506e-a975-4b96-854a-5bbbf42bb3d9/1/19
-
-
 }

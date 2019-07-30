@@ -1,0 +1,1 @@
+﻿exec uspUsuariosGrupoDerechosObtener @Nickname = "ricardo.luna"

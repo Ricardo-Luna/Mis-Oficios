@@ -137,9 +137,9 @@ class login : AppCompatActivity() {
         val manager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         IP = Formatter.formatIpAddress(manager.connectionInfo.ipAddress)
         if (IP.contains("10.0") || IP.contains("132.40.24")) {
-            GlobalBASE_URL.BASE_URL= "http://10.0.0.2/api/registro/api/"
+            GlobalBASE_URL.BASE_URL= "http://localhost:50577/api"
         } else {
-            GlobalBASE_URL.BASE_URL = "http://187.217.248.135/api/registro/api/"
+            GlobalBASE_URL.BASE_URL = "http://localhost:50577/api"
         }
     }
 }
