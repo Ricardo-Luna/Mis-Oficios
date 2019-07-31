@@ -197,9 +197,9 @@ namespace WebApplication1.ModelosDataCenter
             //    .Property(e => e.Correo)
             //    .IsUnicode(false);
 
-            modelBuilder.Entity<vwUsuario>()
-                .Property(e => e.NombreCompleto)
-                .IsUnicode(false);
+            //modelBuilder.Entity<vwUsuario>()
+            //    .Property(e => e.NombreCompleto)
+            //    .IsUnicode(false);
 
             //modelBuilder.Entity<vwUsuario>()
             //    .Property(e => e.NicknameActualizacion)

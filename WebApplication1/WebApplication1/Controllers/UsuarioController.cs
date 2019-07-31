@@ -21,6 +21,11 @@ namespace WebApplication1.Controllers
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult PostGrupos([FromBody] Login login)
         {
+            if (login.NickName == null)
+            {
+                return BadRequest("El nombre de usuario o contraseña invalidos");
+            }
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand("uspUsuariosGrupoDerechosObtener", conn))
             {
@@ -32,20 +37,39 @@ namespace WebApplication1.Controllers
                 nn.Value = login.NickName;
                 conn.Open();
                 consul = cmd.ExecuteReader();
-                while (consul.Read())
-                {
+                    consul.Read();
+
                     us = new vwUsuario();
-                    Permiso permiso = new Permiso();
+                try
+                {
                     us.IdUsuario = new Guid(consul["IdUsuario"].ToString());
                     us.NickName = consul["NickName"].ToString();
                     us.Password = consul["Password"].ToString();
                     us.IdArea = new Guid(consul["IdArea"].ToString());
-                    permiso.IdPermiso = System.Convert.ToInt32(consul["IdDerecho"].ToString());
-
+                    us.NombreArea = consul["AreaNombre"].ToString();
+                    us.IdGrupo = new Guid(consul["IdGrupo"].ToString());
+                    us.GrupoUsuarios = consul["Nombre"].ToString();
+                    while (consul.Read())
+                    {
+                        Permiso permiso = new Permiso();
+                        permiso.IdPermiso = consul["IdDerecho"].ToString();
+                        permiso.Numero = consul["NombreDerecho"].ToString();
+                        us.Permisos.Add(permiso);
+                    }
                     usuario.Add(us);
                 }
+                catch(Exception e) { return BadRequest("El nombre de usuario o contraseña invalidos"); }
+                if (login.NickName==us.NickName && login.Password == us.Password )
+                {
+                    return Ok(usuario);
+                }
+                else { return BadRequest("Datos inválidos"); }
+
+
+
+               
                 conn.Close();
-                return Ok(usuario);
+               
             }
         }
     }
