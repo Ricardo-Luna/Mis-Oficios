@@ -14,4 +14,4 @@ class Mensaje (var NombreArea: String, var Comentario: String)
 
 class LoginReq (var NickName: String, var Password : String)
 
-class LoginRes (val NickName: String,val Password: String, val Permisos: List<Permiso> )
+class LoginRes (val NickName: String,val Password: String, val Permisos: List<Permiso>, val IdArea: String, val NombreArea: String, val IdGrupo: String, val IdUsuario: String, val GrupoUsuarios: String)

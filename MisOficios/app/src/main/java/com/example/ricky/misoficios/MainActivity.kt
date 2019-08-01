@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadData()
+        //loadData()
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.setBackgroundColor(Color.parseColor("#3f4d60"))
