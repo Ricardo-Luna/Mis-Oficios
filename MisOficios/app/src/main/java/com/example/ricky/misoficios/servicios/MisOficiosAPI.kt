@@ -12,7 +12,9 @@ interface MisOficiosAPI {
 
     @GET("Documentos/{IdUsuarioPropietario}/{inicio}/{final}")
     fun getDocumentos(
-        @Field("IdUsuarioPropietario") IdUsuarioPropietario: String
+        @Field("IdUsuarioPropietario") IdUsuarioPropietario: String,
+        @Field("inicio") inicio:String,
+        @Field("final") final: String
     ): Call<List<Oficios>>
 
     @POST("Usuarios/Login")

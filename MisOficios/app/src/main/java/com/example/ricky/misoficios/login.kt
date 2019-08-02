@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.wifi.WifiManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 
 import android.text.format.Formatter
 import android.util.Log

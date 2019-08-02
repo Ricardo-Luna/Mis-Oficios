@@ -45,7 +45,7 @@ class MainFragment : Fragment() {
     fun onActualizarLista() {
         dialog.show()
         var usuario = SharedPreference.getInstance(context!!).usuario
-        RetrofitClient.instance.getDocumentos("f65c506e-a975-4b96-854a-5bbbf42bb3d9")
+        RetrofitClient.instance.getDocumentos("f65c506e-a975-4b96-854a-5bbbf42bb3d9","1","19")
             .enqueue(object : Callback<List<Oficios>> {
                 override fun onFailure(call: Call<List<Oficios>>, t: Throwable) {
                     Log.e("onFailure", t.message)
