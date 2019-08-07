@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication1.ModelosDataCenter;
@@ -21,6 +23,8 @@ namespace WebApplication1.Controllers
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult PostGrupos([FromBody] Login login)
         {
+            login.Password = GetMd5Hash(login.Password);
+
             if (login.NickName == null)
             {
                 return BadRequest("El nombre de usuario o contraseña invalidos");
@@ -30,16 +34,16 @@ namespace WebApplication1.Controllers
             using (SqlCommand cmd = new SqlCommand("uspUsuariosGrupoDerechosObtener", conn))
             {
                 var usuario = new List<vwUsuario>();
-                
+
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlParameter nn = cmd.Parameters.Add("@NickName", SqlDbType.VarChar, 25);
                 nn.Direction = ParameterDirection.Input;
                 nn.Value = login.NickName;
                 conn.Open();
                 consul = cmd.ExecuteReader();
-                    consul.Read();
+                consul.Read();
 
-                    us = new vwUsuario();
+                us = new vwUsuario();
                 try
                 {
                     us.IdUsuario = new Guid(consul["IdUsuario"].ToString());
@@ -58,19 +62,30 @@ namespace WebApplication1.Controllers
                     }
                     usuario.Add(us);
                 }
-                catch(Exception e) { return BadRequest("El nombre de usuario o contraseña invalidos"); }
-                if (login.NickName==us.NickName && login.Password == us.Password )
+                catch (Exception e) { return BadRequest("El nombre de usuario o contraseña invalidos"); }
+                if (login.NickName == us.NickName && login.Password == us.Password)
                 {
                     return Ok(usuario);
                 }
-                else { return BadRequest("Datos inválidos"); }
+                else { return BadRequest("Datos inválidos: " + login.Password); }
 
 
 
-               
+
                 conn.Close();
-               
+
             }
+        }
+        private string GetMd5Hash(string Valor)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] hash = md5.ComputeHash(Encoding.ASCII.GetBytes(Valor));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("x2"));
+            }
+            return sb.ToString();
         }
     }
 }
