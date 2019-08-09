@@ -12,8 +12,8 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="241dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="16dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.578"
             android:id="@+id/linearLayout" android:background="@drawable/guzman"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/relativeLayout">
@@ -46,9 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-            android:layout_marginEnd="17dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="258dp" android:id="@+id/relativeLayout"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             android:background="@android:color/darker_gray" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="1.0">
 
@@ -62,10 +62,10 @@
                 android:id="@+id/txuser"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="4dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" android:layout_marginBottom="372dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:textColor="@android:color/background_light" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_marginEnd="8dp"
+                android:textColor="@android:color/background_light"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="50dp"/>
         <EditText
 
                 android:layout_width="0dp"
@@ -75,12 +75,11 @@
                 android:id="@+id/txpw"
                 android:hint="Contraseña"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="4dp" android:layout_marginBottom="308dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="Contraseña" app:layout_constraintHorizontal_bias="0.0"
-                android:textColor="@android:color/background_light" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="1.0"/>
+                android:contentDescription="Contraseña" app:layout_constraintHorizontal_bias="1.0"
+                android:textColor="@android:color/background_light"
+                android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/txuser"/>
         <Button
                 android:id="@+id/btnIniciar"
                 android:layout_width="0dp"
@@ -94,9 +93,9 @@
                 android:textColor="@android:color/background_light"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.398"
-                style="@android:style/Widget.DeviceDefault.Light.Button.Inset"/>
+                android:layout_marginEnd="8dp"
+                style="@android:style/Widget.DeviceDefault.Light.Button.Inset"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent"/>
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
