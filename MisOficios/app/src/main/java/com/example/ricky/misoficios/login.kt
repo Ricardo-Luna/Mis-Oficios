@@ -134,11 +134,9 @@ class login : AppCompatActivity() {
         val IP: String
         val manager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         IP = Formatter.formatIpAddress(manager.connectionInfo.ipAddress)
-        if (IP.contains("10.0") || IP.contains("132.40.24")) {
-            GlobalBASE_URL.BASE_URL= "http://10.0.0.228:55715/api/registro/api/"
-        } else {
-            GlobalBASE_URL.BASE_URL = "http://10.0.0.228:55715/api/"
-        }
+
+            GlobalBASE_URL.BASE_URL= "http://10.0.0.17/ApiMovilMisOficios/api/"
+
     }
     }
 
