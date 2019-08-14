@@ -62,6 +62,7 @@ class login : AppCompatActivity() {
     }
 
     private fun validarCampos() {
+
         if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
             Toast.makeText(this, "Usuario o contraseña en blanco", Toast.LENGTH_SHORT).show()
         } else {
@@ -86,10 +87,13 @@ class login : AppCompatActivity() {
                             if (dialog.isShowing())
                                 dialog.dismiss()
                             if (validarPermisos(response.body()!!.Permisos)) {
-
-                                SharedPreference.getInstance(applicationContext).saveUsuario(response.body()!!)
+                                Toast.makeText(
+                                    applicationContext,
+                                    "La tarea falló con éxito",
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 val intent = Intent(applicationContext, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(
@@ -114,60 +118,58 @@ class login : AppCompatActivity() {
     }
 
     private fun validarPermisos(permisos: List<Permiso>): Boolean {
-        val posicion = permisos.indexOfFirst { it.Numero == 1000 }
+        val posicion = permisos.indexOfFirst { it.numeroPermiso == 1000}
         if (posicion > -1) {
             return true
         }
         return false
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (SharedPreference.getInstance(this).isLoggedIn) {
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-    }
+   //override fun onStart() {
+   //      super.onStart()
+//
+   //         val intent = Intent(applicationContext, MainActivity::class.java)
+   //        // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+   //         startActivity(intent)
+//
+   // }
 
     private fun getIpAddress() {
         val IP: String
         val manager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         IP = Formatter.formatIpAddress(manager.connectionInfo.ipAddress)
 
-            GlobalBASE_URL.BASE_URL= "http://10.0.0.17/ApiMovilMisOficios/api/"
+        GlobalBASE_URL.BASE_URL = "http://10.0.0.17/ApiMovilMisOficios/api/"
 
     }
+}
+
+
+/*
+
+
+//{Deprecated methods}
+
+btnIniciar.setOnClickListener{
+     val user = txuser.text.toString().trim()
+     val pw = txpw.text.toString().trim()
+     if(user.isEmpty() || pw.toString().isEmpty())
+     {Toast.makeText(this,"Usuario o contraseña en blanco", Toast.LENGTH_SHORT).show()}
+
+ }
+
+private fun validarIn() {
+    if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
+        Toast.makeText(
+            this,
+            "Datos inválidos, vuelva a intentar o acuda a TI por un cambio de contraseña",
+            Toast.LENGTH_LONG
+        ).show()
+    } else {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
+}
 
-
-
-
-    /*
-
-
-    //{Deprecated methods}
-
-    btnIniciar.setOnClickListener{
-         val user = txuser.text.toString().trim()
-         val pw = txpw.text.toString().trim()
-         if(user.isEmpty() || pw.toString().isEmpty())
-         {Toast.makeText(this,"Usuario o contraseña en blanco", Toast.LENGTH_SHORT).show()}
-
-     }
-
-    private fun validarIn() {
-        if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
-            Toast.makeText(
-                this,
-                "Datos inválidos, vuelva a intentar o acuda a TI por un cambio de contraseña",
-                Toast.LENGTH_LONG
-            ).show()
-        } else {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-     */
+ */
 
