@@ -29,25 +29,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //loadData()
-
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.setBackgroundColor(Color.parseColor("#3f4d60"))
         setSupportActionBar(toolbar)
-
-
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Aquí se creará nuevo oficio", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
             val intent = Intent(baseContext, NuevoOficio::class.java)
             startActivity(intent)
-
         }
-
-
-
-
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
