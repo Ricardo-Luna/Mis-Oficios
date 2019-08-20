@@ -11,13 +11,12 @@ import android.os.Bundle
 
 import android.text.format.Formatter
 import android.util.Log
-import android.view.View
 
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 
-import com.example.ricky.misoficios.Fragmentos.SharedPreference
+import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.LoginReq
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.example.ricky.misoficios.Modelos.Permiso
@@ -45,8 +44,6 @@ class login : AppCompatActivity() {
         btnIniciar = findViewById(R.id.btnIniciar)
         txuser = findViewById(R.id.txuser)
         txpw = findViewById(R.id.txpw)
-
-
 
         btnIniciar.setOnClickListener { validarCampos() }
 
@@ -92,6 +89,12 @@ class login : AppCompatActivity() {
                                     "La tarea falló con éxito",
                                     Toast.LENGTH_LONG
                                 ).show()
+                                val loginRes = response.body()!!
+                                loginRes.NickName = txuser.text.toString()
+                                Log.e("Usuario", loginRes.toString())
+                                SharedPreference.getInstance(applicationContext).saveUsuario(loginRes)
+
+
                                 val intent = Intent(applicationContext, MainActivity::class.java)
                                 // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)

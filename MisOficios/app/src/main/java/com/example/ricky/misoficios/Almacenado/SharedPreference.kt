@@ -1,4 +1,4 @@
-package com.example.ricky.misoficios.Fragmentos
+package com.example.ricky.misoficios.Almacenado
 
 import android.content.Context
 import com.example.ricky.misoficios.Modelos.LoginRes
@@ -35,7 +35,8 @@ class SharedPreference private constructor(private val mCtx: Context)
         @Synchronized
         fun getInstance(mCtx: Context): SharedPreference {
             if (mInstance == null) {
-                mInstance = SharedPreference(mCtx)
+                mInstance =
+                    SharedPreference(mCtx)
             }
             return mInstance as SharedPreference
         }
