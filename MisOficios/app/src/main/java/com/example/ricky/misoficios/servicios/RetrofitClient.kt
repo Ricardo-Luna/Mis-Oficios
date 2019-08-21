@@ -27,4 +27,9 @@ object RetrofitClient {
             .build()
         retrofit.create(MisOficiosAPI::class.java)
     }
+
+    val retrofit = Retrofit.Builder()
+        .baseUrl("http://10.0.0.17/ApiMovilMisOficios/api/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 }

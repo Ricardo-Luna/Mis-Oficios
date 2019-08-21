@@ -39,7 +39,7 @@ fun buildEmpleado(): ArrayList<Empleados>{
     empleado.add(Empleados("Adrián", "Jefe"))
     empleado.add(Empleados("Marco", "Developer"))
     empleado.add(Empleados("Alejandro", "Estudiante"))
-    empleado.add(Empleados("Fernando", "Asistemte"))
+    empleado.add(Empleados("Fernando", "Asistente"))
 
     return empleado
 }

@@ -1,24 +1,23 @@
 package com.example.ricky.misoficios.servicios
 
 
-import com.example.ricky.misoficios.Modelos.Documentos
-import com.example.ricky.misoficios.Modelos.LoginReq
-import com.example.ricky.misoficios.Modelos.LoginRes
-import com.example.ricky.misoficios.Modelos.Oficios
+import com.example.ricky.misoficios.Modelos.*
 import retrofit2.Call
 import retrofit2.http.*
 
 interface MisOficiosAPI {
 
 
-    @GET("Documentos/{IdUsuarioPropietario}/{inicio}/{final}")
+    @GET("Documentos/{IdUsuarioPropietario}")
     fun getDocumentos(
-        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String,
-        @Path("inicio") inicio: String,
-        @Path("final") final: String
+        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<List<Documentos>>
 
     @POST("Usuarios/Login")
     fun getLogin(@Body loginReq: LoginReq): Call<LoginRes>
 
+    @GET("DocumentosCantidad/{IdUsuarioPropietario}")
+    fun getCantidadDocs(
+        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+    ): Call<valor>
 }

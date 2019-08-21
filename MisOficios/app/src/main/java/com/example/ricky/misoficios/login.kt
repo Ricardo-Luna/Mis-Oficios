@@ -87,7 +87,7 @@ class login : AppCompatActivity() {
                                 Toast.makeText(
                                     applicationContext,
                                     "La tarea falló con éxito",
-                                    Toast.LENGTH_LONG
+                                    Toast.LENGTH_SHORT
                                 ).show()
                                 val loginRes = response.body()!!
                                 loginRes.NickName = txuser.text.toString()
@@ -102,7 +102,7 @@ class login : AppCompatActivity() {
                                 Toast.makeText(
                                     applicationContext,
                                     "El usuario no tiene permiso para usar esta aplicación",
-                                    Toast.LENGTH_LONG
+                                    Toast.LENGTH_SHORT
                                 ).show()
                             }
                         } else {
@@ -111,7 +111,7 @@ class login : AppCompatActivity() {
                             Toast.makeText(
                                 applicationContext,
                                 "El nombre de usuario o la contraseña son incorrectos",
-                                Toast.LENGTH_LONG
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
                 }

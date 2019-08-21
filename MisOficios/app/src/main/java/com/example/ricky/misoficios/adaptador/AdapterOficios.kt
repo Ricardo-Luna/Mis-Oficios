@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.MainFragment
 import com.example.ricky.misoficios.Modelos.Documentos
@@ -36,10 +37,7 @@ class AdapterOficios(var list: ArrayList<Oficios>, var fragmentManager: Fragment
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bindItems(list[position])
-       // val transaction = fragmentManager!!.beginTransaction()
-       // transaction.replace(R.id.frm_Main,MainFragment())
-       // transaction.addToBackStack(null)
-       // transaction.commit()
+
     }
 
 
@@ -66,40 +64,8 @@ class AdapterOficios(var list: ArrayList<Oficios>, var fragmentManager: Fragment
                 imagenMensaje.setImageResource(R.drawable.icons8_high_priority_127px)
             }
 
-
-            //   //Texto en comentario aquí
-            //   var  showOficios = Oficios(data.asunto,data.remitente,data.destinatario,data.fecha,data.folio,data.codigo,data.importancia)
-//
-            //   RetrofitClient.instance.getDocumentos(usuario.IdUsuario,"1","19")
-            //       .enqueue(object : Callback<Oficios> {
-            //           override fun onFailure(call: Call<Oficios>, t: Throwable) {
-            //               Log.e("onFailure", t.message)
-            //           }
-//
-            //           override fun onResponse(call: Call<Oficios>, response: Response<Oficios>) {
-//
-            //           }
-            //       })
         }
     }
 }
 
 
-/// val codigo : TextView =
-//    asunto.text = data.asunto
-//destinatario.text = data.destinatario
-//remitente.text = data.remitente
-//fecha.text = data.fecha
-//folio.text = data.codigo
-//
-//if (data.importancia.toInt()==1){
-//    imagenMensaje.setImageResource(R.drawable.icons8_info_127px)
-//}
-//if (data.importancia.toInt()==2){
-//    imagenMensaje.setImageResource(R.drawable.icons8_high_priority_127px)
-//}
-//
-//
-//imagenMensaje.setOnClickListener {
-//    Snackbar.make(itemView, "Aquí se muestra la importancia del mensaje", Snackbar.LENGTH_SHORT).show()
-//}

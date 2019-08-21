@@ -34,6 +34,9 @@ class Oficios(
     var codigo: String?,
     var importancia: Byte?
 )
+class valor(
+    var cantidad: Int?
+)
 class Documentos(
     var asunto: String?,
     var remitente: String?,
