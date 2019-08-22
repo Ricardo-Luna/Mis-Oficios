@@ -34,9 +34,41 @@ class Oficios(
     var codigo: String?,
     var importancia: Byte?
 )
+
+
+
+class Oficios2(
+    var IdDocumento: String?,
+    var Titulo: String?,
+    var IdPropietario: String?,
+    var idDocumentoRemitente: String?,
+    var IdCarpeta: String?,
+    var Codigo: String?,
+    var Importancia: String?,
+    var estatus: String?,
+    var FechaEnvio: String?
+
+    )
+
+class Documentos2(
+    var IdDocumento: String?,
+    var Titulo: String?,
+    var IdPropietario: String?,
+    var idDocumentoRemitente: String?,
+    var IdCarpeta: String?,
+    var Codigo: String?,
+    var Importancia: String?,
+    var estatus: String?,
+    var FechaEnvio: String?
+
+)
+
+
 class valor(
     var cantidad: Int?
 )
+
+
 class Documentos(
     var asunto: String?,
     var remitente: String?,

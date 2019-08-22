@@ -14,13 +14,14 @@ import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.MainFragment
 import com.example.ricky.misoficios.Modelos.Documentos
 import com.example.ricky.misoficios.Modelos.Oficios
+import com.example.ricky.misoficios.Modelos.Oficios2
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AdapterOficios(var list: ArrayList<Oficios>, var fragmentManager: FragmentManager) :
+class AdapterOficios(var list: ArrayList<Oficios2>, var fragmentManager: FragmentManager) :
     RecyclerView.Adapter<AdapterOficios.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -42,7 +43,7 @@ class AdapterOficios(var list: ArrayList<Oficios>, var fragmentManager: Fragment
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindItems(data: Oficios) {
+        fun bindItems(data: Oficios2) {
             val asunto: TextView = itemView.findViewById(R.id.txtAsunto)
             val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)
             val remitente: TextView = itemView.findViewById(R.id.txtRemitente)
@@ -51,16 +52,16 @@ class AdapterOficios(var list: ArrayList<Oficios>, var fragmentManager: Fragment
             val imagenMensaje: ImageView = itemView.findViewById(R.id.imgAlerta)
             var usuario = SharedPreference.getInstance(itemView.context).usuario
 
-            asunto.text = data.asunto
-            destinatario.text = data.destinatario
-            remitente.text = data.remitente
-            fecha.text = data.fecha
-            folio.text = data.codigo
+            asunto.text = data.Titulo
+           // destinatario.text = data.
+           // remitente.text = data.remitente
+            fecha.text = data.FechaEnvio
+            folio.text = data.Codigo
 
-            if (data.importancia?.toInt() == 1) {
+            if (data.Importancia?.toInt() == 1) {
                 imagenMensaje.setImageResource(R.drawable.icons8_info_127px)
             }
-            if (data.importancia?.toInt() == 2) {
+            if (data.Importancia?.toInt() == 2) {
                 imagenMensaje.setImageResource(R.drawable.icons8_high_priority_127px)
             }
 

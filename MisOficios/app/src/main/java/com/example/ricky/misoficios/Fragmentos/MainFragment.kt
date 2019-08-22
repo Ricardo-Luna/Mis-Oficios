@@ -15,9 +15,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.SharedPreference
-import com.example.ricky.misoficios.Modelos.Documentos
-import com.example.ricky.misoficios.Modelos.Oficios
-import com.example.ricky.misoficios.Modelos.valor
+import com.example.ricky.misoficios.Modelos.*
 
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.adaptador.AdapterOficios
@@ -34,10 +32,10 @@ import com.example.ricky.misoficios.MainActivity as MainActivity
 class MainFragment : Fragment() {
     lateinit var dialog: AlertDialog
     lateinit var oficiosRecycler: RecyclerView
-    lateinit var oficiosList: ArrayList<Oficios>
+    lateinit var oficiosList: ArrayList<Oficios2>
 
 
-    //objeto de servicios/RetrofitClient
+    //objeto de {servicios/RetrofitClient}
     val api = retrofit.create(MisOficiosAPI::class.java)
 
     override fun onCreateView(
@@ -52,11 +50,12 @@ class MainFragment : Fragment() {
         oficiosRecycler.layoutManager = llm
 
         // --Aquí alterno entre los métodos siguientes
-        // onActualizarLista2()
+        onActualizarLista2()
         onActualizarLista()
 
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
+            onActualizarLista()
             onActualizarLista2()
             swipeRefreshLayout.setRefreshing(false)
         })
@@ -66,19 +65,15 @@ class MainFragment : Fragment() {
     // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
     fun onActualizarLista2() {
         api.getDocumentos("ae10550a-cf5c-4912-aed6-3b0adbcde508")
-            .enqueue(object : Callback<List<Documentos>> {
-                override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
-                    d("Response recibido","onResponse: ${response.body()!![0].asunto}")
+            .enqueue(object: Callback<List<Documentos2>>{
+                override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
-                override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
-                    d("Response No Recibido","onFailure")
+                override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
+                    d("Response recibido", "onResponse: ${response.body()!![0].Titulo}")
                 }
-
-
-            }
-
-            )
+            })
     }
 
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
@@ -89,48 +84,50 @@ class MainFragment : Fragment() {
 
         var usuario = SharedPreference.getInstance(context!!).usuario
         RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
-                                                            // que se puede intercambiar por la línea siguiente
+            // que se puede intercambiar por la línea siguiente
             "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
         )
-            .enqueue(object : Callback<List<Documentos>> {
-
-                override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
+            .enqueue(object : Callback<List<Documentos2>>{
+                override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
                     Log.e("onFailure", t.message)
                 }
 
-                override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
+                override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
 
-                            val Documentos = response.body()
+                            val Documentos2 = response.body()
                             var fin = response.body()?.size
                             Toast.makeText(
                                 context,
-                                "Response Sucessful, " + fin+" elements",
+                                "Response Sucessful, " + fin + " elements",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            val adapter = AdapterOficios(buildOficios(Documentos!!), fragmentManager!!)
+                            val adapter = AdapterOficios(buildOficios(Documentos2!!), fragmentManager!!)
                             oficiosRecycler.adapter = adapter
                         }
                     }
                 }
+
             })
     }
 
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
 
-    fun buildOficios(G: List<Documentos>): ArrayList<Oficios> {
+    fun buildOficios(G: List<Documentos2>): ArrayList<Oficios2> {
         oficiosList = ArrayList()
         for (item in G) {
             oficiosList.add(
-                Oficios(
-                    item.asunto,
-                    item.remitente,
-                    item.destinatario,
-                    item.fecha,
-                    item.folio,
-                    item.codigo,
-                    item.importancia
+                Oficios2(
+                    item.IdDocumento,
+                    item.Titulo,
+                    item.IdPropietario,
+                    item.idDocumentoRemitente,
+                    item.IdCarpeta,
+                    item.Codigo,
+                    item.Importancia,
+                    item.estatus,
+                    item.FechaEnvio
                 )
             )
         }

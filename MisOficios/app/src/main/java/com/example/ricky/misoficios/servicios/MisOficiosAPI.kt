@@ -9,9 +9,7 @@ interface MisOficiosAPI {
 
 
     @GET("Documentos/{IdUsuarioPropietario}")
-    fun getDocumentos(
-        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
-    ): Call<List<Documentos>>
+    fun getDocumentos( @Path("IdUsuarioPropietario") IdUsuarioPropietario: String ): Call<List<Documentos2>>
 
     @POST("Usuarios/Login")
     fun getLogin(@Body loginReq: LoginReq): Call<LoginRes>
