@@ -18,4 +18,10 @@ interface MisOficiosAPI {
     fun getCantidadDocs(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<valor>
+
+    @GET("/getUsuarioNombre/{IdUsuario}")
+    fun getNickName(
+        @Path("IdUsuario") IdUsuario: String
+    ):Call<nickname>
+
 }

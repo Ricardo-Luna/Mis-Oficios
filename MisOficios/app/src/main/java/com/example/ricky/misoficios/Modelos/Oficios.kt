@@ -25,6 +25,18 @@ package com.example.ricky.misoficios.Modelos
 //
 //)
 
+
+class nickname(
+    NickName: String
+)
+
+
+
+
+
+
+
+
 class Oficios(
     var asunto: String?,
     var remitente: String?,
@@ -46,7 +58,8 @@ class Oficios2(
     var Codigo: String?,
     var Importancia: String?,
     var estatus: String?,
-    var FechaEnvio: String?
+    var FechaEnvio: String?,
+    var PropietarioNombreCompleto: String
 
     )
 
@@ -59,8 +72,8 @@ class Documentos2(
     var Codigo: String?,
     var Importancia: String?,
     var estatus: String?,
-    var FechaEnvio: String?
-
+    var FechaEnvio: String?,
+    var PropietarioNombreCompleto: String
 )
 
 

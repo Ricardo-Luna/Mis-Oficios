@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.*
@@ -33,7 +34,7 @@ class MainFragment : Fragment() {
     lateinit var dialog: AlertDialog
     lateinit var oficiosRecycler: RecyclerView
     lateinit var oficiosList: ArrayList<Oficios2>
-
+    lateinit var txtFecha: TextView
 
     //objeto de {servicios/RetrofitClient}
     val api = retrofit.create(MisOficiosAPI::class.java)
@@ -110,6 +111,7 @@ class MainFragment : Fragment() {
                 }
 
             })
+
     }
 
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
@@ -127,7 +129,9 @@ class MainFragment : Fragment() {
                     item.Codigo,
                     item.Importancia,
                     item.estatus,
-                    item.FechaEnvio
+                    item.FechaEnvio,
+                    item.PropietarioNombreCompleto
+
                 )
             )
         }

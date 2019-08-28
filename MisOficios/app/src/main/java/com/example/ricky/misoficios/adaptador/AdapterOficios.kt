@@ -1,5 +1,8 @@
 package com.example.ricky.misoficios.adaptador
 
+import android.content.Intent
+import android.provider.ContactsContract
+import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -12,9 +15,11 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.MainFragment
+import com.example.ricky.misoficios.Fragmentos.NuevoOficio
 import com.example.ricky.misoficios.Modelos.Documentos
 import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.Modelos.Oficios2
+import com.example.ricky.misoficios.Modelos.nickname
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import retrofit2.Call
@@ -44,8 +49,9 @@ class AdapterOficios(var list: ArrayList<Oficios2>, var fragmentManager: Fragmen
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Oficios2) {
+            var aux: String
             val asunto: TextView = itemView.findViewById(R.id.txtAsunto)
-            val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)
+            //  val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)
             val remitente: TextView = itemView.findViewById(R.id.txtRemitente)
             val fecha: TextView = itemView.findViewById(R.id.txtFecha)
             val folio: TextView = itemView.findViewById(R.id.txtFolio)
@@ -53,20 +59,53 @@ class AdapterOficios(var list: ArrayList<Oficios2>, var fragmentManager: Fragmen
             var usuario = SharedPreference.getInstance(itemView.context).usuario
 
             asunto.text = data.Titulo
-           // destinatario.text = data.
-           // remitente.text = data.remitente
+            // destinatario.text = data.
+            // remitente.text = data.IdPropietario
             fecha.text = data.FechaEnvio
             folio.text = data.Codigo
-
+            remitente.text = data.PropietarioNombreCompleto
             if (data.Importancia?.toInt() == 1) {
-                imagenMensaje.setImageResource(R.drawable.icons8_info_127px)
+                imagenMensaje.setImageResource(R.drawable.attention)
+                imagenMensaje.setOnClickListener { view ->
+                    Snackbar.make(view, "Importancia baja", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
             }
-            if (data.Importancia?.toInt() == 2) {
-                imagenMensaje.setImageResource(R.drawable.icons8_high_priority_127px)
+
+                if (data.Importancia?.toInt() == 2) {
+                    imagenMensaje.setImageResource(R.drawable.icons8_info_127px)
+                    imagenMensaje.setOnClickListener { view ->
+                        Snackbar.make(view, "Importancia normal", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
+                    }
+                }
+                    if (data.Importancia?.toInt() == 3) {
+                        imagenMensaje.setImageResource(R.drawable.icons8_high_priority_127px)
+                        imagenMensaje.setOnClickListener { view ->
+                            Snackbar.make(view, "Importancia alta", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show()
+                        }
+
+
+                    }
+
+
+                    //  RetrofitClient.instance.getNickName(data.IdPropietario.toString())
+                    //      .enqueue(object : Callback<nickname>{
+                    //          override fun onFailure(call: Call<nickname>, t: Throwable) {
+                    //         }
+                    //      override fun onResponse(call: Call<nickname>, response: Response<nickname>) {
+                    //      val nick = response.body()!!
+//                  //       remitente.text = nick.toString()
+                    //      Log.d("Response de remitente", "onResponse: ${nick}")
+                    //    //  Log.d("Response 2", "onResponse: ${data.IdPropietario.toString()}")
+                    //  }
+                    //  })
+
+
             }
 
         }
     }
-}
 
 
