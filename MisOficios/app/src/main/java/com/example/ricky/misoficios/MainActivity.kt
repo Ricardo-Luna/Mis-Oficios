@@ -1,5 +1,6 @@
 package com.example.ricky.misoficios
 
+
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -14,7 +15,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.example.ricky.misoficios.Fragmentos.*
-import io.reactivex.disposables.CompositeDisposable
+
 
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216

@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+>
+    <include layout="@layout/layout_recycler"></include>
+
+    <!-- Adding bottom sheet after main content -->
+
+    <include layout="@layout/btm_carpetas" ></include>
 
 
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".Fragmentos.MainFragment" android:id="@+id/frm_Main">
-
-
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/oficiosRecycler"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
-
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

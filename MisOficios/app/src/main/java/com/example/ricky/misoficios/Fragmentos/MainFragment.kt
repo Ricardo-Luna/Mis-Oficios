@@ -1,8 +1,9 @@
 package com.example.ricky.misoficios.Fragmentos
 
-import android.content.Context
+
 import android.app.AlertDialog
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -30,11 +31,22 @@ import retrofit2.Response
 import com.example.ricky.misoficios.MainActivity as MainActivity
 
 
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetDialog
+import kotlinx.android.synthetic.main.btm_carpetas.*
+
+
 class MainFragment : Fragment() {
     lateinit var dialog: AlertDialog
     lateinit var oficiosRecycler: RecyclerView
     lateinit var oficiosList: ArrayList<Oficios2>
     lateinit var txtFecha: TextView
+
+    private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
+
+
+
+
 
     //objeto de {servicios/RetrofitClient}
     val api = retrofit.create(MisOficiosAPI::class.java)
@@ -50,7 +62,10 @@ class MainFragment : Fragment() {
         llm.orientation = LinearLayout.VERTICAL
         oficiosRecycler.layoutManager = llm
 
-        // --Aquí alterno entre los métodos siguientes
+        
+
+
+                // --Aquí alterno entre los métodos siguientes
         onActualizarLista2()
         onActualizarLista()
 
@@ -62,6 +77,8 @@ class MainFragment : Fragment() {
         })
         return view
     }
+
+
 
     // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
     fun onActualizarLista2() {
@@ -114,6 +131,10 @@ class MainFragment : Fragment() {
 
     }
 
+
+
+
+
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
 
     fun buildOficios(G: List<Documentos2>): ArrayList<Oficios2> {
@@ -147,6 +168,39 @@ class MainFragment : Fragment() {
 
     oficiosRecycler.adapter = adapter
 */
+//Comienza onCreate
+    //sheetBehavior = BottomSheetBehavior.from<ConstraintLayout>(btm_carpetas)
+    //sheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+    //    override fun onStateChanged(bottomSheet: View, newState: Int) {
+    //        when (newState) {
+    //            BottomSheetBehavior.STATE_HIDDEN -> {
+    //            }
+    //            BottomSheetBehavior.STATE_EXPANDED ->
+    //                txtcarpetas.text = "Cerrar"
+    //            BottomSheetBehavior.STATE_COLLAPSED ->
+    //                txtcarpetas.text = "Carpetas"
+    //            BottomSheetBehavior.STATE_DRAGGING -> {
+    //            }
+    //            BottomSheetBehavior.STATE_SETTLING -> {
+    //            }
+    //        }
+    //    }
+    //    override fun onSlide(bottomSheet: View, slideOffset: Float) {
+    //    }
+    //})
+    //    txtcarpetas.setOnClickListener(View.OnClickListener {
+    //        expandCloseSheet()
+    //    })
+    // Termina onCreate
 
+    //private fun expandCloseSheet() {
+    //    if (sheetBehavior!!.state != BottomSheetBehavior.STATE_EXPANDED) {
+    //        sheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+    //        txtcarpetas.text = "Cerrar"
+    //    } else {
+    //        sheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+    //        txtcarpetas.text = "Carpetas"
+    //    }
+    //}
 
 }
