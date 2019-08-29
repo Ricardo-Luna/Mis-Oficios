@@ -24,4 +24,8 @@ interface MisOficiosAPI {
         @Path("IdUsuario") IdUsuario: String
     ):Call<nickname>
 
+    @GET("api/Carpetas/{IdUsuarioPropietario}")
+    fun getCarpetas(
+        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+    ):Call<List<folder>>
 }

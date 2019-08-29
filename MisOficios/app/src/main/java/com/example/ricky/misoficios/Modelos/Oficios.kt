@@ -30,9 +30,28 @@ class nickname(
     NickName: String
 )
 
+class Carpetas(
+   var IdCarpeta: String?  ,
+   var IdUsuarioPropietario: String?  ,
+   var Nombre: String? ,
+   var Recibidos: Byte? ,
+   var Enviados: Byte?,
+   var Borradores: Byte? ,
+   var IdUsuarioActualizacion: String? ,
+   var FechaActualizacion: String
+)
 
 
-
+class folder(
+   var IdCarpeta: String?  ,
+   var IdUsuarioPropietario: String?  ,
+   var Nombre: String? ,
+   var Recibidos: Byte? ,
+   var Enviados: Byte?,
+   var Borradores: Byte? ,
+   var IdUsuarioActualizacion: String? ,
+   var FechaActualizacion: String
+)
 
 
 

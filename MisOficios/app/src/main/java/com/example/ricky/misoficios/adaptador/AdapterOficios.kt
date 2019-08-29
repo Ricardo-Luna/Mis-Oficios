@@ -48,7 +48,7 @@ class AdapterOficios(var list: ArrayList<Oficios2>, var fragmentManager: Fragmen
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindItems(data: Oficios2) {
+        fun bindItems(data: Oficios2){
             var aux: String
             val asunto: TextView = itemView.findViewById(R.id.txtAsunto)
             //  val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)

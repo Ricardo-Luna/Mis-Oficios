@@ -33,13 +33,16 @@ import com.example.ricky.misoficios.MainActivity as MainActivity
 
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
+import com.example.ricky.misoficios.adaptador.AdapterCarpetas
 import kotlinx.android.synthetic.main.btm_carpetas.*
 
 
 class MainFragment : Fragment() {
     lateinit var dialog: AlertDialog
     lateinit var oficiosRecycler: RecyclerView
+    lateinit var  carpetasRecycler: RecyclerView
     lateinit var oficiosList: ArrayList<Oficios2>
+    lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var txtFecha: TextView
 
     private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
@@ -57,17 +60,21 @@ class MainFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
-        var swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+        carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
+        val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         val llm: LinearLayoutManager = LinearLayoutManager(context)
+        val llm2: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
+        llm2.orientation = LinearLayout.VERTICAL
         oficiosRecycler.layoutManager = llm
-
+        carpetasRecycler.layoutManager = llm2
         
 
 
                 // --Aquí alterno entre los métodos siguientes
         onActualizarLista2()
         onActualizarLista()
+        onMostrarCarpetas()
 
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
@@ -75,6 +82,8 @@ class MainFragment : Fragment() {
             onActualizarLista2()
             swipeRefreshLayout.setRefreshing(false)
         })
+
+
         return view
     }
 
@@ -116,11 +125,11 @@ class MainFragment : Fragment() {
 
                             val Documentos2 = response.body()
                             var fin = response.body()?.size
-                            Toast.makeText(
-                                context,
-                                "Response Sucessful, " + fin + " elements",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                          //  Toast.makeText(
+                          //      context,
+                          //      "Response Sucessful, " + fin + " elements",
+                          //      Toast.LENGTH_SHORT
+                          //  ).show()
                             val adapter = AdapterOficios(buildOficios(Documentos2!!), fragmentManager!!)
                             oficiosRecycler.adapter = adapter
                         }
@@ -133,6 +142,47 @@ class MainFragment : Fragment() {
 
 
 
+    fun onMostrarCarpetas(){
+        var usuario = SharedPreference.getInstance(context!!).usuario
+        RetrofitClient.instance.getCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508")
+            .enqueue(object: Callback<List<folder>>{
+
+                override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
+                    if(response.isSuccessful){
+                        if (!response.body().isNullOrEmpty()) {
+
+                            val folder = response.body()
+
+                            Toast.makeText(
+                                context,
+                                "Response folder Sucessful",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
+                            val adapter2 = AdapterCarpetas(buildCarpetas(folder!!), fragmentManager!!)
+                            carpetasRecycler.adapter = adapter2
+                        }
+                        else
+                        {
+                            Toast.makeText(
+                                context,
+                                "Sin carpetas para mostrar",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<List<folder>>, t: Throwable) {
+                    Log.e("onFailure", t.message)
+                    Toast.makeText(
+                        context,
+                            "Response not Sucessful",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            })
+    }
 
 
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
@@ -158,6 +208,30 @@ class MainFragment : Fragment() {
         }
         return oficiosList
     }
+
+
+    fun buildCarpetas(G: List<folder>): ArrayList<Carpetas>{
+        carpetasList = ArrayList()
+        for(item in G){
+            carpetasList.add(
+                Carpetas(
+                    item.IdCarpeta,
+                    item.IdUsuarioPropietario,
+                    item.Nombre,
+                    item.Recibidos,
+                    item.Enviados,
+                    item.Borradores,
+                    item.IdUsuarioActualizacion,
+                    item.FechaActualizacion
+                )
+            )
+        }
+        return  carpetasList
+    }
+
+
+
+
 
 
 /*

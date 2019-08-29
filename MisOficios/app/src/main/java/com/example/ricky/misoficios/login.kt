@@ -84,11 +84,11 @@ class login : AppCompatActivity() {
                             if (dialog.isShowing())
                                 dialog.dismiss()
                             if (validarPermisos(response.body()!!.Permisos)) {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "La tarea falló con éxito",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                              //  Toast.makeText(
+                              //      applicationContext,
+                              //      "La tarea falló con éxito",
+                              //      Toast.LENGTH_SHORT
+                              //  ).show()
                                 val loginRes = response.body()!!
                                 loginRes.NickName = txuser.text.toString()
                                 Log.e("Usuario", loginRes.toString())

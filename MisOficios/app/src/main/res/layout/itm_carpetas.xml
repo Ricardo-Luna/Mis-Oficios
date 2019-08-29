@@ -13,6 +13,6 @@
         <TextView
                 android:text="FolderName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/textView27" android:textSize="25sp"/>
+                android:layout_height="match_parent" android:id="@+id/tvCarpetas" android:textSize="25sp"/>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
