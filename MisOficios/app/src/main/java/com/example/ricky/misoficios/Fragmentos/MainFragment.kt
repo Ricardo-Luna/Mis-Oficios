@@ -32,10 +32,7 @@ import com.example.ricky.misoficios.MainActivity as MainActivity
 
 
 import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import com.example.ricky.misoficios.Callables.RetrofitMethods
 import com.example.ricky.misoficios.adaptador.AdapterCarpetas
-import kotlinx.android.synthetic.main.btm_carpetas.*
 
 
 class MainFragment : Fragment() {
@@ -62,22 +59,19 @@ class MainFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
 
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
-        carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
+      //  carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
 
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
 
         val llm: LinearLayoutManager = LinearLayoutManager(context)
-        val llm2: LinearLayoutManager = LinearLayoutManager(context)
-        llm.orientation = LinearLayout.VERTICAL
-        llm2.orientation = LinearLayout.VERTICAL
+      //  val llm2: LinearLayoutManager = LinearLayoutManager(context)
+          llm.orientation = LinearLayout.VERTICAL
+     //   llm2.orientation = LinearLayout.VERTICAL
         oficiosRecycler.layoutManager = llm
-        carpetasRecycler.layoutManager = llm2
-        
+      //  carpetasRecycler.layoutManager = llm2
 
 
         // --Aquí alterno entre los métodos siguientes
-
-
         onActualizarLista2()
         onActualizarLista()
         onMostrarCarpetas()
@@ -118,26 +112,23 @@ class MainFragment : Fragment() {
     fun onActualizarLista() {
 
         var usuario = SharedPreference.getInstance(context!!).usuario
-        RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
+        RetrofitClient.instance.getDocsCarpetas(//usuario.IdUsuario <-Este es el usuario de la aplicación,
             // que se puede intercambiar por la línea siguiente
-            "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
+            "ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
+            "8995969b-6837-46d2-bd91-485c4d3ee8c2"
         )
             .enqueue(object : Callback<List<Documentos2>>{
                 override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
                     Log.e("onFailure", t.message)
+                    d("Response no recibido", "Response no recibido")
                 }
 
                 override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
-
+                            d("Response no recibido", "onResponse: ${response.body()!![0].Titulo}")
                             val Documentos2 = response.body()
                             var fin = response.body()?.size
-                          //  Toast.makeText(
-                          //      context,
-                          //      "Response Sucessful, " + fin + " elements",
-                          //      Toast.LENGTH_SHORT
-                          //  ).show()
                             val adapter = AdapterOficios(buildOficios(Documentos2!!))
                             oficiosRecycler.adapter = adapter
                         }
@@ -204,13 +195,13 @@ class MainFragment : Fragment() {
                 Oficios2(
                     item.IdDocumento,
                     item.Titulo,
+                    item.FechaEnvio,
                     item.IdPropietario,
                     item.idDocumentoRemitente,
                     item.IdCarpeta,
                     item.Codigo,
                     item.Importancia,
                     item.estatus,
-                    item.FechaEnvio,
                     item.PropietarioNombreCompleto
 
                 )
