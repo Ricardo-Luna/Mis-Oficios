@@ -54,8 +54,6 @@ class login : AppCompatActivity() {
         dialog = builder.create()
         dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         getIpAddress()
-
-
     }
 
     private fun validarCampos() {
@@ -128,14 +126,7 @@ class login : AppCompatActivity() {
         return false
     }
 
-   //override fun onStart() {
-   //      super.onStart()
-//
-   //         val intent = Intent(applicationContext, MainActivity::class.java)
-   //        // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-   //         startActivity(intent)
-//
-   // }
+
 
     private fun getIpAddress() {
         val IP: String
@@ -173,6 +164,15 @@ private fun validarIn() {
         startActivity(intent)
     }
 }
+override fun onStart() {
+         super.onStart()
+
+            val intent = Intent(applicationContext, MainActivity::class.java)
+           // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+    }
+
 
  */
 

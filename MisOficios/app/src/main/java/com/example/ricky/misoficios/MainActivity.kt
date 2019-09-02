@@ -1,6 +1,7 @@
 package com.example.ricky.misoficios
 
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -12,9 +13,20 @@ import android.view.MenuItem
 import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
+import android.widget.Toast
+import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.*
+import com.example.ricky.misoficios.Modelos.Carpetas
+import com.example.ricky.misoficios.Modelos.folder
+import com.example.ricky.misoficios.adaptador.AdapterCarpetas
+import com.example.ricky.misoficios.servicios.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 //Temas:
@@ -24,7 +36,8 @@ import com.example.ricky.misoficios.Fragmentos.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
-
+    lateinit var  carpetasRecycler: RecyclerView
+    lateinit var carpetasList: ArrayList<Carpetas>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,6 +168,65 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+    fun onMostrarCarpetas(context: Context){
+        var usuario = SharedPreference.getInstance(context!!).usuario
+        RetrofitClient.instance.getCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508")
+            .enqueue(object: Callback<List<folder>> {
+
+                override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
+                    if(response.isSuccessful){
+                        if (!response.body().isNullOrEmpty()) {
+
+                            val folder = response.body()
+
+                            Toast.makeText(
+                                context,
+                                "Response folder Sucessful",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
+                            val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
+                            carpetasRecycler.adapter = adapter2
+                        }
+                        else
+                        {
+                            Toast.makeText(
+                                context,
+                                "Sin carpetas para mostrar",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<List<folder>>, t: Throwable) {
+                    Log.e("onFailure", t.message)
+                    Toast.makeText(
+                        context,
+                        "Response not Sucessful",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            })
+    }
+    fun buildCarpetas(G: List<folder>): ArrayList<Carpetas>{
+        carpetasList = ArrayList()
+        for(item in G){
+            carpetasList.add(
+                Carpetas(
+                    item.IdCarpeta,
+                    item.IdUsuarioPropietario,
+                    item.Nombre,
+                    item.Recibidos,
+                    item.Enviados,
+                    item.Borradores,
+                    item.IdUsuarioActualizacion,
+                    item.FechaActualizacion
+                )
+            )
+        }
+        return  carpetasList
     }
 
 }

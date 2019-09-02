@@ -11,7 +11,7 @@ import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.R
 import kotlinx.android.synthetic.main.itm_carpetas.view.*
 
-class AdapterCarpetas(var list: ArrayList<Carpetas>, var fragmentManager: FragmentManager):
+class AdapterCarpetas(var list: ArrayList<Carpetas>):
     RecyclerView.Adapter<AdapterCarpetas.ViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {

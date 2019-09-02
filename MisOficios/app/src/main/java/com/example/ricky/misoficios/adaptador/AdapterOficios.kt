@@ -1,32 +1,19 @@
 package com.example.ricky.misoficios.adaptador
 
-import android.content.Intent
-import android.provider.ContactsContract
 import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.SharedPreference
-import com.example.ricky.misoficios.Fragmentos.MainFragment
-import com.example.ricky.misoficios.Fragmentos.NuevoOficio
-import com.example.ricky.misoficios.Modelos.Documentos
-import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.Modelos.Oficios2
-import com.example.ricky.misoficios.Modelos.nickname
 import com.example.ricky.misoficios.R
-import com.example.ricky.misoficios.servicios.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class AdapterOficios(var list: ArrayList<Oficios2>, var fragmentManager: FragmentManager) :
+
+class AdapterOficios(var list: ArrayList<Oficios2>) :
     RecyclerView.Adapter<AdapterOficios.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -51,7 +38,7 @@ class AdapterOficios(var list: ArrayList<Oficios2>, var fragmentManager: Fragmen
         fun bindItems(data: Oficios2){
             var aux: String
             val asunto: TextView = itemView.findViewById(R.id.txtAsunto)
-            //  val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)
+            //val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)
             val remitente: TextView = itemView.findViewById(R.id.txtRemitente)
             val fecha: TextView = itemView.findViewById(R.id.txtFecha)
             val folio: TextView = itemView.findViewById(R.id.txtFolio)
@@ -90,17 +77,7 @@ class AdapterOficios(var list: ArrayList<Oficios2>, var fragmentManager: Fragmen
                     }
 
 
-                    //  RetrofitClient.instance.getNickName(data.IdPropietario.toString())
-                    //      .enqueue(object : Callback<nickname>{
-                    //          override fun onFailure(call: Call<nickname>, t: Throwable) {
-                    //         }
-                    //      override fun onResponse(call: Call<nickname>, response: Response<nickname>) {
-                    //      val nick = response.body()!!
-//                  //       remitente.text = nick.toString()
-                    //      Log.d("Response de remitente", "onResponse: ${nick}")
-                    //    //  Log.d("Response 2", "onResponse: ${data.IdPropietario.toString()}")
-                    //  }
-                    //  })
+
 
 
             }

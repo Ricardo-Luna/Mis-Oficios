@@ -9,7 +9,8 @@ interface MisOficiosAPI {
 
 
     @GET("Documentos/{IdUsuarioPropietario}")
-    fun getDocumentos( @Path("IdUsuarioPropietario") IdUsuarioPropietario: String ): Call<List<Documentos2>>
+    fun getDocumentos( @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+    ): Call<List<Documentos2>>
 
     @POST("Usuarios/Login")
     fun getLogin(@Body loginReq: LoginReq): Call<LoginRes>
@@ -28,4 +29,13 @@ interface MisOficiosAPI {
     fun getCarpetas(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ):Call<List<folder>>
+
+
+
+    @GET("api/DocCarpetas/{IdUsuarioPropietario}/{IdCarpeta}")
+    fun getDocsCarpetas(
+        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String,
+        @Path("IdCarpeta") idCarpetas: String
+    ): Call<List<Documentos2>>
+
 }

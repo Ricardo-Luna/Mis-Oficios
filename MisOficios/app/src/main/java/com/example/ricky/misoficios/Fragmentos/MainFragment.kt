@@ -33,6 +33,7 @@ import com.example.ricky.misoficios.MainActivity as MainActivity
 
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
+import com.example.ricky.misoficios.Callables.RetrofitMethods
 import com.example.ricky.misoficios.adaptador.AdapterCarpetas
 import kotlinx.android.synthetic.main.btm_carpetas.*
 
@@ -44,7 +45,7 @@ class MainFragment : Fragment() {
     lateinit var oficiosList: ArrayList<Oficios2>
     lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var txtFecha: TextView
-
+    
     private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
 
@@ -59,9 +60,12 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
+
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
         carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
+
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+
         val llm: LinearLayoutManager = LinearLayoutManager(context)
         val llm2: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
@@ -71,10 +75,14 @@ class MainFragment : Fragment() {
         
 
 
-                // --Aquí alterno entre los métodos siguientes
+        // --Aquí alterno entre los métodos siguientes
+
+
         onActualizarLista2()
         onActualizarLista()
         onMostrarCarpetas()
+
+        //  --Método que actualiza el layout arrastándolo hacia abajo
 
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
@@ -130,7 +138,7 @@ class MainFragment : Fragment() {
                           //      "Response Sucessful, " + fin + " elements",
                           //      Toast.LENGTH_SHORT
                           //  ).show()
-                            val adapter = AdapterOficios(buildOficios(Documentos2!!), fragmentManager!!)
+                            val adapter = AdapterOficios(buildOficios(Documentos2!!))
                             oficiosRecycler.adapter = adapter
                         }
                     }
@@ -139,6 +147,8 @@ class MainFragment : Fragment() {
             })
 
     }
+
+
 
 
 
@@ -159,7 +169,7 @@ class MainFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
-                            val adapter2 = AdapterCarpetas(buildCarpetas(folder!!), fragmentManager!!)
+                            val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
                             carpetasRecycler.adapter = adapter2
                         }
                         else
@@ -230,6 +240,42 @@ class MainFragment : Fragment() {
     }
 
 
+
+
+
+    //fun onActualizarLista() {
+//
+    //    var usuario = SharedPreference.getInstance(context!!).usuario
+    //    RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
+    //        // que se puede intercambiar por la línea siguiente
+    //        "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
+    //    )
+    //        .enqueue(object : Callback<List<Documentos2>>{
+    //            override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
+    //                Log.e("onFailure", t.message)
+    //            }
+//
+    //            override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
+    //                if (response.isSuccessful) {
+    //                    if (!response.body().isNullOrEmpty()) {
+//
+    //                        val Documentos2 = response.body()
+    //                        var fin = response.body()?.size
+    //                        //  Toast.makeText(
+    //                        //      context,
+    //                        //      "Response Sucessful, " + fin + " elements",
+    //                        //      Toast.LENGTH_SHORT
+    //                        //  ).show()
+    //                        val adapter = AdapterOficios(buildOficios(Documentos2!!))
+    //                        oficiosRecycler.adapter = adapter
+    //                    }
+    //                }
+    //            }
+//
+    //        })
+//
+    //}
+    //
 
 
 
