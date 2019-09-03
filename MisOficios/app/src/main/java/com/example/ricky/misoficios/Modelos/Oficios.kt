@@ -20,9 +20,6 @@ package com.example.ricky.misoficios.Modelos
 //    var SelloDigital: String?,
 //    var IdUsuarioActualizacion: String?,
 //    var FechaActualizacion: String?
-//
-//
-//
 //)
 
 
@@ -77,7 +74,7 @@ class Oficios2(
     var IdCarpeta: String?,
     var Codigo: String?,
     var Importancia: String?,
-    var estatus: String?,
+        var estatus: String?,
     var PropietarioNombreCompleto: String
 
     )
@@ -85,13 +82,13 @@ class Oficios2(
 class Documentos2(
     var IdDocumento: String?,
     var Titulo: String?,
-    var FechaEnvio: String?,
     var IdPropietario: String?,
     var idDocumentoRemitente: String?,
     var IdCarpeta: String?,
     var Codigo: String?,
-    var Importancia: String?,
+    var Importancia:    String?,
     var estatus: String?,
+    var FechaEnvio: String?,
     var PropietarioNombreCompleto: String
 )
 
@@ -110,6 +107,15 @@ class Documentos(
     var codigo: String?,
     var importancia: Byte?
 )
+
+
+class Gruposrv(
+    var nombre: String,
+    var destinatarios: String,
+    var propietario: String,
+    var fecha: String
+)
+
 class Grupos(
     var nombre: String,
     var destinatarios: String,
@@ -135,10 +141,6 @@ data class Permiso(
 )
 
 
-class Mensaje(
-    var NombreArea: String,
-    var Comentario: String
-)
 
 
 class LoginReq(

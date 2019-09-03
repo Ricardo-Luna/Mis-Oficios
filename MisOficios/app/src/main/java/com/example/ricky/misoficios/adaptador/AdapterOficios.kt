@@ -20,7 +20,6 @@ class AdapterOficios(var list: ArrayList<Oficios2>) :
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
         return ViewHolder(view)
 
-
     }
 
     override fun getItemCount(): Int {

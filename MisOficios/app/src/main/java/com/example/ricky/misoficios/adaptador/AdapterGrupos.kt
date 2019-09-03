@@ -30,10 +30,6 @@ class AdapterGrupos(var list: ArrayList<Grupos>) : RecyclerView.Adapter<AdapterG
         holder.bindItems(list[position])
     }
 
-
-
-
-
 class ViewHolder(view: View):RecyclerView.ViewHolder(view){
     fun bindItems(data:Grupos){
         val nombre: TextView = itemView.findViewById(R.id.nombre)

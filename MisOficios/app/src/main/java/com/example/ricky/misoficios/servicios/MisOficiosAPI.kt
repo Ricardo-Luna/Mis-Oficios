@@ -37,7 +37,7 @@ interface MisOficiosAPI {
     @GET("api/DocCarpetas/{IdUsuarioPropietario}/{IdCarpeta}")
     fun getDocsCarpetas(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String,
-        @Path("IdCarpeta") idCarpetas: String
+        @Path("IdCarpeta") IdCarpeta: String
     ): Call<List<Documentos2>>
 
 }

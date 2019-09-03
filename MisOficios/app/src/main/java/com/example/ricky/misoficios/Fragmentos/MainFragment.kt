@@ -64,15 +64,16 @@ class MainFragment : Fragment() {
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
 
         val llm: LinearLayoutManager = LinearLayoutManager(context)
-      //  val llm2: LinearLayoutManager = LinearLayoutManager(context)
+        val llm2: LinearLayoutManager = LinearLayoutManager(context)
           llm.orientation = LinearLayout.VERTICAL
-     //   llm2.orientation = LinearLayout.VERTICAL
+        llm2.orientation = LinearLayout.VERTICAL
         oficiosRecycler.layoutManager = llm
-      //  carpetasRecycler.layoutManager = llm2
+       //  carpetasRecycler.layoutManager = llm2
 
 
         // --Aquí alterno entre los métodos siguientes
         onActualizarLista2()
+        onActualizarLista3()
         onActualizarLista()
         onMostrarCarpetas()
 
@@ -120,17 +121,21 @@ class MainFragment : Fragment() {
             .enqueue(object : Callback<List<Documentos2>>{
                 override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
                     Log.e("onFailure", t.message)
-                    d("Response no recibido", "Response no recibido")
+                    d("1996Responsenorecibido", "Response no recibido")
                 }
 
                 override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
-                            d("Response no recibido", "onResponse: ${response.body()!![0].Titulo}")
+                            d("Response recibido", "onResponse: ${response.body()!![0].Titulo}")
                             val Documentos2 = response.body()
                             var fin = response.body()?.size
                             val adapter = AdapterOficios(buildOficios(Documentos2!!))
                             oficiosRecycler.adapter = adapter
+                        }
+                        else
+                        {
+                            d("Response recibido,fallo", "onResponse: ${response.body()!![0].Titulo}")
                         }
                     }
                 }
@@ -142,23 +147,50 @@ class MainFragment : Fragment() {
 
 
 
+    fun onActualizarLista3() {
+
+        var usuario = SharedPreference.getInstance(context!!).usuario
+        RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
+            // que se puede intercambiar por la línea siguiente
+            "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
+        )
+            .enqueue(object : Callback<List<Documentos2>>{
+                override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
+                    Log.e("onFailure", t.message)
+                }
+
+                override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
+                    if (response.isSuccessful) {
+                        if (!response.body().isNullOrEmpty()) {
+
+                            val Documentos2 = response.body()
+                            var fin = response.body()?.size
+                            //  Toast.makeText(
+                            //      context,
+                            //      "Response Sucessful, " + fin + " elements",
+                            //      Toast.LENGTH_SHORT
+                            //  ).show()
+                            val adapter = AdapterOficios(buildOficios(Documentos2!!))
+                            oficiosRecycler.adapter = adapter
+                        }
+                    }
+                }
+
+            })
+
+    }
+    //
+
+
 
     fun onMostrarCarpetas(){
         var usuario = SharedPreference.getInstance(context!!).usuario
         RetrofitClient.instance.getCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508")
             .enqueue(object: Callback<List<folder>>{
-
                 override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
                     if(response.isSuccessful){
                         if (!response.body().isNullOrEmpty()) {
-
                             val folder = response.body()
-
-                            Toast.makeText(
-                                context,
-                                "Response folder Sucessful",
-                                Toast.LENGTH_SHORT
-                            ).show()
                             d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
                             val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
                             carpetasRecycler.adapter = adapter2
@@ -175,11 +207,6 @@ class MainFragment : Fragment() {
                 }
                 override fun onFailure(call: Call<List<folder>>, t: Throwable) {
                     Log.e("onFailure", t.message)
-                    Toast.makeText(
-                        context,
-                            "Response not Sucessful",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
 
             })
