@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import  android.widget.ImageButton
 import com.example.ricky.misoficios.Modelos.Grupos
+import com.example.ricky.misoficios.Modelos.Gruposrv
 import com.example.ricky.misoficios.R
 import kotlinx.android.synthetic.main.itm_grupos.view.*
 
-class AdapterGrupos(var list: ArrayList<Grupos>) : RecyclerView.Adapter<AdapterGrupos.ViewHolder>(){
+class AdapterGrupos(var list: ArrayList<Gruposrv>) : RecyclerView.Adapter<AdapterGrupos.ViewHolder>(){
 
 
 
@@ -26,31 +27,28 @@ class AdapterGrupos(var list: ArrayList<Grupos>) : RecyclerView.Adapter<AdapterG
         return list.size
     }
 
-    override fun onBindViewHolder(holder: AdapterGrupos.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(list[position])
     }
 
 class ViewHolder(view: View):RecyclerView.ViewHolder(view){
-    fun bindItems(data:Grupos){
+    fun bindItems(data:Gruposrv){
         val nombre: TextView = itemView.findViewById(R.id.nombre)
-        val destinatario: TextView = itemView.findViewById(R.id.destinatarios)
-        val propietarios: TextView = itemView.findViewById(R.id.Propietario)
-        val fecha: TextView = itemView.findViewById(R.id.actualización)
-        val editar: ImageButton = itemView.findViewById(R.id.editar)
-        val eliminar: ImageButton = itemView.findViewById(R.id.eliminar)
+        val usuarioActualizacion: TextView = itemView.findViewById(R.id.usuarioActualizacion)
+        val propietario: TextView = itemView.findViewById(R.id.propietario)
+        val actualizacion: TextView = itemView.findViewById(R.id.actualizacion)
 
-        nombre.text = data.nombre
-        destinatario.text = data.destinatarios
-        propietarios.text = data.propietario
-        fecha.text = data.fecha
 
-        editar.setOnClickListener {
-            Snackbar.make(itemView, "Dará la posibilidad de editar el grupo", Snackbar.LENGTH_SHORT).show()
-        }
 
-        eliminar.setOnClickListener {
-            Snackbar.make(itemView, "Dará la posibilidad de eliminar el grupo", Snackbar.LENGTH_SHORT).show()
-        }
+
+        nombre.text = data.Nombre
+        usuarioActualizacion.text = data.IdUsuarioActualizacion
+        propietario.text = data.idUsuarioPropietario
+        actualizacion.text = data.FechaActualizacion
+       // propietarios.text = data
+        //fecha.text = data.fecha
+
+
 
     }
 

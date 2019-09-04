@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.util.Log.d
 import android.view.Menu
 import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.SharedPreference
@@ -177,35 +178,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
                     if(response.isSuccessful){
                         if (!response.body().isNullOrEmpty()) {
-
                             val folder = response.body()
-
-                            Toast.makeText(
-                                context,
-                                "Response folder Sucessful",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            Log.d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
+                             d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
                             val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
                             carpetasRecycler.adapter = adapter2
                         }
                         else
                         {
-                            Toast.makeText(
-                                context,
-                                "Sin carpetas para mostrar",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            d("onResponse: ","Vacio")
                         }
                     }
                 }
                 override fun onFailure(call: Call<List<folder>>, t: Throwable) {
                     Log.e("onFailure", t.message)
-                    Toast.makeText(
-                        context,
-                        "Response not Sucessful",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    d("onFailure: ","No recibido")
                 }
 
             })

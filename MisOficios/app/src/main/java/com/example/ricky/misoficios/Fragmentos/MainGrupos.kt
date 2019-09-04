@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.ricky.misoficios.Modelos.Grupos
 import com.example.ricky.misoficios.Modelos.Oficios
-import com.example.ricky.misoficios.Modelos.buildGrupos
+
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.adaptador.AdapterGrupos
 import com.example.ricky.misoficios.adaptador.AdapterOficios
@@ -33,9 +33,9 @@ class MainGrupos : Fragment() {
         llm.orientation = LinearLayout.VERTICAL
         gruposRecycler.layoutManager = llm
 
-        val adapter= AdapterGrupos(buildGrupos())
-
-        gruposRecycler.adapter = adapter
+        //val adapter= AdapterGrupos(buildGrupos())
+//
+        //gruposRecycler.adapter = adapter
 
         return view
 

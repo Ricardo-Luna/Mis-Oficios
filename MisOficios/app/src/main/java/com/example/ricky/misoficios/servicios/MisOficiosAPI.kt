@@ -40,4 +40,9 @@ interface MisOficiosAPI {
         @Path("IdCarpeta") IdCarpeta: String
     ): Call<List<Documentos2>>
 
+    @GET("api/Grupos/{IdUsuarioPropietario}")
+    fun getGrupos(
+        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+    ): Call<List<Grupos>>
+
 }

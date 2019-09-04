@@ -64,16 +64,16 @@ class MainFragment : Fragment() {
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
 
         val llm: LinearLayoutManager = LinearLayoutManager(context)
-        val llm2: LinearLayoutManager = LinearLayoutManager(context)
+        //val llm2: LinearLayoutManager = LinearLayoutManager(context)
           llm.orientation = LinearLayout.VERTICAL
-        llm2.orientation = LinearLayout.VERTICAL
+        //llm2.orientation = LinearLayout.VERTICAL
         oficiosRecycler.layoutManager = llm
        //  carpetasRecycler.layoutManager = llm2
 
 
         // --Aquí alterno entre los métodos siguientes
-        onActualizarLista2()
-        onActualizarLista3()
+        //onActualizarLista2()
+        //onActualizarLista3()
         onActualizarLista()
         onMostrarCarpetas()
 
@@ -82,7 +82,7 @@ class MainFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
             onActualizarLista()
-            onActualizarLista2()
+           // onActualizarLista2()
             swipeRefreshLayout.setRefreshing(false)
         })
 
@@ -135,7 +135,7 @@ class MainFragment : Fragment() {
                         }
                         else
                         {
-                            d("Response recibido,fallo", "onResponse: ${response.body()!![0].Titulo}")
+                            d("Response Oficios:", "Fallo: ${response.body()!![0].Titulo}")
                         }
                     }
                 }
@@ -143,6 +143,48 @@ class MainFragment : Fragment() {
             })
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -153,23 +195,14 @@ class MainFragment : Fragment() {
         RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
             // que se puede intercambiar por la línea siguiente
             "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
-        )
-            .enqueue(object : Callback<List<Documentos2>>{
+        ).enqueue(object : Callback<List<Documentos2>>{
                 override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
                     Log.e("onFailure", t.message)
                 }
-
                 override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
-
                             val Documentos2 = response.body()
-                            var fin = response.body()?.size
-                            //  Toast.makeText(
-                            //      context,
-                            //      "Response Sucessful, " + fin + " elements",
-                            //      Toast.LENGTH_SHORT
-                            //  ).show()
                             val adapter = AdapterOficios(buildOficios(Documentos2!!))
                             oficiosRecycler.adapter = adapter
                         }
@@ -180,6 +213,46 @@ class MainFragment : Fragment() {
 
     }
     //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -256,11 +329,11 @@ class MainFragment : Fragment() {
         }
         return  carpetasList
     }
+}
 
 
 
-
-
+//var fin = response.body()?.size
     //fun onActualizarLista() {
 //
     //    var usuario = SharedPreference.getInstance(context!!).usuario
@@ -341,4 +414,4 @@ class MainFragment : Fragment() {
     //    }
     //}
 
-}
+

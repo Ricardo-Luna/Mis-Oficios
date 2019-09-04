@@ -74,7 +74,7 @@ class Oficios2(
     var IdCarpeta: String?,
     var Codigo: String?,
     var Importancia: String?,
-        var estatus: String?,
+    var estatus: String?,
     var PropietarioNombreCompleto: String
 
     )
@@ -110,17 +110,20 @@ class Documentos(
 
 
 class Gruposrv(
-    var nombre: String,
-    var destinatarios: String,
-    var propietario: String,
-    var fecha: String
+    var IdGrupo: String,
+    var idUsuarioPropietario: String,
+    var Nombre: String?,
+    var IdUsuarioActualizacion: String?,
+    var FechaActualizacion: String?
 )
 
+
 class Grupos(
-    var nombre: String,
-    var destinatarios: String,
-    var propietario: String,
-    var fecha: String
+    var IdGrupo: String,
+    var idUsuarioPropietario: String,
+    var Nombre: String?,
+    var IdUsuarioActualizacion: String?,
+    var FechaActualizacion: String?
 )
 
 
@@ -139,8 +142,6 @@ class EmpleadosGrupo(
 data class Permiso(
     val numeroPermiso: Int
 )
-
-
 
 
 class LoginReq(
