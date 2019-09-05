@@ -32,7 +32,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 
     }
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Oficios){
             var aux: String
@@ -43,7 +42,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val folio: TextView = itemView.findViewById(R.id.txtFolio)
             val imagenMensaje: ImageView = itemView.findViewById(R.id.imgAlerta)
             var usuario = SharedPreference.getInstance(itemView.context).usuario
-
             asunto.text = data.Titulo
             // destinatario.text = data.
             // remitente.text = data.IdPropietario
@@ -57,7 +55,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         .setAction("Action", null).show()
                 }
             }
-
                 if (data.Importancia?.toInt() == 2) {
                     imagenMensaje.setImageResource(R.drawable.icons8_info_127px)
                     imagenMensaje.setOnClickListener { view ->
@@ -71,16 +68,8 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                             Snackbar.make(view, "Importancia alta", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show()
                         }
-
-
                     }
-
-
-
-
-
             }
-
         }
     }
 

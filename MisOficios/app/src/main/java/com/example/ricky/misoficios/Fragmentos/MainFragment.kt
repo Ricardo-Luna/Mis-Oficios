@@ -30,7 +30,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.ricky.misoficios.MainActivity as MainActivity
 
-
 import android.support.design.widget.BottomSheetBehavior
 import com.example.ricky.misoficios.adaptador.AdapterCarpetas
 
@@ -63,26 +62,17 @@ class MainFragment : Fragment() {
         val llm: LinearLayoutManager = LinearLayoutManager(context)
         val llm2: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
-
         oficiosRecycler.layoutManager = llm
         carpetasRecycler.layoutManager = llm2
-
-
         // --Aquí alterno entre los métodos siguientes
-
-
 //      --Método que actualiza el layout arrastándolo hacia abajo
-
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
             mostrarDocumentos()
             swipeRefreshLayout.setRefreshing(false)
         })
-        
         return view
     }
-
-
 
     // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
     fun onActualizarLista2() {
@@ -97,7 +87,6 @@ class MainFragment : Fragment() {
                 }
             })
     }
-
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
     //   actualmente
     fun  mostrarDocumentos(){
@@ -127,7 +116,6 @@ class MainFragment : Fragment() {
                 }
             )
     }
-
     fun onMostrarCarpetas(){
         var usuario = SharedPreference.getInstance(context!!).usuario
         RetrofitClient.instance.getCarpetas("b3be6e2f-7e79-474c-9985-fab45ed8956a")
