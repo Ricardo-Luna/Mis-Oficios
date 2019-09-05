@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.ricky.misoficios.Almacenado.SharedPreference
-import com.example.ricky.misoficios.Modelos.Oficios2
+import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.R
 
 
-class AdapterOficios(var list: ArrayList<Oficios2>) :
+class AdapterOficios(var list: ArrayList<Oficios>) :
     RecyclerView.Adapter<AdapterOficios.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -34,7 +34,7 @@ class AdapterOficios(var list: ArrayList<Oficios2>) :
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindItems(data: Oficios2){
+        fun bindItems(data: Oficios){
             var aux: String
             val asunto: TextView = itemView.findViewById(R.id.txtAsunto)
             //val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)

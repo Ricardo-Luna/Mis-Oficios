@@ -27,20 +27,22 @@ interface MisOficiosAPI {
     ):Call<nickname>
 
 
-    @GET("api/Carpetas/{IdUsuarioPropietario}")
+    @GET("Carpetas/{IdUsuarioPropietario}")
     fun getCarpetas(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ):Call<List<folder>>
 
 
 
-    @GET("api/DocCarpetas/{IdUsuarioPropietario}/{IdCarpeta}")
+    @GET("DocCarpetas/{IdUsuarioPropietario}/{IdCarpeta}")
     fun getDocsCarpetas(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String,
         @Path("IdCarpeta") IdCarpeta: String
-    ): Call<List<Documentos2>>
+    ): Call<List<Documentos>>
 
-    @GET("api/Grupos/{IdUsuarioPropietario}")
+
+
+    @GET("Grupos/{IdUsuarioPropietario}")
     fun getGrupos(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<List<Grupos>>

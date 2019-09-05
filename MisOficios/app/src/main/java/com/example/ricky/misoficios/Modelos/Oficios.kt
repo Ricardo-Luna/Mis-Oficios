@@ -31,9 +31,9 @@ class Carpetas(
    var IdCarpeta: String?  ,
    var IdUsuarioPropietario: String?  ,
    var Nombre: String? ,
-   var Recibidos: Byte? ,
-   var Enviados: Byte?,
-   var Borradores: Byte? ,
+   var Recibidos: Boolean? ,
+   var Enviados: Boolean?,
+   var Borradores: Boolean? ,
    var IdUsuarioActualizacion: String? ,
    var FechaActualizacion: String
 )
@@ -43,9 +43,9 @@ class folder(
    var IdCarpeta: String?  ,
    var IdUsuarioPropietario: String?  ,
    var Nombre: String? ,
-   var Recibidos: Byte? ,
-   var Enviados: Byte?,
-   var Borradores: Byte? ,
+   var Recibidos: Boolean? ,
+   var Enviados: Boolean?,
+   var Borradores: Boolean? ,
    var IdUsuarioActualizacion: String? ,
    var FechaActualizacion: String
 )
@@ -53,15 +53,6 @@ class folder(
 
 
 
-class Oficios(
-    var asunto: String?,
-    var remitente: String?,
-    var destinatario: String?,
-    var fecha: String?,
-    var folio: String?,
-    var codigo: String?,
-    var importancia: Byte?
-)
 
 
 
@@ -99,13 +90,29 @@ class valor(
 
 
 class Documentos(
-    var asunto: String?,
-    var remitente: String?,
-    var destinatario: String?,
-    var fecha: String?,
-    var folio: String?,
-    var codigo: String?,
-    var importancia: Byte?
+    var IdDocumento: String?,
+    var Titulo: String?,
+    var FechaEnvio: String?,
+    var IdPropietario: String?,
+    var idDocumentoRemitente: String?,
+    var IdCarpeta: String?,
+    var Codigo: String?,
+    var Importancia: String?,
+    var estatus: String?,
+    var PropietarioNombreCompleto: String
+)
+
+class Oficios(
+    var IdDocumento: String?,
+    var Titulo: String?,
+    var FechaEnvio: String?,
+    var IdPropietario: String?,
+    var idDocumentoRemitente: String?,
+    var IdCarpeta: String?,
+    var Codigo: String?,
+    var Importancia: String?,
+    var estatus: String?,
+    var PropietarioNombreCompleto: String
 )
 
 

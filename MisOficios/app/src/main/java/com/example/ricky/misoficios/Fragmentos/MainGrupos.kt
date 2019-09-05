@@ -34,7 +34,6 @@ class MainGrupos : Fragment() {
         gruposRecycler.layoutManager = llm
 
         //val adapter= AdapterGrupos(buildGrupos())
-//
         //gruposRecycler.adapter = adapter
 
         return view

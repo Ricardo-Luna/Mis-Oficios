@@ -39,18 +39,13 @@ class MainFragment : Fragment() {
     lateinit var dialog: AlertDialog
     lateinit var oficiosRecycler: RecyclerView
     lateinit var  carpetasRecycler: RecyclerView
-    lateinit var oficiosList: ArrayList<Oficios2>
+    lateinit var oficiosList: ArrayList<Oficios>
     lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var txtFecha: TextView
-    
     private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
-
-
-
-
-
     //objeto de {servicios/RetrofitClient}
     val api = retrofit.create(MisOficiosAPI::class.java)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,34 +54,31 @@ class MainFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
 
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
-      //  carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
+        carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
 
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
-
+        onMostrarCarpetas()
+        mostrarDocumentos()
+        onActualizarLista2()
         val llm: LinearLayoutManager = LinearLayoutManager(context)
-        //val llm2: LinearLayoutManager = LinearLayoutManager(context)
-          llm.orientation = LinearLayout.VERTICAL
-        //llm2.orientation = LinearLayout.VERTICAL
+        val llm2: LinearLayoutManager = LinearLayoutManager(context)
+        llm.orientation = LinearLayout.VERTICAL
+
         oficiosRecycler.layoutManager = llm
-       //  carpetasRecycler.layoutManager = llm2
+        carpetasRecycler.layoutManager = llm2
 
 
         // --Aquí alterno entre los métodos siguientes
-        //onActualizarLista2()
-        //onActualizarLista3()
-        onActualizarLista()
-        onMostrarCarpetas()
 
-        //  --Método que actualiza el layout arrastándolo hacia abajo
+
+//      --Método que actualiza el layout arrastándolo hacia abajo
 
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
-            onActualizarLista()
-           // onActualizarLista2()
+            mostrarDocumentos()
             swipeRefreshLayout.setRefreshing(false)
         })
-
-
+        
         return view
     }
 
@@ -94,167 +86,47 @@ class MainFragment : Fragment() {
 
     // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
     fun onActualizarLista2() {
-        api.getDocumentos("ae10550a-cf5c-4912-aed6-3b0adbcde508")
-            .enqueue(object: Callback<List<Documentos2>>{
-                override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        api.getDocsCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508","8995969b-6837-46d2-bd91-485c4d3ee8c2")
+            .enqueue(object: Callback<List<Documentos>>{
+                override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
+//                   d("onResponse", "Response succesful  ${response.body()!![0].Titulo}")
                 }
 
-                override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
-                    d("Response recibido", "onResponse: ${response.body()!![0].Titulo}")
+                override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
+                    d("onResponse", "FAILURE")
                 }
             })
     }
 
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
     //   actualmente
-
-
-    fun onActualizarLista() {
-
-        var usuario = SharedPreference.getInstance(context!!).usuario
-        RetrofitClient.instance.getDocsCarpetas(//usuario.IdUsuario <-Este es el usuario de la aplicación,
-            // que se puede intercambiar por la línea siguiente
-            "ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
-            "8995969b-6837-46d2-bd91-485c4d3ee8c2"
-        )
-            .enqueue(object : Callback<List<Documentos2>>{
-                override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
-                    Log.e("onFailure", t.message)
-                    d("1996Responsenorecibido", "Response no recibido")
-                }
-
-                override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
+    fun  mostrarDocumentos(){
+        api.getDocsCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
+            "8995969b-6837-46d2-bd91-485c4d3ee8c2")
+            .enqueue(object: Callback<List<Documentos>>{
+                override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
                             d("Response recibido", "onResponse: ${response.body()!![0].Titulo}")
-                            val Documentos2 = response.body()
+                            val Documentos = response.body()
                             var fin = response.body()?.size
-                            val adapter = AdapterOficios(buildOficios(Documentos2!!))
+                            val adapter = AdapterOficios(buildOficios(Documentos!!))
                             oficiosRecycler.adapter = adapter
                         }
                         else
                         {
-                            d("Response Oficios:", "Fallo: ${response.body()!![0].Titulo}")
+                            d("Response Oficios:", "recibido vacío")
                         }
                     }
-                }
+                    }
 
-            })
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    fun onActualizarLista3() {
-
-        var usuario = SharedPreference.getInstance(context!!).usuario
-        RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
-            // que se puede intercambiar por la línea siguiente
-            "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
-        ).enqueue(object : Callback<List<Documentos2>>{
-                override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
+                override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
                     Log.e("onFailure", t.message)
+                    d("onResponse: ", "Response no recibido")
                 }
-                override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
-                    if (response.isSuccessful) {
-                        if (!response.body().isNullOrEmpty()) {
-                            val Documentos2 = response.body()
-                            val adapter = AdapterOficios(buildOficios(Documentos2!!))
-                            oficiosRecycler.adapter = adapter
-                        }
-                    }
                 }
-
-            })
-
+            )
     }
-    //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     fun onMostrarCarpetas(){
         var usuario = SharedPreference.getInstance(context!!).usuario
@@ -279,7 +151,7 @@ class MainFragment : Fragment() {
                     }
                 }
                 override fun onFailure(call: Call<List<folder>>, t: Throwable) {
-                    Log.e("onFailure", t.message)
+                    d("USUARIO: onFailure: ", "Fallo en MainFragment")
                 }
 
             })
@@ -288,11 +160,11 @@ class MainFragment : Fragment() {
 
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
 
-    fun buildOficios(G: List<Documentos2>): ArrayList<Oficios2> {
+    fun buildOficios(G: List<Documentos>): ArrayList<Oficios> {
         oficiosList = ArrayList()
         for (item in G) {
             oficiosList.add(
-                Oficios2(
+                Oficios(
                     item.IdDocumento,
                     item.Titulo,
                     item.FechaEnvio,
