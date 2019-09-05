@@ -21,7 +21,7 @@ interface MisOficiosAPI {
     ): Call<valor>
 
 
-    @GET("/getUsuarioNombre/{IdUsuario}")
+    @GET("getUsuarioNombre/{IdUsuario}")
     fun getNickName(
         @Path("IdUsuario") IdUsuario: String
     ):Call<nickname>

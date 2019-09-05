@@ -77,7 +77,7 @@ class GruposFrg : Fragment() {
             override fun onResponse(call: Call<List<Grupos>>, response: Response<List<Grupos>>) {
                 if(response.isSuccessful)
                 {
-                    Log.d("Response", "onResponse: ${response.body()!![0].Nombre}")
+                    Log.d("Response", "onResponse: ${response.body()!![1].Nombre}")
                     val Grupos = response.body()
                     val adapter = AdapterGrupos(buildGrupos((Grupos!!)))
                     gruposRecyclerView.adapter = adapter
