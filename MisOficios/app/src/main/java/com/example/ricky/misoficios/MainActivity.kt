@@ -24,6 +24,7 @@ import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Modelos.folder
 import com.example.ricky.misoficios.adaptador.AdapterCarpetas
+import com.example.ricky.misoficios.adaptador.mostrarDocumento
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Aquí se creará nuevo oficio", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-            val intent = Intent(baseContext, NuevoOficio::class.java)
+            val intent = Intent(baseContext, mostrarDocumento::class.java)
             startActivity(intent)
         }
        // onMostrarCarpetas(this@MainActivity)
