@@ -41,6 +41,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val fecha: TextView = itemView.findViewById(R.id.txtFecha)
             val folio: TextView = itemView.findViewById(R.id.txtFolio)
             val imagenMensaje: ImageView = itemView.findViewById(R.id.imgAlerta)
+            val iv: ImageView = itemView.findViewById(R.id.iv)
             var usuario = SharedPreference.getInstance(itemView.context).usuario
             asunto.text = data.Titulo
             // destinatario.text = data.
@@ -48,6 +49,54 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             fecha.text = data.FechaEnvio
             folio.text = data.Codigo
             remitente.text = data.PropietarioNombreCompleto
+            if(data.estatus?.toInt() == 1)
+            {
+                iv.setImageResource(R.drawable.nw)
+                    iv.setOnClickListener { view ->
+                        Snackbar.make(view, "Nuevo Documento", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
+                    }
+            }
+            if(data.estatus?.toInt() == 2)
+            {
+                iv.setImageResource(R.drawable.ic_menu_send)
+                iv.setOnClickListener { view ->
+                    Snackbar.make(view, "Documento enviado", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
+            if(data.estatus?.toInt() == 3)
+            {
+                iv.setImageResource(R.drawable.rvs)
+                iv.setOnClickListener { view ->
+                    Snackbar.make(view, "Recibido", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
+            if(data.estatus?.toInt() == 4)
+            {
+                iv.setImageResource(R.drawable.ic_rd)
+                iv.setOnClickListener { view ->
+                    Snackbar.make(view, "Leído", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
+            if(data.estatus?.toInt() == 5)
+            {
+                iv.setImageResource(R.drawable.deleted)
+                iv.setOnClickListener { view ->
+                    Snackbar.make(view, "Jajja we esto ni siquiera debería salir", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show()
+                }
+            }
+
+
+
+
+
+
+
+
             if (data.Importancia?.toInt() == 1) {
                 imagenMensaje.setImageResource(R.drawable.attention)
                 imagenMensaje.setOnClickListener { view ->

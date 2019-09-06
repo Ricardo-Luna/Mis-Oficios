@@ -1,4 +1,4 @@
-package com.example.ricky.misoficios.adaptador
+package com.example.ricky.misoficios.Fragmentos
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -12,10 +12,10 @@ class mostrarDocumento : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mostrar_documento)
         wb.loadUrl("file:///android_asset/ss.html")
+       // nuevoDoc()
 
-    }
-    fun nuevoDoc()
+    }fun nuevoDoc()
     {
-        File("data.html").forEachLine { println(it) }
+        File("/android_asset/ss.html").forEachLine { println(it) }
     }
 }

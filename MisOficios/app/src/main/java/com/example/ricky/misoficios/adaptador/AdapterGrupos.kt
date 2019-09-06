@@ -22,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 class AdapterGrupos(var list: ArrayList<Gruposrv>) : RecyclerView.Adapter<AdapterGrupos.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.itm_grupos, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.itm_groups, parent, false)
         return ViewHolder(view)
     }
 

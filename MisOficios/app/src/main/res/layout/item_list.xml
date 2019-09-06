@@ -20,15 +20,9 @@
 
 
             <ImageView
-                    android:layout_width="26dp"
-                    android:layout_height="28dp" app:srcCompat="@drawable/icons8_invisible_127px"
-                    android:id="@+id/imageView7"
-                    app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView8" android:layout_marginEnd="8dp"/>
-            <ImageView
                     android:layout_width="31dp"
                     android:layout_height="27dp" app:srcCompat="@drawable/ic_menu_send"
-                    android:id="@+id/imageView8"
+                    android:id="@+id/iv"
                     android:layout_marginTop="4dp"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"/>

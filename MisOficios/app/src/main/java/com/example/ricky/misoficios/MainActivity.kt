@@ -1,7 +1,6 @@
 package com.example.ricky.misoficios
 
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -15,20 +14,10 @@ import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
-import android.util.Log.d
 import android.view.Menu
-import android.widget.Toast
-import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Modelos.Carpetas
-import com.example.ricky.misoficios.Modelos.folder
-import com.example.ricky.misoficios.adaptador.AdapterCarpetas
-import com.example.ricky.misoficios.adaptador.mostrarDocumento
-import com.example.ricky.misoficios.servicios.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
 
 
 //Temas:
@@ -197,23 +186,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //
    //         })
    // }
-    fun buildCarpetas(G: List<folder>): ArrayList<Carpetas>{
-        carpetasList = ArrayList()
-        for(item in G){
-            carpetasList.add(
-                Carpetas(
-                    item.IdCarpeta,
-                    item.IdUsuarioPropietario,
-                    item.Nombre,
-                    item.Recibidos,
-                    item.Enviados,
-                    item.Borradores,
-                    item.IdUsuarioActualizacion,
-                    item.FechaActualizacion
-                )
-            )
-        }
-        return  carpetasList
-    }
+
 
 }
