@@ -90,13 +90,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 }
             }
 
-
-
-
-
-
-
-
             if (data.Importancia?.toInt() == 1) {
                 imagenMensaje.setImageResource(R.drawable.attention)
                 imagenMensaje.setOnClickListener { view ->
