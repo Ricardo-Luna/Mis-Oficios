@@ -8,7 +8,7 @@
 
               android:orientation="vertical"
               android:paddingBottom="10dp"
-              app:behavior_hideable="true"
+              app:behavior_hideable="false"
               app:behavior_peekHeight="56dp"
               app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
               android:background="#D5D2D2">
@@ -16,11 +16,11 @@
     <TextView
             android:text="Carpetas"
             android:layout_width="match_parent"
-            android:layout_height="56sp"
+            android:layout_height="60dp"
             android:id="@+id/txtcarpetas" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="1.0"
-            android:background="#3f4d60" android:textColor="#C8FFFFFF" android:gravity="center"
+            android:background="#FF8C00" android:textColor="#C8FFFFFF" android:gravity="center"
             android:textSize="22sp"/>
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

@@ -4,8 +4,7 @@ import android.content.Context
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.google.gson.Gson
 
-class SharedPreference private constructor(private val mCtx: Context)
-{
+class SharedPreference private constructor(private val mCtx: Context) {
     private val SHARED_PREF_NAME = "spOficios"
     val gson = Gson()
     val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -20,10 +19,11 @@ class SharedPreference private constructor(private val mCtx: Context)
             return sharedPreferences.getInt("Status", -1) != -1
         }
 
-    fun saveUsuario (usuario: LoginRes) {
+    fun saveUsuario(usuario: LoginRes) {
         val serializedUser = gson.toJson(usuario)
         sharedPreferences.edit().putString("Usuario", serializedUser).apply()
     }
+
     fun limpiar() {
         val editor = sharedPreferences.edit()
         editor.clear()

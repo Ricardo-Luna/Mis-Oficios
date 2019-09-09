@@ -38,7 +38,7 @@ import com.example.ricky.misoficios.adaptador.AdapterCarpetas
 class MainFragment : Fragment() {
     lateinit var dialog: AlertDialog
     lateinit var oficiosRecycler: RecyclerView
-    lateinit var  carpetasRecycler: RecyclerView
+    lateinit var carpetasRecycler: RecyclerView
     lateinit var oficiosList: ArrayList<Oficios>
     lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var txtFecha: TextView
@@ -77,8 +77,8 @@ class MainFragment : Fragment() {
 
     // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
     fun onActualizarLista2() {
-        api.getDocsCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508","8995969b-6837-46d2-bd91-485c4d3ee8c2")
-            .enqueue(object: Callback<List<Documentos>>{
+        api.getDocsCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508", "8995969b-6837-46d2-bd91-485c4d3ee8c2")
+            .enqueue(object : Callback<List<Documentos>> {
                 override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
 //                   d("onResponse", "Response succesful  ${response.body()!![0].Titulo}")
                 }
@@ -88,12 +88,15 @@ class MainFragment : Fragment() {
                 }
             })
     }
+
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
     //   actualmente
-    public fun  mostrarDocumentos(){
-        api.getDocsCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
-            "8995969b-6837-46d2-bd91-485c4d3ee8c2")
-            .enqueue(object: Callback<List<Documentos>>{
+    public fun mostrarDocumentos() {
+        api.getDocsCarpetas(
+            "ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
+            "8995969b-6837-46d2-bd91-485c4d3ee8c2"
+        )
+            .enqueue(object : Callback<List<Documentos>> {
                 override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
@@ -102,35 +105,32 @@ class MainFragment : Fragment() {
                             var fin = response.body()?.size
                             val adapter = AdapterOficios(buildOficios(Documentos!!))
                             oficiosRecycler.adapter = adapter
-                        }
-                        else
-                        {
+                        } else {
                             d("Response Oficios:", "recibido vacío")
                         }
                     }
-                    }
+                }
 
                 override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
                     Log.e("onFailure", t.message)
                     d("onResponse: ", "Response no recibido")
                 }
-                }
+            }
             )
     }
-    fun onMostrarCarpetas(){
+
+    fun onMostrarCarpetas() {
         var usuario = SharedPreference.getInstance(context!!).usuario
         RetrofitClient.instance.getCarpetas("b3be6e2f-7e79-474c-9985-fab45ed8956a")
-            .enqueue(object: Callback<List<folder>>{
+            .enqueue(object : Callback<List<folder>> {
                 override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
                             val folder = response.body()
                             d("Response recibido", "onResponse: ${response.body()!![1].Nombre}")
                             val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
                             carpetasRecycler.adapter = adapter2
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(
                                 context,
                                 "Sin carpetas para mostrar",
@@ -139,6 +139,7 @@ class MainFragment : Fragment() {
                         }
                     }
                 }
+
                 override fun onFailure(call: Call<List<folder>>, t: Throwable) {
                     d("USUARIO: onFailure: ", "Fallo en MainFragment")
                 }
@@ -172,9 +173,9 @@ class MainFragment : Fragment() {
     }
 
 
-    fun buildCarpetas(G: List<folder>): ArrayList<Carpetas>{
+    fun buildCarpetas(G: List<folder>): ArrayList<Carpetas> {
         carpetasList = ArrayList()
-        for(item in G){
+        for (item in G) {
             carpetasList.add(
                 Carpetas(
                     item.IdCarpeta,
@@ -188,48 +189,45 @@ class MainFragment : Fragment() {
                 )
             )
         }
-        return  carpetasList
+        return carpetasList
     }
 }
 
 
-
 //var fin = response.body()?.size
-    //fun onActualizarLista() {
+//fun onActualizarLista() {
 //
-    //    var usuario = SharedPreference.getInstance(context!!).usuario
-    //    RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
-    //        // que se puede intercambiar por la línea siguiente
-    //        "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
-    //    )
-    //        .enqueue(object : Callback<List<Documentos2>>{
-    //            override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
-    //                Log.e("onFailure", t.message)
-    //            }
+//    var usuario = SharedPreference.getInstance(context!!).usuario
+//    RetrofitClient.instance.getDocumentos(//usuario.IdUsuario <-Este es el usuario de la aplicación,
+//        // que se puede intercambiar por la línea siguiente
+//        "ae10550a-cf5c-4912-aed6-3b0adbcde508"    //  <----
+//    )
+//        .enqueue(object : Callback<List<Documentos2>>{
+//            override fun onFailure(call: Call<List<Documentos2>>, t: Throwable) {
+//                Log.e("onFailure", t.message)
+//            }
 //
-    //            override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
-    //                if (response.isSuccessful) {
-    //                    if (!response.body().isNullOrEmpty()) {
+//            override fun onResponse(call: Call<List<Documentos2>>, response: Response<List<Documentos2>>) {
+//                if (response.isSuccessful) {
+//                    if (!response.body().isNullOrEmpty()) {
 //
-    //                        val Documentos2 = response.body()
-    //                        var fin = response.body()?.size
-    //                        //  Toast.makeText(
-    //                        //      context,
-    //                        //      "Response Sucessful, " + fin + " elements",
-    //                        //      Toast.LENGTH_SHORT
-    //                        //  ).show()
-    //                        val adapter = AdapterOficios(buildOficios(Documentos2!!))
-    //                        oficiosRecycler.adapter = adapter
-    //                    }
-    //                }
-    //            }
+//                        val Documentos2 = response.body()
+//                        var fin = response.body()?.size
+//                        //  Toast.makeText(
+//                        //      context,
+//                        //      "Response Sucessful, " + fin + " elements",
+//                        //      Toast.LENGTH_SHORT
+//                        //  ).show()
+//                        val adapter = AdapterOficios(buildOficios(Documentos2!!))
+//                        oficiosRecycler.adapter = adapter
+//                    }
+//                }
+//            }
 //
-    //        })
+//        })
 //
-    //}
-    //
-
-
+//}
+//
 
 
 /*
@@ -241,38 +239,38 @@ class MainFragment : Fragment() {
     oficiosRecycler.adapter = adapter
 */
 //Comienza onCreate
-    //sheetBehavior = BottomSheetBehavior.from<ConstraintLayout>(btm_carpetas)
-    //sheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-    //    override fun onStateChanged(bottomSheet: View, newState: Int) {
-    //        when (newState) {
-    //            BottomSheetBehavior.STATE_HIDDEN -> {
-    //            }
-    //            BottomSheetBehavior.STATE_EXPANDED ->
-    //                txtcarpetas.text = "Cerrar"
-    //            BottomSheetBehavior.STATE_COLLAPSED ->
-    //                txtcarpetas.text = "Carpetas"
-    //            BottomSheetBehavior.STATE_DRAGGING -> {
-    //            }
-    //            BottomSheetBehavior.STATE_SETTLING -> {
-    //            }
-    //        }
-    //    }
-    //    override fun onSlide(bottomSheet: View, slideOffset: Float) {
-    //    }
-    //})
-    //    txtcarpetas.setOnClickListener(View.OnClickListener {
-    //        expandCloseSheet()
-    //    })
-    // Termina onCreate
+//sheetBehavior = BottomSheetBehavior.from<ConstraintLayout>(btm_carpetas)
+//sheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+//    override fun onStateChanged(bottomSheet: View, newState: Int) {
+//        when (newState) {
+//            BottomSheetBehavior.STATE_HIDDEN -> {
+//            }
+//            BottomSheetBehavior.STATE_EXPANDED ->
+//                txtcarpetas.text = "Cerrar"
+//            BottomSheetBehavior.STATE_COLLAPSED ->
+//                txtcarpetas.text = "Carpetas"
+//            BottomSheetBehavior.STATE_DRAGGING -> {
+//            }
+//            BottomSheetBehavior.STATE_SETTLING -> {
+//            }
+//        }
+//    }
+//    override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//    }
+//})
+//    txtcarpetas.setOnClickListener(View.OnClickListener {
+//        expandCloseSheet()
+//    })
+// Termina onCreate
 
-    //private fun expandCloseSheet() {
-    //    if (sheetBehavior!!.state != BottomSheetBehavior.STATE_EXPANDED) {
-    //        sheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
-    //        txtcarpetas.text = "Cerrar"
-    //    } else {
-    //        sheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
-    //        txtcarpetas.text = "Carpetas"
-    //    }
-    //}
+//private fun expandCloseSheet() {
+//    if (sheetBehavior!!.state != BottomSheetBehavior.STATE_EXPANDED) {
+//        sheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+//        txtcarpetas.text = "Cerrar"
+//    } else {
+//        sheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+//        txtcarpetas.text = "Carpetas"
+//    }
+//}
 
 

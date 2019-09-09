@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.setBackgroundColor(Color.parseColor("#3f4d60"))
+        toolbar.setBackgroundColor(Color.parseColor("#FF8C00"))
         setSupportActionBar(toolbar)
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->
