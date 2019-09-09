@@ -2,6 +2,7 @@ package com.example.ricky.misoficios.Fragmentos
 
 
 import android.app.AlertDialog
+import android.databinding.DataBindingUtil.setContentView
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -89,7 +90,7 @@ class MainFragment : Fragment() {
     }
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
     //   actualmente
-    fun  mostrarDocumentos(){
+    public fun  mostrarDocumentos(){
         api.getDocsCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
             "8995969b-6837-46d2-bd91-485c4d3ee8c2")
             .enqueue(object: Callback<List<Documentos>>{
