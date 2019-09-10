@@ -18,6 +18,9 @@ import android.view.Menu
 import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
+import android.view.WindowManager
+
+
 
 
 //Temas:
@@ -35,8 +38,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.setBackgroundColor(Color.parseColor("#FF8C00"))
+        toolbar.setBackgroundColor(Color.parseColor("#ffb300"))
         setSupportActionBar(toolbar)
+
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Aquí se creará nuevo oficio", Snackbar.LENGTH_LONG)
