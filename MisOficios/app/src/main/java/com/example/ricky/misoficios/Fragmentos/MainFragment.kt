@@ -128,7 +128,7 @@ class MainFragment : Fragment() {
                         if (!response.body().isNullOrEmpty()) {
                             val folder = response.body()
                             d("Response recibido", "onResponse: ${response.body()!![1].Nombre}")
-                            val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
+                            val adapter2 = AdapterCarpetas(oficiosRecycler,buildCarpetas(folder!!))
                             carpetasRecycler.adapter = adapter2
                         } else {
                             Toast.makeText(

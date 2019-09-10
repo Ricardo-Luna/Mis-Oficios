@@ -2,6 +2,7 @@ package com.example.ricky.misoficios.adaptador
 
 
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,7 +20,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AdapterCarpetas( var list: ArrayList<Carpetas>):
+class AdapterCarpetas(var rv: RecyclerView,
+                      var list: ArrayList<Carpetas>):
     RecyclerView.Adapter<AdapterCarpetas.ViewHolder>()
 {
 
@@ -39,34 +41,41 @@ class AdapterCarpetas( var list: ArrayList<Carpetas>):
     }
 
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
 
         fun bindItems(data: Carpetas){
             val tvCarpetas: TextView = itemView.findViewById(R.id.tvCarpetas)
             val id = data.IdCarpeta
-            var oficiosRecycler: RecyclerView
-           
+
+
             tvCarpetas.text = data.Nombre
-            try {
+
                 tvCarpetas.setOnClickListener { view ->
-                    oficiosRecycler = itemView.findViewById(R.id.oficiosRecycler)
-                    Log.d("--//Recycler: ", "queonda")
+
+
                     if (data.Recibidos == true) {
-                        mostrarDocumentos(id!!, oficiosRecycler)
+                        mostrarDocumentos(id!!)
+                        Log.d("--//Recycler: ", "recibidos")
                     }
-                    if (data.Enviados == true) {
-                        mostrarDocumentos(id!!, oficiosRecycler)
+                    if (data.Enviados == false) {
+                        mostrarDocumentos(id!!)
+                        Log.d("--//Recycler: ", "enviados")
                     }
-                    if (data.Borradores == true) {
-                        mostrarDocumentos(id!!, oficiosRecycler)
+                    if (data.Borradores == false) {
+                        mostrarDocumentos(id!!)
+                        Log.d("--//Recycler: ", "borradores")
+
                     }
+
                 }
-            }catch (e:Exception){Log.d("--//Recycler: ", "Excepción encontrada")}
+
         }
-        fun  mostrarDocumentos(id:String,recyclerView: RecyclerView){
+
+
+       fun  mostrarDocumentos(id:String){
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-            api.getDocsCarpetas("3f66d2e6-57cb-48cd-8632-21ec91f80421", "eb25d47c-cb26-44e6-bfb0-26e3e47c1dac")
+            api.getDocsCarpetas("b3be6e2f-7e79-474c-9985-fab45ed8956a", id)
                 .enqueue(object: Callback<List<Documentos>> {
                     override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
                         if (response.isSuccessful) {
@@ -74,10 +83,9 @@ class AdapterCarpetas( var list: ArrayList<Carpetas>):
                                 Log.d("Response recibido", "onResponse: ${response.body()!![0].Titulo}")
                                 val Documentos = response.body()
                                 val adapter = AdapterOficios(buildOficios(Documentos!!))
-                                recyclerView.adapter = adapter
-                                var bundle = Bundle()
-                                //bundle.putString("tvCarpeta",)
-                               // oficiosRecycler = itemView.findViewById(R.id.oficiosRecycler,id)
+                                rv.adapter = adapter
+
+
 
                             }
                             else
