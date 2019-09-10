@@ -22,6 +22,7 @@
         <activity
                 android:name=".Fragmentos.NuevoOficio"
                 android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
                 android:name=".login"
