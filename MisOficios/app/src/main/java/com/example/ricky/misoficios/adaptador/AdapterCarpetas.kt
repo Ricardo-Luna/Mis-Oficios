@@ -1,6 +1,7 @@
 package com.example.ricky.misoficios.adaptador
 
 
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,6 +46,7 @@ class AdapterCarpetas( var list: ArrayList<Carpetas>):
             val tvCarpetas: TextView = itemView.findViewById(R.id.tvCarpetas)
             val id = data.IdCarpeta
             var oficiosRecycler: RecyclerView
+           
             tvCarpetas.text = data.Nombre
             try {
                 tvCarpetas.setOnClickListener { view ->
@@ -73,6 +75,8 @@ class AdapterCarpetas( var list: ArrayList<Carpetas>):
                                 val Documentos = response.body()
                                 val adapter = AdapterOficios(buildOficios(Documentos!!))
                                 recyclerView.adapter = adapter
+                                var bundle = Bundle()
+                                //bundle.putString("tvCarpeta",)
                                // oficiosRecycler = itemView.findViewById(R.id.oficiosRecycler,id)
 
                             }
@@ -85,7 +89,7 @@ class AdapterCarpetas( var list: ArrayList<Carpetas>):
 
                     override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
                         Log.e("onFailure", t.message)
-                        Log.d("onResponse: ", "Response no recibido")
+
                     }
                 }
                 )
