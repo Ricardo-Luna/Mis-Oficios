@@ -6,9 +6,12 @@
                                                  android:fitsSystemWindows="true"
 
 >
-    <include layout="@layout/layout_recycler" android:id="@+id/revw"></include>
 
     <!-- Adding bottom sheet after main content -->
+
+    <include
+            android:id="@+id/revw"
+            layout="@layout/layout_recycler"></include>
 
     <include layout="@layout/btm_carpetas" ></include>
 

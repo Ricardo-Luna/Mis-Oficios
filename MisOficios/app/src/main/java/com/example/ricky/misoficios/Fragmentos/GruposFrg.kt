@@ -98,10 +98,10 @@ class GruposFrg : Fragment() {
             grupos.add(
                 Gruposrv(
                     item.IdGrupo,
-                    item.idUsuarioPropietario,
                     item.Nombre,
                     item.IdUsuarioActualizacion,
-                    item.FechaActualizacion
+                    item.FechaActualizacion,
+                    item.PropietarioNombreCompleto
                 )
             )
         }

@@ -28,33 +28,27 @@ class nickname(
 )
 
 class Carpetas(
-   var IdCarpeta: String?  ,
-   var IdUsuarioPropietario: String?  ,
-   var Nombre: String? ,
-   var Recibidos: Boolean? ,
-   var Enviados: Boolean?,
-   var Borradores: Boolean? ,
-   var IdUsuarioActualizacion: String? ,
-   var FechaActualizacion: String
+    var IdCarpeta: String?,
+    var IdUsuarioPropietario: String?,
+    var Nombre: String?,
+    var Recibidos: Boolean?,
+    var Enviados: Boolean?,
+    var Borradores: Boolean?,
+    var IdUsuarioActualizacion: String?,
+    var FechaActualizacion: String
 )
 
 
 class folder(
-   var IdCarpeta: String?  ,
-   var IdUsuarioPropietario: String?  ,
-   var Nombre: String? ,
-   var Recibidos: Boolean? ,
-   var Enviados: Boolean?,
-   var Borradores: Boolean? ,
-   var IdUsuarioActualizacion: String? ,
-   var FechaActualizacion: String
+    var IdCarpeta: String?,
+    var IdUsuarioPropietario: String?,
+    var Nombre: String?,
+    var Recibidos: Boolean?,
+    var Enviados: Boolean?,
+    var Borradores: Boolean?,
+    var IdUsuarioActualizacion: String?,
+    var FechaActualizacion: String
 )
-
-
-
-
-
-
 
 class Oficios2(
     var IdDocumento: String?,
@@ -68,7 +62,7 @@ class Oficios2(
     var estatus: String?,
     var PropietarioNombreCompleto: String
 
-    )
+)
 
 class Documentos2(
     var IdDocumento: String?,
@@ -77,7 +71,7 @@ class Documentos2(
     var idDocumentoRemitente: String?,
     var IdCarpeta: String?,
     var Codigo: String?,
-    var Importancia:    String?,
+    var Importancia: String?,
     var estatus: String?,
     var FechaEnvio: String?,
     var PropietarioNombreCompleto: String
@@ -87,7 +81,6 @@ class Documentos2(
 class valor(
     var cantidad: Int?
 )
-
 
 class Documentos(
     var IdDocumento: String?,
@@ -100,6 +93,14 @@ class Documentos(
     var Importancia: String?,
     var estatus: String?,
     var PropietarioNombreCompleto: String
+)
+
+class UsuariosGrupo(
+    var UsuarioNombreCompleto: String
+)
+
+class UsuariosGrupos(
+    var UsuarioNombreCompleto: String
 )
 
 class Oficios(
@@ -115,47 +116,41 @@ class Oficios(
     var PropietarioNombreCompleto: String
 )
 
-
 class Gruposrv(
     var IdGrupo: String,
-    var idUsuarioPropietario: String,
-    var Nombre: String?,
+    var Nombre: String,
     var IdUsuarioActualizacion: String?,
-    var FechaActualizacion: String?
+    var FechaActualizacion: String,
+    var PropietarioNombreCompleto: String?
 )
-
 
 class Grupos(
     var IdGrupo: String,
-    var idUsuarioPropietario: String,
-    var Nombre: String?,
+    var Nombre: String,
     var IdUsuarioActualizacion: String?,
-    var FechaActualizacion: String?
+    var FechaActualizacion: String,
+    var PropietarioNombreCompleto: String,
+    var idUsuarioPropietario: String
 )
-
 
 class Empleados(
     var nombre: String,
     var puesto: String
 )
 
-
 class EmpleadosGrupo(
     var nombre: String,
     var puesto: String
 )
 
-
 data class Permiso(
     val numeroPermiso: Int
 )
-
 
 class LoginReq(
     var NickName: String,
     var Password: String
 )
-
 
 public class LoginRes(
     var IdUsuario: String,

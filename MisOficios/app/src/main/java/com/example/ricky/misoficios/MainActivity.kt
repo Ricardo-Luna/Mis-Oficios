@@ -21,8 +21,6 @@ import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
 import android.view.WindowManager
 
 
-
-
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
 
@@ -30,7 +28,8 @@ import android.view.WindowManager
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
-    lateinit var  carpetasRecycler: RecyclerView
+
+    lateinit var carpetasRecycler: RecyclerView
     lateinit var carpetasList: ArrayList<Carpetas>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +37,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.setBackgroundColor(Color.parseColor("#ffb300"))
-        setSupportActionBar(toolbar)
+    //    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary))
+    //   var actionBar = supportActionBar
+    //   //toolbar.setBackgroundColor("@drawable/gradient_blue")
+    //   actionBar!!.title = "Recibidos"
+       setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->
@@ -52,7 +54,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -88,9 +94,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun displayFragment(id: Int){
-        val fragment = when (id)
-        {
+    fun displayFragment(id: Int) {
+        val fragment = when (id) {
             R.id.nav_home -> {
                 MainFragment()
 
@@ -103,25 +108,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_send -> {
                 NwGrupo()
             }
-            R.id.nwDoc ->
-            {
+            R.id.nwDoc -> {
                 CrearOficio()
             }
-            R.id.itGrupo ->
-            {
+            R.id.itGrupo -> {
                 NwGrupo()
             }
 
-           // R.id.itCarpeta ->
-           // {
-           //
-           // }
+            // R.id.itCarpeta ->
+            // {
+            //
+            // }
 
             else -> {
                 MainFragment()
             }
         }
-        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
+            .commit()
     }
 
 
@@ -150,46 +154,45 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
 
-
-            else ->
-            {
+            else -> {
                 MainFragment()
             }
         }
 
-        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
+            .commit()
 
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-   // fun onMostrarCarpetas(context: Context){
-   //     var usuario = SharedPreference.getInstance(context!!).usuario
-   //     RetrofitClient.instance.getCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508")
-   //         .enqueue(object: Callback<List<folder>> {
+    // fun onMostrarCarpetas(context: Context){
+    //     var usuario = SharedPreference.getInstance(context!!).usuario
+    //     RetrofitClient.instance.getCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508")
+    //         .enqueue(object: Callback<List<folder>> {
 //
-   //             override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
-   //                 if(response.isSuccessful){
-   //                     if (!response.body().isNullOrEmpty()) {
-   //                         val folder = response.body()
-   //                          d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
-   //                         val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
-   //                         carpetasRecycler.adapter = adapter2
-   //                     }
-   //                     else
-   //                     {
-   //                         d("onResponse: ","Vacio")
-   //                     }
-   //                 }
-   //             }
-   //             override fun onFailure(call: Call<List<folder>>, t: Throwable) {
-   //                 Log.e("onFailure", t.message)
-   //                 d("onFailure: ","No recibido")
-   //             }
+    //             override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
+    //                 if(response.isSuccessful){
+    //                     if (!response.body().isNullOrEmpty()) {
+    //                         val folder = response.body()
+    //                          d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
+    //                         val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
+    //                         carpetasRecycler.adapter = adapter2
+    //                     }
+    //                     else
+    //                     {
+    //                         d("onResponse: ","Vacio")
+    //                     }
+    //                 }
+    //             }
+    //             override fun onFailure(call: Call<List<folder>>, t: Throwable) {
+    //                 Log.e("onFailure", t.message)
+    //                 d("onFailure: ","No recibido")
+    //             }
 //
-   //         })
-   // }
+    //         })
+    // }
 
 
 }

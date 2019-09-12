@@ -12,6 +12,12 @@ interface MisOficiosAPI {
     fun getDocumentos( @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<List<Documentos2>>
 
+
+    @GET("GruposUsuarios/")
+    fun getUsuariosGrupos(@Path("IdGrupo") IdGrupo: String
+    ): Call<List<UsuariosGrupo>>
+
+
     @POST("Usuarios/Login")
     fun getLogin(@Body loginReq: LoginReq): Call<LoginRes>
 

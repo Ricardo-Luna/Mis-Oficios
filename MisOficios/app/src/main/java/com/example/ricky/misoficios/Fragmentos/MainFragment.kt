@@ -2,7 +2,6 @@ package com.example.ricky.misoficios.Fragmentos
 
 
 import android.app.AlertDialog
-import android.databinding.DataBindingUtil.setContentView
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -19,18 +18,14 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.*
-
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.adaptador.AdapterOficios
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import com.example.ricky.misoficios.servicios.RetrofitClient.retrofit
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.ricky.misoficios.MainActivity as MainActivity
-
 import android.support.design.widget.BottomSheetBehavior
 import com.example.ricky.misoficios.adaptador.AdapterCarpetas
 
@@ -77,9 +72,15 @@ class MainFragment : Fragment() {
 
     // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
     fun onActualizarLista2() {
-        api.getDocsCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508", "8995969b-6837-46d2-bd91-485c4d3ee8c2")
+        api.getDocsCarpetas(
+            "ae10550a-cf5c-4912-aed6-3b0adbcde508",
+            "8995969b-6837-46d2-bd91-485c4d3ee8c2"
+        )
             .enqueue(object : Callback<List<Documentos>> {
-                override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
+                override fun onResponse(
+                    call: Call<List<Documentos>>,
+                    response: Response<List<Documentos>>
+                ) {
 //                   d("onResponse", "Response succesful  ${response.body()!![0].Titulo}")
                 }
 
@@ -91,13 +92,16 @@ class MainFragment : Fragment() {
 
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
     //   actualmente
-    public fun mostrarDocumentos() {
+    fun mostrarDocumentos() {
         api.getDocsCarpetas(
             "ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
             "8995969b-6837-46d2-bd91-485c4d3ee8c2"
         )
             .enqueue(object : Callback<List<Documentos>> {
-                override fun onResponse(call: Call<List<Documentos>>, response: Response<List<Documentos>>) {
+                override fun onResponse(
+                    call: Call<List<Documentos>>,
+                    response: Response<List<Documentos>>
+                ) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
                             d("Response recibido", "onResponse: ${response.body()!![0].Titulo}")
@@ -123,12 +127,16 @@ class MainFragment : Fragment() {
         var usuario = SharedPreference.getInstance(context!!).usuario
         RetrofitClient.instance.getCarpetas("b3be6e2f-7e79-474c-9985-fab45ed8956a")
             .enqueue(object : Callback<List<folder>> {
-                override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
+                override fun onResponse(
+                    call: Call<List<folder>>,
+                    response: Response<List<folder>>
+                ) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
                             val folder = response.body()
                             d("Response recibido", "onResponse: ${response.body()!![1].Nombre}")
-                            val adapter2 = AdapterCarpetas(oficiosRecycler,buildCarpetas(folder!!))
+                            val adapter2 =
+                                AdapterCarpetas(oficiosRecycler, buildCarpetas(folder!!), context!!)
                             carpetasRecycler.adapter = adapter2
                         } else {
                             Toast.makeText(
