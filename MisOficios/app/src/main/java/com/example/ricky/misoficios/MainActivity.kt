@@ -2,7 +2,6 @@ package com.example.ricky.misoficios
 
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -18,7 +17,7 @@ import android.view.Menu
 import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
-import android.view.WindowManager
+
 
 
 //Temas:
@@ -42,6 +41,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //   //toolbar.setBackgroundColor("@drawable/gradient_blue")
     //   actionBar!!.title = "Recibidos"
        setSupportActionBar(toolbar)
+
+
+       // val gradientDrawable = GradientDrawable(
+       //     GradientDrawable.Orientation.TOP_BOTTOM,
+       //     intArrayOf(
+       //         ContextCompat.getColor(this, R.color.color1),
+       //         ContextCompat.getColor(this,R.color.color2),
+       //         ContextCompat.getColor(this, R.color.color3),
+       //         ContextCompat.getColor(this,R.color.color4),
+       //         ContextCompat.getColor(this,R.color.color5)
+       //     )
+       // )
+//
+       // val rv = findViewById(R.id.oficiosRecycler)
+       // rv.setBackground(gradientDrawable)
+
 
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->

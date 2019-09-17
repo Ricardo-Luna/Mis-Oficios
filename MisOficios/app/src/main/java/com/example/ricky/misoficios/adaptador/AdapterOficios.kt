@@ -1,18 +1,26 @@
 package com.example.ricky.misoficios.adaptador
 
+
+import android.content.Context
+import android.content.Intent
 import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentManager
+import android.support.v4.content.ContextCompat.createDeviceProtectedStorageContext
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.ricky.misoficios.Almacenado.SharedPreference
+import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
+import com.example.ricky.misoficios.MainActivity
 import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.R
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import kotlin.coroutines.coroutineContext
 
 
 class AdapterOficios(var list: ArrayList<Oficios>) :
@@ -39,6 +47,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             var aux: String
             val asunto: TextView = itemView.findViewById(R.id.txtAsunto)
             //val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)
+     //       val rv: RelativeLayout = itemView.findViewById(R.id.relativeLayout2)
             val remitente: TextView = itemView.findViewById(R.id.txtRemitente)
             val fecha: TextView = itemView.findViewById(R.id.txtFecha)
             val folio: TextView = itemView.findViewById(R.id.txtFolio)
@@ -46,6 +55,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val iv: ImageView = itemView.findViewById(R.id.iv)
             var usuario = SharedPreference.getInstance(itemView.context).usuario
             asunto.text = data.Titulo
+
             // destinatario.text = data.
             // remitente.text = data.IdPropietario
             if (data.FechaEnvio != null) {
@@ -59,6 +69,12 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 }
             }
 
+
+           // rv.setOnClickListener { view ->
+           //     Snackbar.make(view, "Aquí se creará nuevo oficio", Snackbar.LENGTH_LONG)
+           //         .setAction("Action", null).show()
+           //     val intent = Intent(MainActivity@this,mostrarDocumento::class.java)
+           // }
 
             folio.text = data.Codigo
             remitente.text = data.PropietarioNombreCompleto

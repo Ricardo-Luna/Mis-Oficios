@@ -16,8 +16,8 @@
         <android.support.constraint.ConstraintLayout
                 android:id="@+id/relativeLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/gradient"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -49,20 +49,21 @@
 
                     <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="61dp"
+                            android:layout_height="28dp"
                             android:layout_weight="1"
                             android:text="Asunto:"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="#99312B2B"
                             android:textSize="12sp" />
 
                     <TextView
                             android:id="@+id/txtAsunto"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="34dp"
                             android:layout_weight="1"
                             android:text="Ver avances en la app"
-                            android:textColor="@android:color/background_dark" />
+                            android:textColor="#99312B2B" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -71,20 +72,16 @@
                     android:id="@+id/linearLayout3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/iv"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
+                    app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                         android:id="@+id/txtFecha"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Miercoles 22 de Junio 08:00"
-                        android:textColor="@android:color/background_dark" />
+                        android:textColor="#99312B2B" />
             </LinearLayout>
 
             <LinearLayout
@@ -95,8 +92,8 @@
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-                    app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                         android:id="@+id/txtFolio"
@@ -104,7 +101,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="0sp"
                         android:text="9999/2018"
-                        android:textColor="@android:color/background_dark" />
+                        android:textColor="#99312B2B" />
             </LinearLayout>
 
             <ImageView
@@ -123,7 +120,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="Remitente:"
-                    android:textColor="@android:color/background_dark"
+                    android:textColor="#99312B2B"
                     app:layout_constraintBottom_toBottomOf="@+id/txtRemitente"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imgAlerta"
@@ -135,11 +132,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:text="Remitente"
-                    android:textColor="@android:color/background_dark"
+                    android:textColor="#99312B2B"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView20"
-                    app:layout_constraintTop_toBottomOf="@+id/imgAlerta"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                     app:layout_constraintVertical_bias="0.0" />
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>

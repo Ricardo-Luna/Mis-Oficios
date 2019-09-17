@@ -13,8 +13,9 @@
         <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/oficiosRecycler"
-                android:background="@drawable/gradient"/>
+                android:id="@+id/oficiosRecycler"/>
+              <!--  android:background="@drawable/gradient_dark"/> -->
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

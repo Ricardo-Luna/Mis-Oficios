@@ -2,6 +2,7 @@ package com.example.ricky.misoficios.Fragmentos
 
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
