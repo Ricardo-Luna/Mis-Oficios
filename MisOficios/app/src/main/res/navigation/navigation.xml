@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"/>
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation">
+    <fragment
+            android:id="@+id/gruposFrg"
+            android:name="com.example.ricky.misoficios.Fragmentos.GruposFrg"
+            android:label="fragment_grupos_frg"
+            tools:layout="@layout/fragment_grupos_frg" >
+        <action
+                android:id="@+id/grupos_usuarios"
+                app:destination="@id/lista_usuarios" />
+    </fragment>
+    <fragment
+            android:id="@+id/lista_usuarios"
+            android:name="com.example.ricky.misoficios.Fragmentos.lista_usuarios"
+            android:label="fragment_lista_usuarios"
+            tools:layout="@layout/fragment_lista_usuarios" />
+</navigation>

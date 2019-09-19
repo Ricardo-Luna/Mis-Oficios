@@ -82,26 +82,15 @@ class valor(
     var cantidad: Int?
 )
 
-class Documentos(
-    var IdDocumento: String?,
-    var Titulo: String?,
-    var FechaEnvio: String?,
-    var IdPropietario: String?,
-    var idDocumentoRemitente: String?,
-    var IdCarpeta: String?,
-    var Codigo: String?,
-    var Importancia: String?,
-    var estatus: String?,
-    var PropietarioNombreCompleto: String
-)
+
 
 class UsuariosGrupo(
     var UsuarioNombreCompleto: String
 )
 
-class UsuariosGrupos(
-    var UsuarioNombreCompleto: String
-)
+
+
+
 
 class Oficios(
     var IdDocumento: String?,
@@ -116,6 +105,18 @@ class Oficios(
     var PropietarioNombreCompleto: String
 )
 
+class Documentos(
+    var IdDocumento: String?,
+    var Titulo: String?,
+    var FechaEnvio: String?,
+    var IdPropietario: String?,
+    var idDocumentoRemitente: String?,
+    var IdCarpeta: String?,
+    var Codigo: String?,
+    var Importancia: String?,
+    var estatus: String?,
+    var PropietarioNombreCompleto: String
+)
 class Gruposrv(
     var IdGrupo: String,
     var Nombre: String,
@@ -141,6 +142,15 @@ class Empleados(
 class EmpleadosGrupo(
     var nombre: String,
     var puesto: String
+)
+
+
+class usuariosGruposR(
+    var UsuarioNombreCompleto: String
+)
+
+class Integrantes(
+    var UsuarioNombreCompleto: String
 )
 
 data class Permiso(

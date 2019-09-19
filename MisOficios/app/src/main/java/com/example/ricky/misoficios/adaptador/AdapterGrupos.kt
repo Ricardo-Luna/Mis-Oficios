@@ -1,24 +1,25 @@
 package com.example.ricky.misoficios.adaptador
 
+import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.ricky.misoficios.Fragmentos.lista_usuarios
 import com.example.ricky.misoficios.Modelos.Gruposrv
-import com.example.ricky.misoficios.Modelos.nickname
 import com.example.ricky.misoficios.R
-import com.example.ricky.misoficios.servicios.MisOficiosAPI
-import com.example.ricky.misoficios.servicios.RetrofitClient
-import retrofit2.Callback
-import retrofit2.Response
 import java.lang.Exception
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import kotlin.coroutines.coroutineContext
 
-class AdapterGrupos(var list: ArrayList<Gruposrv>) :
+class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<Gruposrv>) :
     RecyclerView.Adapter<AdapterGrupos.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.itm_groups, parent, false)
@@ -29,21 +30,38 @@ class AdapterGrupos(var list: ArrayList<Gruposrv>) :
         return list.size
     }
 
+    fun changeFragment()
+    {
+
+    }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(list[position])
+
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Gruposrv) {
             val nombre: TextView = itemView.findViewById(R.id.nombre)
             //val usuarioActualizacion: TextView = itemView.findViewById(R.id.usuarioActualizacion)
             val propietario: TextView = itemView.findViewById(R.id.propietario)
             val actualizacion: TextView = itemView.findViewById(R.id.actualizacion)
-
+            val cl: ConstraintLayout = itemView.findViewById(R.id.itvw)
+            var bundle = Bundle()
             propietario.text = data.PropietarioNombreCompleto
             nombre.text = data.Nombre
-            //  usuarioActualizacion.text = data.IdUsuarioActualizacion
-            //propietario.text = data.idUsuarioPropietario
+
+            nombre.setOnClickListener {
+                v: View? ->
+                val nuevoFragmento = lista_usuarios()
+                bundle.putString("grupoid",data.IdGrupo )
+                val transaction = fragmentManager!!.beginTransaction()
+
+                transaction.replace(R.id.linearLayoutContentMain, nuevoFragmento)
+                transaction.addToBackStack(null)
+                transaction.commit()
+
+            }
             if (data.FechaActualizacion != null) {
                 try {
                     val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -53,29 +71,13 @@ class AdapterGrupos(var list: ArrayList<Gruposrv>) :
                 } catch (e: Exception) {
                     actualizacion.text = data.FechaActualizacion
                 }
-
-
             }
         }
+
+
     }
 }
 
 
-
-// val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-// api.getNickName(data.IdUsuarioActualizacion!!)
-//     .enqueue(object : Callback<nickname> {
-//         override fun onResponse(
-//             call: retrofit2.Call<nickname>,
-//             response: Response<nickname>
-//         ) {
-//             d("Response recibido", "onResponse: ${response.body()}")
-//             usuarioActualizacion.text = response.body().toString()
-//         }
-//
-//         override fun onFailure(call: retrofit2.Call<nickname>, t: Throwable) {
-//             d("Grupos:", "Falló el response")
-//         }
-//     })
 
 

@@ -123,17 +123,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_send -> {
                 NwGrupo()
             }
-            R.id.nwDoc -> {
-                CrearOficio()
-            }
+           // R.id.nwDoc -> {
+           //     //CrearOficio()
+           // }
             R.id.itGrupo -> {
                 NwGrupo()
             }
 
-            // R.id.itCarpeta ->
-            // {
-            //
-            // }
 
             else -> {
                 MainFragment()
@@ -182,32 +178,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-    // fun onMostrarCarpetas(context: Context){
-    //     var usuario = SharedPreference.getInstance(context!!).usuario
-    //     RetrofitClient.instance.getCarpetas("ae10550a-cf5c-4912-aed6-3b0adbcde508")
-    //         .enqueue(object: Callback<List<folder>> {
-//
-    //             override fun onResponse(call: Call<List<folder>>, response: Response<List<folder>>) {
-    //                 if(response.isSuccessful){
-    //                     if (!response.body().isNullOrEmpty()) {
-    //                         val folder = response.body()
-    //                          d("Response recibido", "onResponse: ${response.body()!![0].Nombre}")
-    //                         val adapter2 = AdapterCarpetas(buildCarpetas(folder!!))
-    //                         carpetasRecycler.adapter = adapter2
-    //                     }
-    //                     else
-    //                     {
-    //                         d("onResponse: ","Vacio")
-    //                     }
-    //                 }
-    //             }
-    //             override fun onFailure(call: Call<List<folder>>, t: Throwable) {
-    //                 Log.e("onFailure", t.message)
-    //                 d("onFailure: ","No recibido")
-    //             }
-//
-    //         })
-    // }
+
 
 
 }

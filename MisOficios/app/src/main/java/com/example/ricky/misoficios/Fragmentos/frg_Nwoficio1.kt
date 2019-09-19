@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ricky.misoficios.R
 
-class CrearOficio : Fragment() {
+class frg_Nwoficio1 : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

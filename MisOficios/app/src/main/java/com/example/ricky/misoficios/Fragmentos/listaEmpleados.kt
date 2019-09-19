@@ -17,12 +17,10 @@ import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.adaptador.AdapterListaEmpleados
 import com.example.ricky.misoficios.adaptador.AdapterListaEmpleadosAdd
 
-class listaEmpleados: Fragment(){
+class listaEmpleados : Fragment() {
 
     lateinit var groupsRecyclerView: RecyclerView
-    lateinit var empleadosRecycler : RecyclerView
     var spinner: Spinner? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,25 +28,11 @@ class listaEmpleados: Fragment(){
     ): View? {
         val view2: View = inflater.inflate(R.layout.itm_grupo_nw, container, false)
         groupsRecyclerView = view2.findViewById(R.id.listUser)
-        val llmm : LinearLayoutManager = LinearLayoutManager(context)
+        val llmm: LinearLayoutManager = LinearLayoutManager(context)
         llmm.orientation = LinearLayout.VERTICAL
         groupsRecyclerView.layoutManager = llmm
         val adapter2 = AdapterListaEmpleadosAdd(buildEmpleadosGrupo())
         groupsRecyclerView.adapter = adapter2
-
-
-
-
-
-
-
-
         return view2
     }
-
-
-
-
-
-
 }

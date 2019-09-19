@@ -9,14 +9,14 @@ interface MisOficiosAPI {
 
 
     @GET("Documentos/{IdUsuarioPropietario}")
-    fun getDocumentos( @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+    fun getDocumentos(
+        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<List<Documentos2>>
 
-
-    @GET("GruposUsuarios/")
-    fun getUsuariosGrupos(@Path("IdGrupo") IdGrupo: String
-    ): Call<List<UsuariosGrupo>>
-
+    @GET("GruposUsuarios/{IdGrupo}")
+    fun getUsuariosGrupos(
+        @Path("IdGrupo") IdGrupo: String
+    ): Call<List<Integrantes>>
 
     @POST("Usuarios/Login")
     fun getLogin(@Body loginReq: LoginReq): Call<LoginRes>
@@ -26,19 +26,10 @@ interface MisOficiosAPI {
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<valor>
 
-
     @GET("getUsuarioNombre/{IdUsuario}")
     fun getNickName(
         @Path("IdUsuario") IdUsuario: String
-    ):Call<nickname>
-
-
-    @GET("Carpetas/{IdUsuarioPropietario}")
-    fun getCarpetas(
-        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
-    ):Call<List<folder>>
-
-
+    ): Call<nickname>
 
     @GET("DocCarpetas/{IdUsuarioPropietario}/{IdCarpeta}")
     fun getDocsCarpetas(
@@ -46,7 +37,10 @@ interface MisOficiosAPI {
         @Path("IdCarpeta") IdCarpeta: String
     ): Call<List<Documentos>>
 
-
+    @GET("Carpetas/{IdUsuarioPropietario}")
+    fun getCarpetas(
+        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+    ): Call<List<folder>>
 
     @GET("Grupos/{IdUsuarioPropietario}")
     fun getGrupos(

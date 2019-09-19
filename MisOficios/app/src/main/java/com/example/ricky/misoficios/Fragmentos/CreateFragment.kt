@@ -15,29 +15,21 @@ import com.example.ricky.misoficios.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.frg_nuevooficio1.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- *
- */
-class CreateFragment : Fragment() {
+//class CreateFragment : Fragment() {
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//        ): View? {
+//            // Inflate the layout for this fragment
+//            return inflater.inflate(R.layout.nuevo_oficio_constrained, container, false)
+//    }
+//
+//
+//}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.nuevo_oficio_constrained, container, false)
-    }
-
-
-}
-
-class CreateDoc : Fragment()
+class CreateFragment : Fragment()
 {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,26 +37,9 @@ class CreateDoc : Fragment()
     ): View? {
         // Inflate the layout for this fragment
         val vista = inflater.inflate(R.layout.frg_crear_oficio, container, false)
-
-
         return vista
     }
 
 
 }
 
-class CreateDoc2 : Fragment()
-{
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val vista
-                =  inflater.inflate(R.layout.frg_nuevooficio2, container, false)
-        return vista
-    }
-
-
-
-}

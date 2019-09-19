@@ -21,20 +21,6 @@ import com.example.ricky.misoficios.adaptador.AdapterGrupos
 import com.example.ricky.misoficios.servicios.RetrofitClient
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [GruposFrg.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [GruposFrg.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 
 
 
@@ -79,7 +65,7 @@ class GruposFrg : Fragment() {
                 {
                     Log.d("Response", "onResponse: ${response.body()!![1].Nombre}")
                     val Grupos = response.body()
-                    val adapter = AdapterGrupos(buildGrupos((Grupos!!)))
+                    val adapter = AdapterGrupos(fragmentManager,buildGrupos((Grupos!!)))
                     gruposRecyclerView.adapter = adapter
                 }
             }

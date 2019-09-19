@@ -2,7 +2,7 @@ package com.example.ricky.misoficios.Fragmentos
 
 
 import android.app.AlertDialog
-import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
@@ -39,6 +39,7 @@ class MainFragment : Fragment() {
     lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var txtFecha: TextView
     private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private var listener: lista_usuarios.OnFragmentInteractionListener? = null
     //objeto de {servicios/RetrofitClient}
     val api = retrofit.create(MisOficiosAPI::class.java)
 
@@ -93,6 +94,8 @@ class MainFragment : Fragment() {
 
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
     //   actualmente
+
+
     fun mostrarDocumentos() {
         api.getDocsCarpetas(
             "ae10550a-cf5c-4912-aed6-3b0adbcde508",    //  <----
@@ -123,6 +126,34 @@ class MainFragment : Fragment() {
             }
             )
     }
+
+    fun onButtonPressed(uri: Uri) {
+        listener?.onFragmentInteraction(uri)
+    }
+
+
+    fun buildOficios(G: List<Documentos>): ArrayList<Oficios> {
+        oficiosList = ArrayList()
+        for (item in G) {
+            oficiosList.add(
+                Oficios(
+                    item.IdDocumento,
+                    item.Titulo,
+                    item.FechaEnvio,
+                    item.IdPropietario,
+                    item.idDocumentoRemitente,
+                    item.IdCarpeta,
+                    item.Codigo,
+                    item.Importancia,
+                    item.estatus,
+                    item.PropietarioNombreCompleto
+
+                )
+            )
+        }
+        return oficiosList
+    }
+
 
     fun onMostrarCarpetas() {
         var usuario = SharedPreference.getInstance(context!!).usuario
@@ -159,28 +190,6 @@ class MainFragment : Fragment() {
 
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
 
-    fun buildOficios(G: List<Documentos>): ArrayList<Oficios> {
-        oficiosList = ArrayList()
-        for (item in G) {
-            oficiosList.add(
-                Oficios(
-                    item.IdDocumento,
-                    item.Titulo,
-                    item.FechaEnvio,
-                    item.IdPropietario,
-                    item.idDocumentoRemitente,
-                    item.IdCarpeta,
-                    item.Codigo,
-                    item.Importancia,
-                    item.estatus,
-                    item.PropietarioNombreCompleto
-
-                )
-            )
-        }
-        return oficiosList
-    }
-
 
     fun buildCarpetas(G: List<folder>): ArrayList<Carpetas> {
         carpetasList = ArrayList()
@@ -200,6 +209,12 @@ class MainFragment : Fragment() {
         }
         return carpetasList
     }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
 }
 
 
