@@ -11,17 +11,17 @@ import com.example.ricky.misoficios.Modelos.Empleados
 import com.example.ricky.misoficios.Modelos.EmpleadosGrupo
 import com.example.ricky.misoficios.R
 
-class AdapterListaEmpleadosAdd(var list: ArrayList<EmpleadosGrupo>): RecyclerView.Adapter<AdapterListaEmpleadosAdd.ViewHolder>() {
+class adapterListaEmpleadosAdd(var list: ArrayList<EmpleadosGrupo>): RecyclerView.Adapter<adapterListaEmpleadosAdd.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): AdapterListaEmpleadosAdd.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): adapterListaEmpleadosAdd.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.itm_usuario_quitar, parent, false)
-        return AdapterListaEmpleadosAdd.ViewHolder(view)
+        return adapterListaEmpleadosAdd.ViewHolder(view)
     }
     override fun getItemCount(): Int {
         return list.size
     }
 
-    override fun onBindViewHolder(holder: AdapterListaEmpleadosAdd.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: adapterListaEmpleadosAdd.ViewHolder, position: Int) {
         holder.bindItems(list[position])
     }
 

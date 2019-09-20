@@ -2,9 +2,6 @@ package com.example.ricky.misoficios.adaptador
 
 
 import android.content.Context
-import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,11 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Modelos.Documentos
 import com.example.ricky.misoficios.Modelos.Oficios
-import com.example.ricky.misoficios.Fragmentos.MainFragment
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient

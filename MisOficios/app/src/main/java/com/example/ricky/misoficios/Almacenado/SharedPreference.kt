@@ -6,6 +6,7 @@ import com.google.gson.Gson
 
 class SharedPreference private constructor(private val mCtx: Context) {
     private val SHARED_PREF_NAME = "spOficios"
+    public var gruposid= ""
     val gson = Gson()
     val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
 

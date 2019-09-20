@@ -44,10 +44,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Oficios) {
-            var aux: String
             val asunto: TextView = itemView.findViewById(R.id.txtAsunto)
-            //val destinatario: TextView = itemView.findViewById(R.id.txtDestinatario)
-     //       val rv: RelativeLayout = itemView.findViewById(R.id.relativeLayout2)
             val remitente: TextView = itemView.findViewById(R.id.txtRemitente)
             val fecha: TextView = itemView.findViewById(R.id.txtFecha)
             val folio: TextView = itemView.findViewById(R.id.txtFolio)
@@ -56,8 +53,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             var usuario = SharedPreference.getInstance(itemView.context).usuario
             asunto.text = data.Titulo
 
-            // destinatario.text = data.
-            // remitente.text = data.IdPropietario
+
             if (data.FechaEnvio != null) {
                 try {
                     val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -69,12 +65,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 }
             }
 
-
-           // rv.setOnClickListener { view ->
-           //     Snackbar.make(view, "Aquí se creará nuevo oficio", Snackbar.LENGTH_LONG)
-           //         .setAction("Action", null).show()
-           //     val intent = Intent(MainActivity@this,mostrarDocumento::class.java)
-           // }
 
             folio.text = data.Codigo
             remitente.text = data.PropietarioNombreCompleto

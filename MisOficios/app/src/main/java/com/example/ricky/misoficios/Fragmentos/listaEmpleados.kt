@@ -15,7 +15,7 @@ import com.example.ricky.misoficios.Modelos.buildEmpleadosGrupo
 import com.example.ricky.misoficios.Modelos.*
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.adaptador.AdapterListaEmpleados
-import com.example.ricky.misoficios.adaptador.AdapterListaEmpleadosAdd
+import com.example.ricky.misoficios.adaptador.adapterListaEmpleadosAdd
 
 class listaEmpleados : Fragment() {
 
@@ -31,7 +31,7 @@ class listaEmpleados : Fragment() {
         val llmm: LinearLayoutManager = LinearLayoutManager(context)
         llmm.orientation = LinearLayout.VERTICAL
         groupsRecyclerView.layoutManager = llmm
-        val adapter2 = AdapterListaEmpleadosAdd(buildEmpleadosGrupo())
+        val adapter2 = adapterListaEmpleadosAdd(buildEmpleadosGrupo())
         groupsRecyclerView.adapter = adapter2
         return view2
     }

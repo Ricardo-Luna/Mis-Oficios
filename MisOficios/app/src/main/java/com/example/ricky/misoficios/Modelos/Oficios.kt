@@ -157,6 +157,7 @@ data class Permiso(
     val numeroPermiso: Int
 )
 
+
 class LoginReq(
     var NickName: String,
     var Password: String

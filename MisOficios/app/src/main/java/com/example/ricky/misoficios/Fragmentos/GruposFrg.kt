@@ -16,8 +16,12 @@ import android.widget.LinearLayout
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.Grupos
 import com.example.ricky.misoficios.Modelos.Gruposrv
+import com.example.ricky.misoficios.Modelos.Integrantes
+import com.example.ricky.misoficios.Modelos.usuariosGruposR
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.adaptador.AdapterGrupos
+import com.example.ricky.misoficios.adaptador.AdapterUsuariosGrupos
+import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
 
 
@@ -28,29 +32,29 @@ import com.example.ricky.misoficios.servicios.RetrofitClient
 class GruposFrg : Fragment() {
     lateinit var gruposRecyclerView : RecyclerView
     lateinit var grupos: ArrayList<Gruposrv>
+    var grupoid: String = ""
+    lateinit var rv : RecyclerView
+    lateinit var usuariosList: ArrayList<usuariosGruposR>
+    public fun recibirDatosGrupo(grupo: String){
+        grupoid = grupo
 
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_grupos_frg,container, false)
         gruposRecyclerView = view.findViewById(R.id.gruposRecycler)
-
+        val fr = lista_usuarios()
+        mostrarUsuarios()
+        val llm2: LinearLayoutManager = LinearLayoutManager(context)
         val llm: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
         gruposRecyclerView.layoutManager = llm
-
+        rv.layoutManager = llm2
         mostrarGrupos()
-
         return view
 
-
-
     }
-
-
-
-
-
 
     fun mostrarGrupos()
     {
@@ -63,7 +67,7 @@ class GruposFrg : Fragment() {
             override fun onResponse(call: Call<List<Grupos>>, response: Response<List<Grupos>>) {
                 if(response.isSuccessful)
                 {
-                    Log.d("Response", "onResponse: ${response.body()!![1].Nombre}")
+                    Log.d("Response", "onResponse: ${response.body()!![0].IdGrupo}")
                     val Grupos = response.body()
                     val adapter = AdapterGrupos(fragmentManager,buildGrupos((Grupos!!)))
                     gruposRecyclerView.adapter = adapter
@@ -74,8 +78,6 @@ class GruposFrg : Fragment() {
             }
         })
     }
-
-
 
     fun buildGrupos(G: List<Grupos>):ArrayList<Gruposrv>{
         grupos = ArrayList()
@@ -93,6 +95,54 @@ class GruposFrg : Fragment() {
         }
         return grupos
     }
+
+
+
+    fun mostrarUsuarios() {
+        val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+        api.getUsuariosGrupos(grupoid)
+            .enqueue(object : Callback<List<Integrantes>> {
+                override fun onResponse(
+                    call: Call<List<Integrantes>>,
+                    response: Response<List<Integrantes>>
+                ) {
+                    if (response.isSuccessful) {
+                        if (!response.body().isNullOrEmpty()) {
+                            //  Log.d("Response Usuarios","onResponse: ${grupoid}")
+                            val Integrantes = response.body()
+                            val adapter = AdapterUsuariosGrupos(buildIntegrantes(Integrantes!!))
+                            rv.adapter = adapter
+
+                        } else {
+                            //  Log.d("Response UsuariosGrupo:", "recibido vacío, "+ { grupoid })
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Integrantes>>, t: Throwable) {
+                    //   Log.d("Response Usuarios:", "Error en response " + { grupoid })
+                }
+            })
+
+    }
+
+    fun buildIntegrantes(G: List<Integrantes>): ArrayList<usuariosGruposR> {
+        usuariosList = ArrayList()
+        for (item in G) {
+            usuariosList.add(
+                usuariosGruposR(
+                    item.UsuarioNombreCompleto
+                )
+            )
+        }
+        return usuariosList
+    }
+
+
+
+
+
+
 
 }
 

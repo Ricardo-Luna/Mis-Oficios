@@ -21,15 +21,19 @@ import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
 
 
-var grupoid: String = ""
-
 class lista_usuarios : Fragment() {
     // TODO: Rename and change types of parameters
+    public fun recibirDatos(grupo: String){
+        grupoid = grupo
+
+    }
     private var param1: String? = null
     private var param2: String? = null
+    var grupoid: String = ""
     private var listener: OnFragmentInteractionListener? = null
     lateinit var integrantesList: ArrayList<Integrantes>
     lateinit var usuariosList: ArrayList<usuariosGruposR>
+    lateinit var rv : RecyclerView
     lateinit var recyclerIntegrantes: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,13 +47,18 @@ class lista_usuarios : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_lista_usuarios, container, false)
-        mostrarUsuarios()
+        //recibirDatos()
         recyclerIntegrantes = view.findViewById(R.id.integrantesRV)
+        rv = view.findViewById(R.id.rvUsuariosGrupos)
+
         val llm: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
         recyclerIntegrantes.layoutManager = llm
+       // Log.d("IDGRUPO: ", "" + { grupoid })
+        mostrarUsuarios()
         return view
     }
+
 
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -71,24 +80,19 @@ class lista_usuarios : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
-                            Log.d(
-                                "Response recibido",
-                                "onResponse: ${response.body()!![0].UsuarioNombreCompleto}"
-                            )
-
+                          //  Log.d("Response Usuarios","onResponse: ${grupoid}")
                             val Integrantes = response.body()
                             val adapter = AdapterUsuariosGrupos(buildIntegrantes(Integrantes!!))
                             recyclerIntegrantes.adapter = adapter
 
                         } else {
-                            Log.d("Response Oficios:", "recibido vacío")
+                          //  Log.d("Response UsuariosGrupo:", "recibido vacío, "+ { grupoid })
                         }
-
                     }
                 }
 
                 override fun onFailure(call: Call<List<Integrantes>>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                 //   Log.d("Response Usuarios:", "Error en response " + { grupoid })
                 }
             })
 

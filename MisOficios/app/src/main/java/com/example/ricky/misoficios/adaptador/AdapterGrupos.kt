@@ -15,6 +15,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import android.util.Log
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import kotlin.coroutines.coroutineContext
@@ -30,10 +31,10 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
         return list.size
     }
 
-    fun changeFragment()
-    {
+    fun changeFragment() {
 
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(list[position])
 
@@ -47,20 +48,25 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
             val propietario: TextView = itemView.findViewById(R.id.propietario)
             val actualizacion: TextView = itemView.findViewById(R.id.actualizacion)
             val cl: ConstraintLayout = itemView.findViewById(R.id.itvw)
-            var bundle = Bundle()
+
             propietario.text = data.PropietarioNombreCompleto
             nombre.text = data.Nombre
-
             nombre.setOnClickListener {
-                v: View? ->
+               // var dBundle = Bundle()
+               //
+               //
+               // dBundle.putString("grupoid", data.IdGrupo)
+               //
+               // nuevoFragmento.setArguments(dBundle)
+                //nuevoFragmento.arguments = dBundle
                 val nuevoFragmento = lista_usuarios()
-                bundle.putString("grupoid",data.IdGrupo )
+                nuevoFragmento.recibirDatos(data.IdGrupo)
+              //  Log.d("Response UsuariosGrupo:", "recibido vacío, "+ { data.IdGrupo })
+                print(data.IdGrupo)
                 val transaction = fragmentManager!!.beginTransaction()
-
                 transaction.replace(R.id.linearLayoutContentMain, nuevoFragmento)
                 transaction.addToBackStack(null)
                 transaction.commit()
-
             }
             if (data.FechaActualizacion != null) {
                 try {

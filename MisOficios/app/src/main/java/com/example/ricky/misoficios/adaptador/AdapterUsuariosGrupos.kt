@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.ricky.misoficios.Modelos.usuariosGruposR
 import com.example.ricky.misoficios.R
-import kotlinx.android.synthetic.main.itm_usuarios.view.*
 
 class AdapterUsuariosGrupos(var list: ArrayList<usuariosGruposR>) :
     RecyclerView.Adapter<AdapterUsuariosGrupos.ViewHolder>() {
