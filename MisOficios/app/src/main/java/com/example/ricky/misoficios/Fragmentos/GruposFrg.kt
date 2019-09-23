@@ -13,6 +13,7 @@ import retrofit2.Response
 import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.Grupos
 import com.example.ricky.misoficios.Modelos.Gruposrv
@@ -44,13 +45,19 @@ class GruposFrg : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_grupos_frg,container, false)
         gruposRecyclerView = view.findViewById(R.id.gruposRecycler)
+
         val fr = lista_usuarios()
         mostrarUsuarios()
         val llm2: LinearLayoutManager = LinearLayoutManager(context)
         val llm: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
         gruposRecyclerView.layoutManager = llm
-        rv.layoutManager = llm2
+
+        //val tx1:  TextView = view.findViewById(R.id.textView10)
+        //val tx2:  TextView = view.findViewById(R.id.actualizacion)
+        //tx1.visibility =  View.GONE
+        //tx2.visibility =  View.GONE
+        // rv.layoutManager = llm2
         mostrarGrupos()
         return view
 

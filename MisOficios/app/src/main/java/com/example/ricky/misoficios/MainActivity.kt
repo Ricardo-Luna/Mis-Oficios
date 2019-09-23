@@ -43,20 +43,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
        setSupportActionBar(toolbar)
 
 
-       // val gradientDrawable = GradientDrawable(
-       //     GradientDrawable.Orientation.TOP_BOTTOM,
-       //     intArrayOf(
-       //         ContextCompat.getColor(this, R.color.color1),
-       //         ContextCompat.getColor(this,R.color.color2),
-       //         ContextCompat.getColor(this, R.color.color3),
-       //         ContextCompat.getColor(this,R.color.color4),
-       //         ContextCompat.getColor(this,R.color.color5)
-       //     )
-       // )
-//
-       // val rv = findViewById(R.id.oficiosRecycler)
-       // rv.setBackground(gradientDrawable)
-
 
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->

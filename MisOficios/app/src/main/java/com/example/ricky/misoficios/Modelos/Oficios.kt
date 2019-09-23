@@ -83,13 +83,19 @@ class valor(
 )
 
 
-
 class UsuariosGrupo(
     var UsuarioNombreCompleto: String
 )
 
+class recycler(
+    var expanded: Boolean
+) {
+    fun isExpanded(): Boolean {
+        return expanded
+    }
 
 
+}
 
 
 class Oficios(
@@ -117,6 +123,7 @@ class Documentos(
     var estatus: String?,
     var PropietarioNombreCompleto: String
 )
+
 class Gruposrv(
     var IdGrupo: String,
     var Nombre: String,

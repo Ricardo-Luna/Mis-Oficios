@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.ricky.misoficios.Modelos.Integrantes
+import com.example.ricky.misoficios.Modelos.recycler
 import com.example.ricky.misoficios.Modelos.usuariosGruposR
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,7 +50,7 @@ class lista_usuarios : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_lista_usuarios, container, false)
         //recibirDatos()
         recyclerIntegrantes = view.findViewById(R.id.integrantesRV)
-        rv = view.findViewById(R.id.rvUsuariosGrupos)
+//        rv = view.findViewById(R.id.rvUsuariosGrupos)
 
         val llm: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
@@ -97,6 +98,14 @@ class lista_usuarios : Fragment() {
             })
 
     }
+
+    private fun bind(re: recycler) {
+        val expanded = re.isExpanded()
+
+        rv.setVisibility(if (expanded) View.VISIBLE else View.GONE)
+
+    }
+
 
     fun buildIntegrantes(G: List<Integrantes>): ArrayList<usuariosGruposR> {
         usuariosList = ArrayList()
