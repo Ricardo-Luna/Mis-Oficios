@@ -12,13 +12,15 @@ import com.example.ricky.misoficios.Modelos.EmpleadosGrupo
 import com.example.ricky.misoficios.R
 import kotlinx.android.synthetic.main.itm_usuarios.view.*
 
-class AdapterListaEmpleados(var list: ArrayList<Empleados>): RecyclerView.Adapter<AdapterListaEmpleados.ViewHolder>() {
+class AdapterListaEmpleados(var list: ArrayList<Empleados>) :
+    RecyclerView.Adapter<AdapterListaEmpleados.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.itm_usuarios, parent, false)
         return ViewHolder(view)
     }
+
     override fun getItemCount(): Int {
         return list.size
     }
@@ -27,27 +29,24 @@ class AdapterListaEmpleados(var list: ArrayList<Empleados>): RecyclerView.Adapte
         holder.bindItems(list[position])
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         lateinit var list: ArrayList<EmpleadosGrupo>
-        fun bindItems(data: Empleados)
-        {
-            val nombre : TextView = itemView.findViewById(R.id.txtEmpleado)
-            val puesto : TextView = itemView.findViewById(R.id.txtArea)
-            val agregar : Button = itemView.findViewById(R.id.btnAgregar)
+        fun bindItems(data: Empleados) {
+            val nombre: TextView = itemView.findViewById(R.id.txtEmpleado)
+            val puesto: TextView = itemView.findViewById(R.id.txtArea)
+            val agregar: Button = itemView.findViewById(R.id.btnAgregar)
             nombre.text = data.nombre
             puesto.text = data.puesto
             val nomaux = nombre.text
             val pueaux = puesto.text
 
             nombre.setOnClickListener {
-                Snackbar.make(itemView, "Empleado: "+nombre.text, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(itemView, "Empleado: " + nombre.text, Snackbar.LENGTH_SHORT).show()
             }
             agregar.setOnClickListener {
-                list.add(EmpleadosGrupo(nomaux as String,pueaux as String))
+                list.add(EmpleadosGrupo(nomaux as String, pueaux as String))
             }
         }
     }
-
-
 
 }

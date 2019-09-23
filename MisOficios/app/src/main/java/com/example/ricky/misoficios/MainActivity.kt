@@ -19,13 +19,11 @@ import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
 
 
-
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
 
 
     lateinit var carpetasRecycler: RecyclerView
@@ -36,12 +34,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-    //    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary))
-    //   var actionBar = supportActionBar
-    //   //toolbar.setBackgroundColor("@drawable/gradient_blue")
-    //   actionBar!!.title = "Recibidos"
-       setSupportActionBar(toolbar)
-
+        //    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary))
+        //   var actionBar = supportActionBar
+        //   //toolbar.setBackgroundColor("@drawable/gradient_blue")
+        //   actionBar!!.title = "Recibidos"
+        setSupportActionBar(toolbar)
 
 
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
@@ -109,9 +106,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_send -> {
                 NwGrupo()
             }
-           // R.id.nwDoc -> {
-           //     //CrearOficio()
-           // }
+            // R.id.nwDoc -> {
+            //     //CrearOficio()
+            // }
             R.id.itGrupo -> {
                 NwGrupo()
             }
@@ -164,7 +161,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-
 
 
 }
