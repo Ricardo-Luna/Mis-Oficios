@@ -17,22 +17,4 @@
 
     </group>
 
-    <item android:title="Carpetas">
-        <menu>
-            <item
-                    android:id="@+id/recibidos"
-                    android:icon="@drawable/recieved"
-                    android:title="Recibidos"/>
-            <item
-                    android:id="@+id/nav_send"
-                    android:icon="@drawable/sent"
-                    android:title="Enviados"/>
-            <item
-                    android:id="@+id/borradores"
-                    android:icon="@drawable/draft"
-                    android:title="Borradores"/>
-        </menu>
-
-    </item>
-
 </menu>
