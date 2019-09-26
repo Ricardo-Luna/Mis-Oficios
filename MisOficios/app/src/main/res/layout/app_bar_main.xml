@@ -21,7 +21,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" android:background="@drawable/background"/>
+    <include
+            android:id="@+id/linearLayoutContentMain"
+            layout="@layout/content_main"
+            android:background="@drawable/background" />
 
 
     <android.support.design.widget.FloatingActionButton

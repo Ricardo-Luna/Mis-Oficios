@@ -12,6 +12,7 @@ class dialogConfirm(context: Context):Dialog(context) {
         setCancelable(false)
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)

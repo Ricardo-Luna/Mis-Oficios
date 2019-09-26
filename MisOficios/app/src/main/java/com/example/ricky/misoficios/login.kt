@@ -11,9 +11,11 @@ import android.os.Bundle
 
 import android.text.format.Formatter
 import android.util.Log
+import android.view.LayoutInflater
 
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 
 import com.example.ricky.misoficios.Almacenado.SharedPreference
@@ -21,6 +23,7 @@ import com.example.ricky.misoficios.Modelos.LoginReq
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.example.ricky.misoficios.Modelos.Permiso
 import com.example.ricky.misoficios.servicios.RetrofitClient
+import kotlinx.android.synthetic.main.dialog_confirm.view.*
 
 import retrofit2.Call
 import retrofit2.Response
@@ -41,8 +44,9 @@ class login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         btnIniciar = findViewById(R.id.btnIniciar)
-        txuser = findViewById(R.id.txuser)
+        txuser = findViewById(R.id.txpw)
         txpw = findViewById(R.id.txpw)
 
         btnIniciar.setOnClickListener { validarCampos() }
@@ -55,6 +59,9 @@ class login : AppCompatActivity() {
         dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         getIpAddress()
     }
+
+
+
 
     private fun validarCampos() {
 

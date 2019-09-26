@@ -103,9 +103,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
 
-            R.id.nav_send -> {
-                NwGrupo()
-            }
             // R.id.nwDoc -> {
             //     //CrearOficio()
             // }
@@ -118,8 +115,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 MainFragment()
             }
         }
-        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
-            .commit()
+       // supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
+       //     .commit()
     }
 
 
@@ -134,18 +131,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 GruposFrg()
             }
 
-            R.id.recibidos -> {
-                MainFragment()
-            }
 
-            R.id.nav_send -> {
-
-                listaEmpleados()
-            }
-
-            R.id.borradores -> {
-                MainFragment()
-            }
 
 
             else -> {
@@ -153,8 +139,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
-            .commit()
+      //  supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
+      //      .commit()
 
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

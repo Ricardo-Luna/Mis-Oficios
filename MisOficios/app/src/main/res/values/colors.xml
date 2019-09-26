@@ -18,5 +18,11 @@
     <color name="grisGobernoFinal">#7d868c</color>
     <color name="naranjaGobiernoInicio">#ff8a65</color>
     <color name="grisGobernoInicio">#bdbdbd</color>
+    <color name="gris">#bdbdbd</color>
+    <color name="blanco">#F5F5F5</color>
+    <color name="grisTransparente">#FFFFFF80</color>
+
+
+
 
 </resources>
