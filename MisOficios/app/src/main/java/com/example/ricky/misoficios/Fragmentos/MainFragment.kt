@@ -28,6 +28,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v7.app.AppCompatActivity
 import com.example.ricky.misoficios.adaptador.AdapterCarpetas
 
 
@@ -38,23 +39,31 @@ class MainFragment : Fragment() {
     lateinit var oficiosList: ArrayList<Oficios>
     lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var txtFecha: TextView
-    private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
+     lateinit var carpetaSeleccionada: String
+     var nombreCarpeta: String = "Recibidos"
+
+    //private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var listener: lista_usuarios.OnFragmentInteractionListener? = null
+
     //objeto de {servicios/RetrofitClient}
     val api = retrofit.create(MisOficiosAPI::class.java)
 
 
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.main_fragment, container, false)
 
+        val view: View = inflater.inflate(R.layout.main_fragment, container, false)
+        //recibirDatos(carpetaSeleccionada,nombreCarpeta)
+        (activity as AppCompatActivity).supportActionBar?.title = nombreCarpeta
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
         carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
 
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         onMostrarCarpetas()
+
         mostrarDocumentos()
         onActualizarLista2()
         val llm: LinearLayoutManager = LinearLayoutManager(context)
@@ -95,6 +104,11 @@ class MainFragment : Fragment() {
     // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
     //   actualmente
 
+   // public fun recibirDatos(carpeta: String, nombre: String){
+   //     carpetaSeleccionada = carpeta
+   //     nombreCarpeta = nombre
+   //     (activity as AppCompatActivity).supportActionBar?.title = nombreCarpeta
+   // }
 
     fun mostrarDocumentos() {
         api.getDocsCarpetas(
@@ -168,7 +182,7 @@ class MainFragment : Fragment() {
                             val folder = response.body()
                             d("Response recibido", "onResponse: ${response.body()!![1].Nombre}")
                             val adapter2 =
-                                AdapterCarpetas(oficiosRecycler, buildCarpetas(folder!!), context!!)
+                                AdapterCarpetas(oficiosRecycler, buildCarpetas(folder!!), context!!,activity as AppCompatActivity )
                             carpetasRecycler.adapter = adapter2
                         } else {
                             Toast.makeText(

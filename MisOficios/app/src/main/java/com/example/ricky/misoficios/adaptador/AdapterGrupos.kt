@@ -32,7 +32,7 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
     }
 
     fun changeFragment() {
-
+        
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -52,13 +52,6 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
             propietario.text = data.PropietarioNombreCompleto
             nombre.text = data.Nombre
             nombre.setOnClickListener {
-               // var dBundle = Bundle()
-               //
-               //
-               // dBundle.putString("grupoid", data.IdGrupo)
-               //
-               // nuevoFragmento.setArguments(dBundle)
-                //nuevoFragmento.arguments = dBundle
                 val nuevoFragmento = lista_usuarios()
                 nuevoFragmento.recibirDatos(data.IdGrupo)
               //  Log.d("Response UsuariosGrupo:", "recibido vacío, "+ { data.IdGrupo })

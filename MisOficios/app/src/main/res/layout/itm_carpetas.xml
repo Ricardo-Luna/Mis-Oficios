@@ -15,7 +15,7 @@
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient_orange">
+                android:background="@drawable/gradient">
 
             <TextView
                     android:id="@+id/tvCarpetas"

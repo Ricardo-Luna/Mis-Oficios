@@ -17,8 +17,6 @@ import android.view.Menu
 import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
-
-
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
 
@@ -115,8 +113,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 MainFragment()
             }
         }
-       // supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
-       //     .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
+            .commit()
     }
 
 
@@ -139,9 +137,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-      //  supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
-      //      .commit()
-
+        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
+            .commit()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)

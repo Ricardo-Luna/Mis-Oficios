@@ -2,6 +2,7 @@ package com.example.ricky.misoficios.adaptador
 
 
 import android.content.Context
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.example.ricky.misoficios.Fragmentos.MainFragment
+import com.example.ricky.misoficios.Fragmentos.lista_usuarios
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Modelos.Documentos
 import com.example.ricky.misoficios.Modelos.Oficios
@@ -22,13 +25,14 @@ import retrofit2.Response
 class AdapterCarpetas(
     var rv: RecyclerView,
     var list: ArrayList<Carpetas>,
-    val context: Context
+    val context: Context,
+    var activity: AppCompatActivity
 ) :
     RecyclerView.Adapter<AdapterCarpetas.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.itm_carpetas, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, activity)
     }
 
     override fun getItemCount(): Int {
@@ -42,15 +46,20 @@ class AdapterCarpetas(
     }
 
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View, val activity: AppCompatActivity) :
+        RecyclerView.ViewHolder(view) {
 
 
         fun bindItems(data: Carpetas) {
             val tvCarpetas: TextView = itemView.findViewById(R.id.tvCarpetas)
             val id = data.IdCarpeta
-
-
+            val nom = data.Nombre
+            val carpeta = data.Nombre
+            //val nuevoFragmento = MainFragment()
+            //nuevoFragmento.recibirDatos(id!!,nom!!)
             tvCarpetas.text = data.Nombre
+
+
 
             tvCarpetas.setOnClickListener { view ->
 
@@ -72,13 +81,14 @@ class AdapterCarpetas(
 
                 }
 
+                (activity).supportActionBar?.title = carpeta
+
             }
 
         }
 
 
         fun mostrarDocumentos(id: String) {
-
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
             api.getDocsCarpetas("b3be6e2f-7e79-474c-9985-fab45ed8956a", id)
                 .enqueue(object : Callback<List<Documentos>> {

@@ -11,6 +11,7 @@ import android.os.Bundle
 
 import android.text.format.Formatter
 import android.util.Log
+import android.util.Log.d
 import android.view.LayoutInflater
 
 import android.widget.Button
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.dialog_confirm.view.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
+import kotlin.math.log
 
 
 class login : AppCompatActivity() {
@@ -46,7 +48,7 @@ class login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         btnIniciar = findViewById(R.id.btnIniciar)
-        txuser = findViewById(R.id.txpw)
+        txuser = findViewById(R.id.txuser)
         txpw = findViewById(R.id.txpw)
 
         btnIniciar.setOnClickListener { validarCampos() }
@@ -61,10 +63,8 @@ class login : AppCompatActivity() {
     }
 
 
-
-
     private fun validarCampos() {
-
+        d("LOGIN:","usr: "+txuser.text.toString()+"pw: "+txpw.text.toString())
         if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
             Toast.makeText(this, "Usuario o contraseña en blanco", Toast.LENGTH_SHORT).show()
         } else {
@@ -89,15 +89,16 @@ class login : AppCompatActivity() {
                             if (dialog.isShowing())
                                 dialog.dismiss()
                             if (validarPermisos(response.body()!!.Permisos)) {
-                              //  Toast.makeText(
-                              //      applicationContext,
-                              //      "La tarea falló con éxito",
-                              //      Toast.LENGTH_SHORT
-                              //  ).show()
+                                //  Toast.makeText(
+                                //      applicationContext,
+                                //      "La tarea falló con éxito",
+                                //      Toast.LENGTH_SHORT
+                                //  ).show()
                                 val loginRes = response.body()!!
                                 loginRes.NickName = txuser.text.toString()
                                 Log.e("Usuario", loginRes.toString())
-                                SharedPreference.getInstance(applicationContext).saveUsuario(loginRes)
+                                SharedPreference.getInstance(applicationContext)
+                                    .saveUsuario(loginRes)
 
 
                                 val intent = Intent(applicationContext, MainActivity::class.java)
@@ -116,23 +117,24 @@ class login : AppCompatActivity() {
                             Toast.makeText(
                                 applicationContext,
                                 "El nombre de usuario o la contraseña son incorrectos",
+
                                 Toast.LENGTH_SHORT
+
                             ).show()
+
                         }
-                }
-                )
+                })
 
         }
     }
 
     private fun validarPermisos(permisos: List<Permiso>): Boolean {
-        val posicion = permisos.indexOfFirst { it.numeroPermiso == 1000}
+        val posicion = permisos.indexOfFirst { it.numeroPermiso == 1000 }
         if (posicion > -1) {
             return true
         }
         return false
     }
-
 
 
     private fun getIpAddress() {
