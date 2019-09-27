@@ -23,8 +23,8 @@
 
             <ImageView
                     android:id="@+id/iv"
-                    android:layout_width="31dp"
-                    android:layout_height="27dp"
+                    android:layout_width="30dp"
+                    android:layout_height="24dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                        android:id="@+id/txtFecha"
+                        android:id="@+id/Fecha"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Miercoles 22 de Junio 08:00"
@@ -95,7 +95,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                        android:id="@+id/txtFolio"
+                        android:id="@+id/Folio"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="0sp"

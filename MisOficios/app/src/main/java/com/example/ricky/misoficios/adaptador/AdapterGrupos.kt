@@ -32,7 +32,7 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
     }
 
     fun changeFragment() {
-        
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -72,8 +72,6 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
                 }
             }
         }
-
-
     }
 }
 

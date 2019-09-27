@@ -8,6 +8,17 @@
         tools:context=".splash">
 
     <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="0dp"
+            android:layout_height="420dp"
+            android:layout_marginStart="-15dp"
+            android:layout_marginEnd="-15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_letra_g" />
+
+    <ImageView
             android:id="@+id/imageView5"
             android:layout_width="196dp"
             android:layout_height="409dp"
@@ -22,12 +33,14 @@
             android:layout_width="195dp"
             android:layout_height="215dp"
             android:layout_marginTop="32dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.353"
-            app:srcCompat="@drawable/icono" />
+            app:srcCompat="@drawable/icono"
+            />
 
     <TextView
             android:id="@+id/textView31"
@@ -43,11 +56,11 @@
 
     <ImageView
             android:id="@+id/imageView7"
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
+            android:layout_width="0dp"
+            android:layout_height="7dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/barralarga" />
+            app:srcCompat="@drawable/img_line_colores" />
 
 </android.support.constraint.ConstraintLayout>
