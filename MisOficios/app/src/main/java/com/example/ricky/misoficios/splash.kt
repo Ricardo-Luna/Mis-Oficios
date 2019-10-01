@@ -31,8 +31,6 @@ class splash : AppCompatActivity() {
               //  findViewById<TextView>(R.id.oficiosText).startAnimation(hyperspaceJumpAnimation)
                 findViewById<ImageView>(R.id.imageView4).startAnimation(hyperspaceJumpAnimation)
             }
-
-
         }
 
 
