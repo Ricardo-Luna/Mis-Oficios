@@ -40,7 +40,6 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
 
     }
 
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Gruposrv) {
             val nombre: TextView = itemView.findViewById(R.id.nombre)
@@ -48,7 +47,6 @@ class AdapterGrupos(var fragmentManager: FragmentManager?, var list: ArrayList<G
             val propietario: TextView = itemView.findViewById(R.id.propietario)
             val actualizacion: TextView = itemView.findViewById(R.id.actualizacion)
             val cl: ConstraintLayout = itemView.findViewById(R.id.itvw)
-
             propietario.text = data.PropietarioNombreCompleto
             nombre.text = data.Nombre
             nombre.setOnClickListener {

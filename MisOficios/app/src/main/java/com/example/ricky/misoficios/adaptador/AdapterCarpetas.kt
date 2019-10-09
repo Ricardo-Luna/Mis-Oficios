@@ -16,6 +16,7 @@ import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Modelos.Documentos
 import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.R
+import com.example.ricky.misoficios.servicios.MisOficios
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import retrofit2.Call
@@ -53,44 +54,55 @@ class AdapterCarpetas(
         fun bindItems(data: Carpetas) {
             val tvCarpetas: TextView = itemView.findViewById(R.id.tvCarpetas)
             val id = data.IdCarpeta
+            val aux = data.Recibidos
             val nom = data.Nombre
             val carpeta = data.Nombre
+
+            val globvar = MisOficios()
+            globvar.usuarioId = data.IdUsuarioPropietario!!
             //val nuevoFragmento = MainFragment()
             //nuevoFragmento.recibirDatos(id!!,nom!!)
             tvCarpetas.text = data.Nombre
-
+            globvar.setCarpetaSeleccionada(id!!)
 
 
             tvCarpetas.setOnClickListener { view ->
+               //
+
+                mostrarDocumentos(id!!)
 
 
-                if (data.Recibidos == true) {
-                    mostrarDocumentos(id!!)
-                    Log.d("--//Recycler: ", "recibidos")
-
-                }
-                if (data.Enviados == false) {
-                    mostrarDocumentos(id!!)
-                    Log.d("--//Recycler: ", "enviados")
-
-                }
-                if (data.Borradores == false) {
-                    mostrarDocumentos(id!!)
-                    Log.d("--//Recycler: ", "borradores")
-
-
-                }
+               // if (data.Recibidos == true) {
+               //     mostrarDocumentos(id!!)
+               //     globvar.carpetaRecibidos = id
+               //     globvar.carpetaSeleccionada = id
+               //     Log.d("XXRecycler Recibidos: ", globvar.carpetaSeleccionada )
+//
+//
+               // }
+               // if (data.Enviados == false) {
+               //     mostrarDocumentos(id!!)
+               //     globvar.carpetaSeleccionada = id
+               //     Log.d("XXRecycler: Enviados ", globvar.carpetaSeleccionada )
+//
+               // }
+               // if (data.Borradores == false) {
+               //     mostrarDocumentos(id!!)
+               //     globvar.carpetaSeleccionada = id
+               //     Log.d("XXRecycler: Borradores ", globvar.carpetaSeleccionada )
+//
+               // }
 
                 (activity).supportActionBar?.title = carpeta
 
             }
 
         }
-
+        val globvar = MisOficios()
 
         fun mostrarDocumentos(id: String) {
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-            api.getDocsCarpetas("b3be6e2f-7e79-474c-9985-fab45ed8956a", id)
+            api.getDocsCarpetas(globvar.getIDUsuario(context), id)
                 .enqueue(object : Callback<List<Documentos>> {
                     override fun onResponse(
                         call: Call<List<Documentos>>,
@@ -98,10 +110,6 @@ class AdapterCarpetas(
                     ) {
                         if (response.isSuccessful) {
                             if (!response.body().isNullOrEmpty()) {
-                                Log.d(
-                                    "Response recibido",
-                                    "onResponse: ${response.body()!![0].Titulo}"
-                                )
                                 val Documentos = response.body()
                                 val adapter = AdapterOficios(buildOficios(Documentos!!))
                                 rv.adapter = adapter

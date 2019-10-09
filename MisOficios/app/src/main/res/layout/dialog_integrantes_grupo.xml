@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/dialog_integrantes_grupo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#889E9B94"
+        android:orientation="vertical"
+        tools:context=".Fragmentos.dialogConfirm">
+
+
+    <ScrollView
+            android:id="@+id/integrantessv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/integrantesrv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+    </ScrollView>
+
+</LinearLayout>

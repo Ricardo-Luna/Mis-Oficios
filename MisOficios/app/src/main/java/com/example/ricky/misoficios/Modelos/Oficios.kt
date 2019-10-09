@@ -124,6 +124,13 @@ class Documentos(
     var PropietarioNombreCompleto: String
 )
 
+class Remitente(
+    var UsuarioNombreCompleto: String
+) {
+
+}
+
+
 class Gruposrv(
     var IdGrupo: String,
     var Nombre: String,
@@ -171,15 +178,15 @@ class LoginReq(
 )
 
 public class LoginRes(
-    var IdUsuario: String,
-    var IdPersona: String,
-    var varIdArea: String,
-    var NickName: String,
-    var Password: String,
-    var NombreCompleto: String,
-    var Correo: String,
-    var Puesto: String,
-    var Status: String,
-    var Rol: String,
-    var Permisos: List<Permiso>
+    var IdUsuario: String?,
+    var IdPersona: String?,
+    var varIdArea: String?,
+    var NickName: String?,
+    var Password: String?,
+    var NombreCompleto: String?,
+    var Correo: String?,
+    var Puesto: String?,
+    var Status: String?,
+    var Rol: String?,
+    var Permisos: List<Permiso>?
 )

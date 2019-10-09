@@ -10,16 +10,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.Oficios
+import com.example.ricky.misoficios.Modelos.Remitente
 import com.example.ricky.misoficios.R
+import com.example.ricky.misoficios.servicios.MisOficiosAPI
+import com.example.ricky.misoficios.servicios.RetrofitClient
 import java.lang.Exception
 import java.text.SimpleDateFormat
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class AdapterOficios(var list: ArrayList<Oficios>) :
     RecyclerView.Adapter<AdapterOficios.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cardview, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_cardview, parent, false)
         return ViewHolder(view)
 
     }
@@ -35,6 +42,8 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        lateinit var rems: String
+
         fun bindItems(data: Oficios) {
             val asunto: TextView = itemView.findViewById(R.id.Asunto)
             val remitente: TextView = itemView.findViewById(R.id.Remitentes)
@@ -43,9 +52,8 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val imagenMensaje: ImageView = itemView.findViewById(R.id.imageImportancia)
             val iv: ImageView = itemView.findViewById(R.id.imageRecibido)
             val ivv: ImageView = itemView.findViewById(R.id.imageLeido)
-            var usuario = SharedPreference.getInstance(itemView.context).usuario
+          //  var usuario = SharedPreference.getInstance(itemView.context).usuario
             asunto.text = data.Titulo
-
 
             if (data.FechaEnvio != null) {
                 try {
@@ -57,7 +65,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                     fecha.text = data.FechaEnvio
                 }
             }
-
 
             folio.text = data.Codigo
             remitente.text = data.PropietarioNombreCompleto
@@ -122,6 +129,34 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         .setAction("Action", null).show()
                 }
             }
+        }
+
+
+
+        fun mostrarRemitentes(id: String) {
+            var y: Boolean = true
+            //var x: Int = 0
+            //var cad: String = ""
+            val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+            api.getRemitentes(id)
+                .enqueue(object : Callback<Remitente> {
+                    override fun onResponse(call: Call<Remitente>, response: Response<Remitente>) {
+                        while (y == true)
+                            try {
+
+
+                                //   cad =  response.body()!![x].UsuarioNombreCompleto  +", "+ cad
+                            } catch (e: Exception) {
+                                y == false
+                            }
+                        rems = response.body()!!.UsuarioNombreCompleto
+
+                    }
+
+                    override fun onFailure(call: Call<Remitente>, t: Throwable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+                })
         }
     }
 }

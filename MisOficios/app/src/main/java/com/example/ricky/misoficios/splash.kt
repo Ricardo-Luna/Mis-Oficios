@@ -33,11 +33,9 @@ class splash : AppCompatActivity() {
             }
         }
 
-
         im.setOnClickListener {
             val intent = Intent(baseContext, login::class.java)
             startActivity(intent)
-
         }
         val background = object : Thread() {
             override fun run() {
@@ -56,6 +54,5 @@ class splash : AppCompatActivity() {
         }
         background.start()
     }
-
 
 }

@@ -25,11 +25,6 @@ import com.example.ricky.misoficios.adaptador.AdapterUsuariosGrupos
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
 
-
-
-
-
-
 class GruposFrg : Fragment() {
     lateinit var gruposRecyclerView : RecyclerView
     lateinit var grupos: ArrayList<Gruposrv>
@@ -102,7 +97,6 @@ class GruposFrg : Fragment() {
         }
         return grupos
     }
-
 
 
     fun mostrarUsuarios() {

@@ -18,11 +18,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.ricky.misoficios.Almacenado.DBHelper
 
 import com.example.ricky.misoficios.Almacenado.SharedPreference
+import com.example.ricky.misoficios.Fragmentos.MainFragment
 import com.example.ricky.misoficios.Modelos.LoginReq
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.example.ricky.misoficios.Modelos.Permiso
+import com.example.ricky.misoficios.servicios.MisOficios
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import kotlinx.android.synthetic.main.dialog_confirm.view.*
 
@@ -62,9 +65,8 @@ class login : AppCompatActivity() {
         getIpAddress()
     }
 
-
     private fun validarCampos() {
-        d("LOGIN:","usr: "+txuser.text.toString()+"pw: "+txpw.text.toString())
+      //  d("LOGIN:", "usr: " + txuser.text.toString() + "pw: " + txpw.text.toString())
         if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
             Toast.makeText(this, "Usuario o contraseña en blanco", Toast.LENGTH_SHORT).show()
         } else {
@@ -88,17 +90,24 @@ class login : AppCompatActivity() {
                         if (response.isSuccessful) {
                             if (dialog.isShowing())
                                 dialog.dismiss()
-                            if (validarPermisos(response.body()!!.Permisos)) {
-                                //  Toast.makeText(
-                                //      applicationContext,
-                                //      "La tarea falló con éxito",
-                                //      Toast.LENGTH_SHORT
-                                //  ).show()
+                            if (validarPermisos(response.body()!!.Permisos!!)) {
                                 val loginRes = response.body()!!
                                 loginRes.NickName = txuser.text.toString()
-                                Log.e("Usuario", loginRes.toString())
+
+
+                                //Database block--------------------------------
+                                val dbHandler = DBHelper(this@login, null)
+                                dbHandler.addID(loginRes.IdUsuario.toString())
+                                val cursor = dbHandler.getID()
+                                cursor!!.moveToFirst()
+
+                                //d("XXXINICIO: ", cursor.getString(0).toString())
+
+                                ////////////////////////////////////////////////
+
+
                                 SharedPreference.getInstance(applicationContext)
-                                    .saveUsuario(loginRes)
+                                    .saveUsuario(loginRes, cursor.getString(0))
 
 
                                 val intent = Intent(applicationContext, MainActivity::class.java)

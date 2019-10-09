@@ -39,7 +39,6 @@ class AdapterListaEmpleados(var list: ArrayList<Empleados>) :
             puesto.text = data.puesto
             val nomaux = nombre.text
             val pueaux = puesto.text
-
             nombre.setOnClickListener {
                 Snackbar.make(itemView, "Empleado: " + nombre.text, Snackbar.LENGTH_SHORT).show()
             }
@@ -48,5 +47,4 @@ class AdapterListaEmpleados(var list: ArrayList<Empleados>) :
             }
         }
     }
-
 }
