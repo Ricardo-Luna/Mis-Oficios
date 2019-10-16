@@ -1,15 +1,11 @@
 package com.example.ricky.misoficios.Almacenado
 
-import android.app.PendingIntent.getActivity
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.widget.Toast
-import java.lang.Exception
-import java.security.AccessController.getContext
-import java.util.prefs.PreferencesFactory
+
 
 class DBHelper(
     context: Context,

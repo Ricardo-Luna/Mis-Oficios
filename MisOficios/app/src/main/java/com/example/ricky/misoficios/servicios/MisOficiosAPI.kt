@@ -47,10 +47,10 @@ interface MisOficiosAPI {
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<List<Grupos>>
 
-    @GET("/Documentos/CantidadDestinatarios/{IdDocumento}")
+    @GET("Documentos/Destinatarios/{IdDocumento}")
     fun getRemitentes(
         @Path("IdDocumento") IdDocumento: String
-    ): Call<Remitente>
+    ): Call<List<Remitente>>
 
     @GET("CarpetaRecibidos/{IdUsuarioPropietario}")
     fun getCarpetaRecibidos(

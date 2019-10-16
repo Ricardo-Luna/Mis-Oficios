@@ -64,40 +64,12 @@ class AdapterCarpetas(
             //nuevoFragmento.recibirDatos(id!!,nom!!)
             tvCarpetas.text = data.Nombre
             globvar.setCarpetaSeleccionada(id!!)
-
-
-            tvCarpetas.setOnClickListener { view ->
-               //
-
-                mostrarDocumentos(id!!)
-
-
-               // if (data.Recibidos == true) {
-               //     mostrarDocumentos(id!!)
-               //     globvar.carpetaRecibidos = id
-               //     globvar.carpetaSeleccionada = id
-               //     Log.d("XXRecycler Recibidos: ", globvar.carpetaSeleccionada )
-//
-//
-               // }
-               // if (data.Enviados == false) {
-               //     mostrarDocumentos(id!!)
-               //     globvar.carpetaSeleccionada = id
-               //     Log.d("XXRecycler: Enviados ", globvar.carpetaSeleccionada )
-//
-               // }
-               // if (data.Borradores == false) {
-               //     mostrarDocumentos(id!!)
-               //     globvar.carpetaSeleccionada = id
-               //     Log.d("XXRecycler: Borradores ", globvar.carpetaSeleccionada )
-//
-               // }
-
+            tvCarpetas.setOnClickListener {
+                mostrarDocumentos(id)
                 (activity).supportActionBar?.title = carpeta
-
             }
-
         }
+
         val globvar = MisOficios()
 
         fun mostrarDocumentos(id: String) {
@@ -148,7 +120,6 @@ class AdapterCarpetas(
                         item.Importancia,
                         item.estatus,
                         item.PropietarioNombreCompleto
-
                     )
                 )
             }

@@ -1,7 +1,7 @@
 package com.example.ricky.misoficios.servicios
 
 import android.app.Application
-import android.app.PendingIntent.getActivity
+
 import android.content.Context
 import android.util.Log
 import android.util.Log.d
@@ -9,42 +9,27 @@ import com.example.ricky.misoficios.Almacenado.DBHelper
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 
 class MisOficios : Application() {
-
-    var carpeta = ""
-    lateinit var carpetaSelect: String
     lateinit var usuarioId: String
 
-    fun setValores(carpeta: String, carpetaSelected: String, id: String) {
-        this.carpeta = carpeta
-        this.carpetaSelect = carpetaSelected
-        this.usuarioId = id
+    companion object {
+        lateinit var carpeta: String
+        lateinit var cadena: String
+        lateinit var carpetaSelect: String
+
+
     }
 
-    fun getIDUsuario(context: Context): String {
-        val dbHandler = DBHelper(context, null)
-        val cursor = dbHandler.getID()
-        cursor!!.moveToFirst()
-        usuarioId = cursor.getString(cursor.getColumnIndex("id")).toString()
-        return usuarioId
+    fun getCadena(): String {
+        return cadena
     }
 
-    fun getCarpetaInicial(context: Context): String {
-        val dbHandler = DBHelper(context, null)
-        val cursor = dbHandler.getCarpetaRecibidos()
-        cursor!!.moveToLast()
-        try {
-            val str =
-                cursor.getString(2).toString()
-            carpeta = str
-
-        } catch (e: Exception) {
-            d("XXXEXCEPTION : ", e.toString())
-        }
-        return carpeta
+    fun setCadena(cad: String) {
+        lateinit var cadena: String
+        cadena = cad
     }
 
     fun setCarpetaSeleccionada(carpeta: String) {
-        this.carpetaSelect = carpeta
+        carpetaSelect = carpeta
     }
 
     fun getCarpetaSeleccionada(): String {
@@ -58,6 +43,19 @@ class MisOficios : Application() {
     fun getCarpetaActual(): String {
         return carpeta
     }
+    //fun setValores(carpeta: String, carpetaSelected: String, id: String) {
+    //    carpeta = carpeta
+    //    carpetaSelect = carpetaSelected
+    //    usuarioId = id
+    //}
+
+    fun getIDUsuario(context: Context): String {
+        val dbHandler = DBHelper(context, null)
+        val cursor = dbHandler.getID()
+        cursor!!.moveToFirst()
+        usuarioId = cursor.getString(cursor.getColumnIndex("id")).toString()
+        return usuarioId
+    }
+
 
 }
-

@@ -63,24 +63,15 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
-        //recibirDatos(carpetaSeleccionada,nombreCarpeta)
-
-
         val carpetasSelected = getCarpetaInicial(getIDUser())
         (activity as AppCompatActivity).supportActionBar?.title = nombreCarpeta
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
         carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
-
         getCarpetaInicial(getIDUser())
-
-        // mostrarDocumentos(getIDUser(), globvar.carpeta)
         onMostrarCarpetas(getIDUser())
-        ld()
-
-        //onActualizarLista2()
+        mostrarDocumentos(getIDUser(), carpetasSelected)
         val llm: LinearLayoutManager = LinearLayoutManager(context)
         val llm2: LinearLayoutManager = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
@@ -88,7 +79,6 @@ class MainFragment : Fragment() {
         carpetasRecycler.layoutManager = llm2
         // --Aquí alterno entre los métodos siguientes
 //      --Método que actualiza el layout arrastándolo hacia abajo
-
 
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
@@ -98,11 +88,6 @@ class MainFragment : Fragment() {
             swipeRefreshLayout.setRefreshing(false)
         })
         return view
-    }
-
-    fun ld() {
-        d("Carpeta inicial: ", globvar.carpeta)
-        d("XXXDOCUMENTOS: ", globvar.usuarioId)
     }
 
     fun mostrarDocumentos(id: String, carpeta: String) {
@@ -121,6 +106,7 @@ class MainFragment : Fragment() {
                             val Documentos = response.body()
                             var fin = response.body()?.size
                             val adapter = AdapterOficios(buildOficios(Documentos!!))
+                            d("Tamaño de Response: ", fin.toString())
                             oficiosRecycler.adapter = adapter
 
                         } else {
@@ -137,7 +123,6 @@ class MainFragment : Fragment() {
             )
     }
 
-
     fun getIDUser(): String {
         val dbHandler = DBHelper(context!!, null)
         val bd = dbHandler.writableDatabase
@@ -146,13 +131,15 @@ class MainFragment : Fragment() {
         //val carpetaRecibidos = bd.rawQuery("Select Carpeta_Recibidos from datos", null)
         if (idb.moveToFirst()) {
             id = idb.getString(0).toString()
-            // d("XXXFRAGMENT", idb.getString(0).toString())
+
         } else d("XXXFRAGMENT", "Error")
 
         bd.close()
         globvar.usuarioId = id
         return id
     }
+
+
 
     fun getCarpetaInicial(id: String): String {
         val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
@@ -180,47 +167,6 @@ class MainFragment : Fragment() {
             })
         d("XYXCARPETARECIBIDOS: ", idrecibidos)
         return idrecibidos
-    }
-
-    fun getCarpetaInicial2(id: String) {
-        val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-        api.getCarpetaRecibidos(id)
-            .enqueue(object : Callback<List<Carpetas>> {
-                override fun onResponse(
-                    call: Call<List<Carpetas>>,
-                    response: Response<List<Carpetas>>
-                ) {
-                    if (response.isSuccessful) {
-                        val fold = response.body()!!
-                        //Log.d("XXXCARPETARECIBIDOS: ", fold[0].IdCarpeta.toString(
-                        idrecibidos = fold[0].IdCarpeta.toString()
-
-                        //Database block--------------------------------------
-                        val dbHandler = DBHelper(context!!, null)
-                        dbHandler.addCarpetaRecibidos(fold[0].IdCarpeta.toString())
-                        val cursor = dbHandler.getCarpetaRecibidos()
-                        cursor!!.moveToLast()
-                        try {
-                            val str =
-                                cursor.getString(2)
-                                    .toString()
-                            globvar.carpeta = str
-                            d("RESPONSERECIEVED: ", str)
-                        } catch (e: Exception) {
-                            d("XXXEXCEPTION : ", e.toString())
-                        }
-                        ///////////////////////////////////////////////////////
-
-
-                    } else {
-                        Log.d("INGESU", "YA CHINGO ASU MARE COMARE")
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Carpetas>>, t: Throwable) {
-                    Log.d("INGESU", " THIS AINT FUNNY ANYMORE")
-                }
-            })
     }
 
     fun buildOficios(G: List<Documentos>): ArrayList<Oficios> {
@@ -255,7 +201,7 @@ class MainFragment : Fragment() {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
                             val folder = response.body()
-                            d("Response recibido", "onResponse: ${response.body()!![1].Nombre}")
+                            //d("Response recibido", "onResponse: ${response.body()!![1].Nombre}")
                             val adapter2 =
                                 AdapterCarpetas(
                                     oficiosRecycler,
@@ -281,9 +227,7 @@ class MainFragment : Fragment() {
             })
     }
 
-
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
-
 
     fun buildCarpetas(G: List<folder>): ArrayList<Carpetas> {
         carpetasList = ArrayList()
@@ -308,40 +252,37 @@ class MainFragment : Fragment() {
         super.onDetach()
         listener = null
     }
-
-
-    // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
-    // fun onActualizarLista2() {
-    //     api.getDocsCarpetas(
-    //         idUser,
-    //         "8d1d65b9-64c6-402c-8a00-2bb7ab20a181"
-//
-    //     )
-    //         .enqueue(object : Callback<List<Documentos>> {
-    //             override fun onResponse(
-    //                 call: Call<List<Documentos>>,
-    //                 response: Response<List<Documentos>>
-    //             ) {
-// //                  d("onResponse", "Response succesful  ${response.body()!![0].Titulo}")
-    //             }
-//
-    //             override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
-    //                 d("onResponse", "FAILURE")
-    //             }
-    //         })
-    // }
-
-    // --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
-    //   actualmente
-
-    // public fun recibirDatos(carpeta: String, nombre: String){
-    //     carpetaSeleccionada = carpeta
-    //     nombreCarpeta = nombre
-    //     (activity as AppCompatActivity).supportActionBar?.title = nombreCarpeta
-    // }
-
-
 }
+
+// --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
+// fun onActualizarLista2() {
+//     api.getDocsCarpetas(
+//         idUser,
+//         "8d1d65b9-64c6-402c-8a00-2bb7ab20a181"
+//
+//     )
+//         .enqueue(object : Callback<List<Documentos>> {
+//             override fun onResponse(
+//                 call: Call<List<Documentos>>,
+//                 response: Response<List<Documentos>>
+//             ) {
+// //                  d("onResponse", "Response succesful  ${response.body()!![0].Titulo}")
+//             }
+//
+//             override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
+//                 d("onResponse", "FAILURE")
+//             }
+//         })
+// }
+
+// --Función que recibe los datos del onResponse y los trata para mostrarlos en el recyclerView,
+//   actualmente
+
+// public fun recibirDatos(carpeta: String, nombre: String){
+//     carpetaSeleccionada = carpeta
+//     nombreCarpeta = nombre
+//     (activity as AppCompatActivity).supportActionBar?.title = nombreCarpeta
+// }
 
 
 //var fin = response.body()?.size
@@ -381,11 +322,8 @@ class MainFragment : Fragment() {
 
 
 /*
-
  // Aquí toma los oficios de la lista
-
     val adapter = AdapterOficios(buildOficios())
-
     oficiosRecycler.adapter = adapter
 */
 //Comienza onCreate
