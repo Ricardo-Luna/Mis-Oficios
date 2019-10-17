@@ -36,7 +36,7 @@ import retrofit2.Response
 
 
 class MainFragment : Fragment() {
-    lateinit var dialog: AlertDialog
+
     lateinit var oficiosRecycler: RecyclerView
     lateinit var carpetasRecycler: RecyclerView
     lateinit var oficiosList: ArrayList<Oficios>
@@ -46,6 +46,7 @@ class MainFragment : Fragment() {
     var nombreCarpeta: String = "Recibidos"
     lateinit var idrecibidos: String
     val globvar = MisOficios()
+
 
     //lateinit var id: String
     //val mydb =  DBHelper(MainActivity(), null)
