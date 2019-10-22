@@ -13,10 +13,8 @@ class MisOficios : Application() {
 
     companion object {
         lateinit var carpeta: String
-        lateinit var cadena: String
+        var cadena: String = ""
         lateinit var carpetaSelect: String
-
-
     }
 
     fun getCadena(): String {
@@ -43,6 +41,7 @@ class MisOficios : Application() {
     fun getCarpetaActual(): String {
         return carpeta
     }
+
     //fun setValores(carpeta: String, carpetaSelected: String, id: String) {
     //    carpeta = carpeta
     //    carpetaSelect = carpetaSelected
@@ -56,6 +55,5 @@ class MisOficios : Application() {
         usuarioId = cursor.getString(cursor.getColumnIndex("id")).toString()
         return usuarioId
     }
-
 
 }

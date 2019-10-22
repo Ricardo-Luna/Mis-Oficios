@@ -18,8 +18,6 @@ class DBHelper(
     val cont = context
 
     override fun onCreate(db: SQLiteDatabase) {
-
-        clearDatabase(TABLE_NAME, db)
         makeDatabase(TABLE_NAME, db)
 
     }
@@ -43,9 +41,7 @@ class DBHelper(
         onCreate(db)
     }
 
-
     fun addID(id: String) {
-
         val values = ContentValues()
         values.put(COLUMN_ID, id)
         val db = this.writableDatabase
@@ -83,3 +79,30 @@ class DBHelper(
 
 //val cursor = dbHandler.getCarpetaRecibidos()
 //cursor!!.moveToFirst()
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//idDocumento
+//Titulo
+//fechaenvio
+//idpropietario
+//iddocumentoremitente
+//idcarpeta
+//codigo
+//importancia
+//estatus
+//propietario
+//remitente

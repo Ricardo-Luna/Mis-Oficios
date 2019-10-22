@@ -50,34 +50,6 @@ class folder(
     var FechaActualizacion: String
 )
 
-class Oficios2(
-    var IdDocumento: String?,
-    var Titulo: String?,
-    var FechaEnvio: String?,
-    var IdPropietario: String?,
-    var idDocumentoRemitente: String?,
-    var IdCarpeta: String?,
-    var Codigo: String?,
-    var Importancia: String?,
-    var estatus: String?,
-    var PropietarioNombreCompleto: String
-
-)
-
-class Documentos2(
-    var IdDocumento: String?,
-    var Titulo: String?,
-    var IdPropietario: String?,
-    var idDocumentoRemitente: String?,
-    var IdCarpeta: String?,
-    var Codigo: String?,
-    var Importancia: String?,
-    var estatus: String?,
-    var FechaEnvio: String?,
-    var PropietarioNombreCompleto: String
-)
-
-
 class valor(
     var cantidad: Int?
 )
@@ -96,7 +68,6 @@ class recycler(
 
 
 }
-
 
 class Oficios(
     var IdDocumento: String?,
@@ -177,16 +148,12 @@ class LoginReq(
     var Password: String
 )
 
-public class LoginRes(
+class LoginRes(
     var IdUsuario: String?,
-    var IdPersona: String?,
-    var varIdArea: String?,
+    var carpetaSeleccionada: String?,
+    var CarpetaInicial: String?,
     var NickName: String?,
     var Password: String?,
     var NombreCompleto: String?,
-    var Correo: String?,
-    var Puesto: String?,
-    var Status: String?,
-    var Rol: String?,
     var Permisos: List<Permiso>?
 )

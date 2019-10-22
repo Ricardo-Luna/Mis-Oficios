@@ -1,15 +1,10 @@
 package com.example.ricky.misoficios.adaptador
 
-
-import android.app.Activity
-import android.app.Application
-import android.content.Context
 import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.ricky.misoficios.Almacenado.SharedPreference
-import com.example.ricky.misoficios.MainActivity
 import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.Modelos.Remitente
 import com.example.ricky.misoficios.R
@@ -52,13 +46,11 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-
-        lateinit var rems: String
+        var rems: String = ""
         lateinit var ret: String
         fun bindItems(data: Oficios) {
+            //ret = mostrarRemitentes(data.IdDocumento!!)
 
-            ret = mostrarRemitentes(data.IdDocumento!!)
             val asunto: TextView = itemView.findViewById(R.id.Asunto)
             val remitente: TextView = itemView.findViewById(R.id.Remitentes)
             val fecha: TextView = itemView.findViewById(R.id.Fecha)
@@ -68,9 +60,13 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val ivv: ImageView = itemView.findViewById(R.id.imageLeido)
             val bm: CardView = itemView.findViewById(R.id.backgr)
             val constraint: ConstraintLayout = itemView.findViewById(R.id.cns)
+
+             mostrarRemitentes(data.IdDocumento!!)
+
+            d("Documento: ", "${data.Titulo}:  Estatus: ${data.estatus}")
+
             var usuario = SharedPreference.getInstance(itemView.context).usuario
             asunto.text = data.Titulo
-
             if (data.FechaEnvio != null) {
                 try {
                     val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -86,42 +82,60 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 }
             }
 
+            constraint.setOnClickListener { view ->
+                constraint.setBackgroundColor(Color.WHITE)
+                asunto.setTextColor(Color.BLACK)
+                remitente.setTextColor(Color.BLACK)
+                fecha.setTextColor(Color.BLACK)
+                folio.setTextColor(Color.BLACK)
+
+            }
+
             folio.text = data.Codigo
             // d("PRUEBA", mostrarRemitentes(data.IdDocumento!!))
-
-            remitente.text = ret
-
+            val globvar = MisOficios()
+            remitente.text = globvar.getCadena()
+            val blanco = "#FFFFFF"
+            val pantone = "#00b0e1"
             if (data.estatus?.toInt() == 1) {
-                if (data.IdPropietario != usuario.toString()) {
-                    constraint.setBackgroundColor(Color.CYAN);
-                    d("USUARIO: ", "DATA: ${data.IdPropietario}, USUARIO: $usuario")
+                if (data.IdPropietario !== usuario.IdUsuario.toString()) {
+                    asunto.setTextColor(Color.parseColor(blanco))
+                    remitente.setTextColor(Color.parseColor(blanco))
+                    fecha.setTextColor(Color.parseColor(blanco))
+                    folio.setTextColor(Color.parseColor(blanco))
+                    constraint.setBackgroundColor(Color.parseColor(pantone))
                 }
-
                 iv.setImageResource(R.drawable.nuevo)
                 iv.setOnClickListener { view ->
-                    Snackbar.make(view, "Nuevo Documento", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Nuevo Documento", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
                 }
             }
             if (data.estatus?.toInt() == 2) {
-                if (data.IdPropietario != usuario.toString()) {
-                    constraint.setBackgroundColor(Color.CYAN);
-                    d("USUARIO: ", "DATA: ${data.IdPropietario}, USUARIO: $usuario")
+                if (data.IdPropietario !== usuario.IdUsuario.toString()) {
+                    asunto.setTextColor(Color.parseColor(blanco))
+                    remitente.setTextColor(Color.parseColor(blanco))
+                    fecha.setTextColor(Color.parseColor(blanco))
+                    folio.setTextColor(Color.parseColor(blanco))
+                    constraint.setBackgroundColor(Color.parseColor(pantone))
                 }
-                iv.setImageResource(R.drawable.enviado)
+                iv.setImageResource(R.drawable.z_enviado)
                 iv.setOnClickListener { view ->
-                    Snackbar.make(view, "Documento enviado", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Documento enviado", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
                 }
             }
             if (data.estatus?.toInt() == 3) {
-                if (data.IdPropietario != usuario.toString()) {
-                    constraint.setBackgroundColor(Color.CYAN);
-                    d("USUARIO: ", "DATA: ${data.IdPropietario}, USUARIO: $usuario")
+                if (data.IdPropietario !== usuario.IdUsuario.toString()) {
+                    asunto.setTextColor(Color.parseColor(blanco))
+                    remitente.setTextColor(Color.parseColor(blanco))
+                    fecha.setTextColor(Color.parseColor(blanco))
+                    folio.setTextColor(Color.parseColor(blanco))
+                    constraint.setBackgroundColor(Color.parseColor(pantone))
                 }
-                iv.setImageResource(R.drawable.recibido)
+                iv.setImageResource(R.drawable.z_recibido)
                 iv.setOnClickListener { view ->
-                    Snackbar.make(view, "Recibido", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Recibido", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
                 }
             }
@@ -129,10 +143,8 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 ivv.setImageResource(R.drawable.leido)
 
                 ivv.setOnClickListener { view ->
-                    Snackbar.make(view, "Leído", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Leído", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
-                    bm.setBackgroundResource(R.drawable.gradient)
-
                 }
             }
             if (data.estatus?.toInt() == 5) {
@@ -146,12 +158,10 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         .setAction("Action", null).show()
                 }
             }
-
-
             if (data.Importancia?.toInt() == 1) {
                 imagenMensaje.setImageResource(R.drawable.importancia_baja)
                 imagenMensaje.setOnClickListener { view ->
-                    Snackbar.make(view, "Importancia baja", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Importancia baja", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
                 }
             }
@@ -159,7 +169,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             if (data.Importancia?.toInt() == 2) {
                 imagenMensaje.setImageResource(R.drawable.importancia_normal)
                 imagenMensaje.setOnClickListener { view ->
-                    Snackbar.make(view, "Importancia normal", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Importancia normal", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
                 }
             }
@@ -167,14 +177,14 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             if (data.Importancia?.toInt() == 3) {
                 imagenMensaje.setImageResource(R.drawable.imporancia_alta)
                 imagenMensaje.setOnClickListener { view ->
-                    Snackbar.make(view, "Importancia alta", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Importancia alta", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
                 }
             }
-
         }
 
-        fun mostrarRemitentes(id: String): String {
+        fun  mostrarRemitentes (id: String) {
+            var ban = true
             var aux = ""
             val globvar = MisOficios()
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
@@ -186,7 +196,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         response: Response<List<Remitente>>
                     ) {
                         val tam = response.body()?.size
-                        d("Cantidad Rems: ", tam.toString())
+                        //d("Cantidad Rems: ", tam.toString())
 
                         if (tam!!.equals(1)) {
                             val nom1 = response.body()!![0].UsuarioNombreCompleto
@@ -218,11 +228,21 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 })
             ret = globvar.getCadena()
             d("--Remitente : ", aux)
-
-            return aux
+            if (ban == true){return mostrarRemitentes(id)} else{ ban == false}
 
         }
+        //fun op1(tam: String, n1: String, n2: String): String {
+//
+        //    var aux = ""
+        //    // if (tam!!.equals(1)) { val nom1 = response.body()!![0].UsuarioNombreCompleto; aux = nom1; return
+//
+//
+        //}
+
     }
+
 }
+
+
 
 

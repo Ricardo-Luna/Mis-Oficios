@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.MainFragment
 import com.example.ricky.misoficios.Fragmentos.lista_usuarios
 import com.example.ricky.misoficios.Modelos.Carpetas
@@ -46,7 +47,6 @@ class AdapterCarpetas(
 
     }
 
-
     inner class ViewHolder(view: View, val activity: AppCompatActivity) :
         RecyclerView.ViewHolder(view) {
 
@@ -70,11 +70,11 @@ class AdapterCarpetas(
             }
         }
 
-        val globvar = MisOficios()
+        var usuario = SharedPreference.getInstance(context).usuario
 
         fun mostrarDocumentos(id: String) {
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-            api.getDocsCarpetas(globvar.getIDUsuario(context), id)
+            api.getDocsCarpetas(usuario.IdUsuario.toString(), id)
                 .enqueue(object : Callback<List<Documentos>> {
                     override fun onResponse(
                         call: Call<List<Documentos>>,

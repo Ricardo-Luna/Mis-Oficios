@@ -1,7 +1,5 @@
 package com.example.ricky.misoficios.Fragmentos
 
-
-import android.app.AlertDialog
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.BottomSheetBehavior
@@ -19,6 +17,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.DBHelper
+import com.example.ricky.misoficios.Almacenado.SharedPreference
+import com.example.ricky.misoficios.Almacenado.dbOficios
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Modelos.Documentos
 import com.example.ricky.misoficios.Modelos.Oficios
@@ -34,7 +34,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class MainFragment : Fragment() {
 
     lateinit var oficiosRecycler: RecyclerView
@@ -47,10 +46,8 @@ class MainFragment : Fragment() {
     lateinit var idrecibidos: String
     val globvar = MisOficios()
 
-
     //lateinit var id: String
     //val mydb =  DBHelper(MainActivity(), null)
-
 
     private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var listener: lista_usuarios.OnFragmentInteractionListener? = null
@@ -58,23 +55,25 @@ class MainFragment : Fragment() {
     //objeto de {servicios/RetrofitClient}
     val api = retrofit.create(MisOficiosAPI::class.java)
 
-
     override fun onCreateView(
 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //val oficiosDb =  dbOficios(context!!,null)
+        var usuario = SharedPreference.getInstance(context!!).usuario
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
-        val carpetasSelected = getCarpetaInicial(getIDUser())
+        val carpetasSelected = getCarpetaInicial(usuario.IdUsuario!!)
         (activity as AppCompatActivity).supportActionBar?.title = nombreCarpeta
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
         carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
-        getCarpetaInicial(getIDUser())
-        onMostrarCarpetas(getIDUser())
-        mostrarDocumentos(getIDUser(), carpetasSelected)
-        val llm: LinearLayoutManager = LinearLayoutManager(context)
-        val llm2: LinearLayoutManager = LinearLayoutManager(context)
+        d("UsuarioOFICIOS", "${usuario.NombreCompleto}")
+        getCarpetaInicial(usuario.IdUsuario!!)
+        onMostrarCarpetas(usuario.IdUsuario!!)
+        mostrarDocumentos(usuario.IdUsuario!!, carpetasSelected)
+        val llm = LinearLayoutManager(context)
+        val llm2 = LinearLayoutManager(context)
         llm.orientation = LinearLayout.VERTICAL
         oficiosRecycler.layoutManager = llm
         carpetasRecycler.layoutManager = llm2
@@ -84,7 +83,7 @@ class MainFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             swipeRefreshLayout.setRefreshing(true)
 
-            mostrarDocumentos(getIDUser(), carpetasSelected)
+            mostrarDocumentos(usuario.IdUsuario!!, carpetasSelected)
 
             swipeRefreshLayout.setRefreshing(false)
         })
@@ -124,6 +123,41 @@ class MainFragment : Fragment() {
             )
     }
 
+
+
+    fun addToDatabase(id: String, carpeta: String) {
+//        var usuario = SharedPreference.getInstance(context!!).idusuario
+        api.getDocsCarpetas(
+            id, carpeta
+        )
+            .enqueue(object : Callback<List<Documentos>> {
+                override fun onResponse(
+                    call: Call<List<Documentos>>,
+                    response: Response<List<Documentos>>
+                ) {
+                    if (response.isSuccessful) {
+                        if (!response.body().isNullOrEmpty()) {
+
+                            val Documentos = response.body()
+                            var fin = response.body()?.size
+
+
+                        } else {
+                            d("Response Oficios:", "recibido vacío")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
+                    Log.e("onFailure", t.message)
+                    d("onResponse: ", "Response no recibido")
+                }
+            }
+            )
+    }
+
+
+
     fun getIDUser(): String {
         val dbHandler = DBHelper(context!!, null)
         val bd = dbHandler.writableDatabase
@@ -140,10 +174,9 @@ class MainFragment : Fragment() {
         return id
     }
 
-
-
     fun getCarpetaInicial(id: String): String {
         val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+        var usuario = SharedPreference.getInstance(context!!).usuario
         var idrecibidos = ""
         api.getCarpetaRecibidos(id)
             .enqueue(object : Callback<List<Carpetas>> {
@@ -154,8 +187,8 @@ class MainFragment : Fragment() {
                     if (response.isSuccessful) {
                         val fold = response.body()!!
                         idrecibidos = fold[0].IdCarpeta.toString()
-                        mostrarDocumentos(getIDUser(), idrecibidos)
-                        d("XYXCARPETARECIBIDOS: ", idrecibidos)
+                        mostrarDocumentos(usuario.IdUsuario.toString(), idrecibidos)
+                        //d("XYXCARPETARECIBIDOS: ", idrecibidos)
 
                     } else {
                         d("INGESU", "YA CHINGO ASU MARE COMARE")
@@ -185,7 +218,6 @@ class MainFragment : Fragment() {
                     item.Importancia,
                     item.estatus,
                     item.PropietarioNombreCompleto
-
                 )
             )
         }
@@ -193,7 +225,7 @@ class MainFragment : Fragment() {
     }
 
     fun onMostrarCarpetas(id: String) {
-        RetrofitClient.instance.getCarpetas(id)
+        RetrofitClient.instance.getCarpetas(id) //id)
             .enqueue(object : Callback<List<folder>> {
                 override fun onResponse(
                     call: Call<List<folder>>,
@@ -229,7 +261,6 @@ class MainFragment : Fragment() {
     }
 
     // --Función para generar los oficios, que recibe una lista de tipo Documentos, cuya estructura está en Modelos/Oficios
-
     fun buildCarpetas(G: List<folder>): ArrayList<Carpetas> {
         carpetasList = ArrayList()
         for (item in G) {
@@ -248,7 +279,6 @@ class MainFragment : Fragment() {
         }
         return carpetasList
     }
-
     override fun onDetach() {
         super.onDetach()
         listener = null
@@ -258,7 +288,7 @@ class MainFragment : Fragment() {
 // --Función para probar el valor del dato recibido en el Response, por lo que no quedará en la versión final
 // fun onActualizarLista2() {
 //     api.getDocsCarpetas(
-//         idUser,
+//        idUser,
 //         "8d1d65b9-64c6-402c-8a00-2bb7ab20a181"
 //
 //     )

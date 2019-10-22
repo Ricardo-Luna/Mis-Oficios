@@ -8,31 +8,20 @@ import android.graphics.drawable.ColorDrawable
 import android.net.wifi.WifiManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-
 import android.text.format.Formatter
 import android.util.Log
-import android.util.Log.d
-import android.view.LayoutInflater
-
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.DBHelper
-
 import com.example.ricky.misoficios.Almacenado.SharedPreference
-import com.example.ricky.misoficios.Fragmentos.MainFragment
 import com.example.ricky.misoficios.Modelos.LoginReq
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.example.ricky.misoficios.Modelos.Permiso
-import com.example.ricky.misoficios.servicios.MisOficios
 import com.example.ricky.misoficios.servicios.RetrofitClient
-import kotlinx.android.synthetic.main.dialog_confirm.view.*
-
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
-import kotlin.math.log
 
 
 class login : AppCompatActivity() {
@@ -45,16 +34,15 @@ class login : AppCompatActivity() {
     lateinit var txpw: EditText
     lateinit var dialog: AlertDialog
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        deleteDatabase("wot")
         btnIniciar = findViewById(R.id.btnIniciar)
         txuser = findViewById(R.id.txuser)
         txpw = findViewById(R.id.txpw)
 
-        btnIniciar.setOnClickListener { validarCampos() }
+        btnIniciar.setOnClickListener {  validarCampos() }
 
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.my_loading, null)
@@ -94,21 +82,18 @@ class login : AppCompatActivity() {
                                 val loginRes = response.body()!!
                                 loginRes.NickName = txuser.text.toString()
 
-
                                 //Database block--------------------------------
-                                val dbHandler = DBHelper(this@login, null)
-                                dbHandler.addID(loginRes.IdUsuario.toString())
-                                val cursor = dbHandler.getID()
-                                cursor!!.moveToFirst()
 
+                              //  val dbHandler = DBHelper(this@login, null)
+                              //  dbHandler.clearDatabase()
+//
+                              //  dbHandler.addID(loginRes.IdUsuario.toString())
+                              //  val cursor = dbHandler.getID()
+                              //  cursor!!.moveToFirst()
                                 //d("XXXINICIO: ", cursor.getString(0).toString())
-
                                 ////////////////////////////////////////////////
-
-
                                 SharedPreference.getInstance(applicationContext)
-                                    .saveUsuario(loginRes, cursor.getString(0))
-
+                                    .saveUsuario(loginRes,loginRes.IdUsuario.toString())     //cursor.getString(0))
 
                                 val intent = Intent(applicationContext, MainActivity::class.java)
                                 // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -133,7 +118,6 @@ class login : AppCompatActivity() {
 
                         }
                 })
-
         }
     }
 

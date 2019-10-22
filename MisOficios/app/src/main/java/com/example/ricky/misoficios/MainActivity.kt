@@ -49,10 +49,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         val globvar = MisOficios()
 
-
-        val ax = globvar.getIDUsuario(this.application)
+//        val ax = globvar.getIDUsuario(this.application)
         // Log.d("XXXDOCUMENTOS: id: ", ax)
-
 
         //val axx = globvar.getCarpetaInicial(this.application)
         //Log.d("XXXDOCUMENTOS:carpeta: ", axx)
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val dbHandler = DBHelper(baseContext, null)
         val db = dbHandler.getCarpetaRecibidos()
 
-        val cad = globvar.getIDUsuario(this.application)
+//        val cad = globvar.getIDUsuario(this.application)
         //  getCarpetaInicial(ax)
         //Log.d("XXXRESPONSECARPETA: ", "")
 
@@ -86,11 +84,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
         navView.setNavigationItemSelectedListener(this)
-
         displayFragment(-1)
-
     }
 
     override fun onBackPressed() {
@@ -101,7 +96,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -119,62 +113,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    //  fun getCarpetaInicial(id: String) {
-    //      val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-//
-    //      api.getCarpetaRecibidos(id)
-    //          .enqueue(object : Callback<List<Carpetas>> {
-    //              override fun onResponse(
-    //                  call: Call<List<Carpetas>>,
-    //                  response: Response<List<Carpetas>>
-    //              ) {
-    //                  if (response.isSuccessful) {
-    //                      val fold = response.body()!!
-    //                      //Log.d("XXXCARPETARECIBIDOS: ", fold[0].IdCarpeta.toString())
-    //                      idrecibidos = fold[0].IdCarpeta.toString()
-//
-//
-//
-    //                      //Database block--------------------------------------
-    //                      val dbHandler = DBHelper(baseContext, null)
-    //                      dbHandler.addCarpetaRecibidos(fold[0].IdCarpeta.toString())
-    //                      val cursor = dbHandler.getCarpetaRecibidos()
-    //                      cursor!!.moveToLast()
-    //                      try {
-    //                          val str =
-    //                              cursor.getString(2)
-    //                                  .toString()
-    //                          Log.d("RESPONSERECIEVED: ", str)
-    //                      } catch (e: Exception) {
-    //                          Log.d("XXXEXCEPTION : ", e.toString())
-    //                      }
-    //                      ///////////////////////////////////////////////////////
-//
-//
-//
-//
-    //                  } else {
-    //                      Log.d("INGESU", "YA CHINGO ASU MARE COMARE")
-    //                  }
-    //              }
-//
-    //              override fun onFailure(call: Call<List<Carpetas>>, t: Throwable) {
-    //                  Log.d("INGESU", " THIS AINT FUNNY ANYMORE")
-    //              }
-    //          })
-//
-//
-    //  }
-
-    // val fold = response.body()!!
-    // val dbHandler = DBHelper(this@MainActivity,null)
-    // dbHandler.addCarpetaRecibidos(fold.IdCarpeta.toString())
-    // val cursor = dbHandler.getCarpetaRecibidos()
-    // cursor!!.moveToFirst()
-    // ret = cursor.getString(0).toString()
-    // Log.d("XXXCARPETARECIBIDOS: ", cursor.getString(0).toString())
-
 
     fun displayFragment(id: Int) {
         val fragment = when (id) {
@@ -203,7 +141,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .commit()
     }
 
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         val fragment = when (item.itemId) {
@@ -228,9 +165,68 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-//    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary))
-    //   var actionBar = supportActionBar
-    //   //toolbar.setBackgroundColor("@drawable/gradient_blue")
-    //   actionBar!!.title = "Recibidos"
+
+
+
+
 
 }
+//    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary))
+//   var actionBar = supportActionBar
+//   //toolbar.setBackgroundColor("@drawable/gradient_blue")
+//   actionBar!!.title = "Recibidos"
+
+//  fun getCarpetaInicial(id: String) {
+//      val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+//
+//      api.getCarpetaRecibidos(id)
+//          .enqueue(object : Callback<List<Carpetas>> {
+//              override fun onResponse(
+//                  call: Call<List<Carpetas>>,
+//                  response: Response<List<Carpetas>>
+//              ) {
+//                  if (response.isSuccessful) {
+//                      val fold = response.body()!!
+//                      //Log.d("XXXCARPETARECIBIDOS: ", fold[0].IdCarpeta.toString())
+//                      idrecibidos = fold[0].IdCarpeta.toString()
+//
+//
+//
+//                      //Database block--------------------------------------
+//                      val dbHandler = DBHelper(baseContext, null)
+//                      dbHandler.addCarpetaRecibidos(fold[0].IdCarpeta.toString())
+//                      val cursor = dbHandler.getCarpetaRecibidos()
+//                      cursor!!.moveToLast()
+//                      try {
+//                          val str =
+//                              cursor.getString(2)
+//                                  .toString()
+//                          Log.d("RESPONSERECIEVED: ", str)
+//                      } catch (e: Exception) {
+//                          Log.d("XXXEXCEPTION : ", e.toString())
+//                      }
+//                      ///////////////////////////////////////////////////////
+//
+//
+//
+//
+//                  } else {
+//                      Log.d("INGESU", "YA CHINGO ASU MARE COMARE")
+//                  }
+//              }
+//
+//              override fun onFailure(call: Call<List<Carpetas>>, t: Throwable) {
+//                  Log.d("INGESU", " THIS AINT FUNNY ANYMORE")
+//              }
+//          })
+//
+//
+//  }
+
+// val fold = response.body()!!
+// val dbHandler = DBHelper(this@MainActivity,null)
+// dbHandler.addCarpetaRecibidos(fold.IdCarpeta.toString())
+// val cursor = dbHandler.getCarpetaRecibidos()
+// cursor!!.moveToFirst()
+// ret = cursor.getString(0).toString()
+// Log.d("XXXCARPETARECIBIDOS: ", cursor.getString(0).toString())

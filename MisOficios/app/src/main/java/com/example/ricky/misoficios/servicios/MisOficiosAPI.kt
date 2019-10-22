@@ -8,10 +8,10 @@ import retrofit2.http.*
 interface MisOficiosAPI {
 
 
-    @GET("Documentos/{IdUsuarioPropietario}")
-    fun getDocumentos(
-        @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
-    ): Call<List<Documentos2>>
+  //  @GET("Documentos/{IdUsuarioPropietario}")
+  //  fun getDocumentos(
+  //      @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+  //  ): Call<List<Documentos2>>
 
     @GET("GruposUsuarios/{IdGrupo}")
     fun getUsuariosGrupos(
