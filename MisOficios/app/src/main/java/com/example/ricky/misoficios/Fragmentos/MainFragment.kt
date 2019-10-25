@@ -56,7 +56,6 @@ class MainFragment : Fragment() {
     val api = retrofit.create(MisOficiosAPI::class.java)
 
     override fun onCreateView(
-
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {

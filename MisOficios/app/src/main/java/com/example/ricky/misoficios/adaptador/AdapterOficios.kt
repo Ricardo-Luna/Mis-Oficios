@@ -3,6 +3,7 @@ package com.example.ricky.misoficios.adaptador
 import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
+import android.support.v7.widget.ActivityChooserView
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log.d
@@ -28,6 +29,7 @@ import retrofit2.Response
 class AdapterOficios(var list: ArrayList<Oficios>) :
     RecyclerView.Adapter<AdapterOficios.ViewHolder>() {
 
+    var aux = ""
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_cardview, parent, false)
@@ -61,8 +63,8 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val bm: CardView = itemView.findViewById(R.id.backgr)
             val constraint: ConstraintLayout = itemView.findViewById(R.id.cns)
 
-             mostrarRemitentes(data.IdDocumento!!)
-
+           // remitente.text = mostrarRemitentes(data.IdDocumento!!,remitente)
+            mostrarRemitentes(data.IdDocumento!!,remitente)
             d("Documento: ", "${data.Titulo}:  Estatus: ${data.estatus}")
 
             var usuario = SharedPreference.getInstance(itemView.context).usuario
@@ -93,8 +95,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 
             folio.text = data.Codigo
             // d("PRUEBA", mostrarRemitentes(data.IdDocumento!!))
-            val globvar = MisOficios()
-            remitente.text = globvar.getCadena()
             val blanco = "#FFFFFF"
             val pantone = "#00b0e1"
             if (data.estatus?.toInt() == 1) {
@@ -183,10 +183,52 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             }
         }
 
-        fun  mostrarRemitentes (id: String) {
-            var ban = true
-            var aux = ""
-            val globvar = MisOficios()
+        fun mostrarRemitentes(id: String, tx: TextView) {
+            val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+
+            api.getRemitentes(id)
+                .enqueue(object : Callback<List<Remitente>> {
+                    override fun onResponse(
+                        call: Call<List<Remitente>>,
+                        response: Response<List<Remitente>>
+                    ) {
+                        val tam = response.body()?.size
+                        //d("Cantidad Rems: ", tam.toString())
+
+                        if (tam!!.equals(1)) {
+                            aux = ""
+                            val nom1 = response.body()!![0].UsuarioNombreCompleto
+                            aux = nom1
+                            tx.text = aux
+                            d("-/Remitente : ", aux)
+                            // return aux
+
+                        }
+                        if (tam.equals(2)) {
+                            aux = ""
+                            val nom1 = response.body()!![0].UsuarioNombreCompleto
+                            val nom2 = response.body()!![1].UsuarioNombreCompleto
+                            aux = nom1 + ", " + nom2
+                            tx.text = aux
+                            d("-//Remitente : ", aux)
+                            //return aux
+                        }
+                        if (tam > 2) {
+                            aux = ""
+                            aux = tam.toString() + " remitentes"
+                            d("-///Remitente : ", aux)
+                            tx.text = aux
+                            //  return aux
+                        }
+                    }
+                    override fun onFailure(call: Call<List<Remitente>>, t: Throwable) {
+                        d("Mostrar Remitentes", "Algo falló")
+                    }
+                })
+        }
+
+         fun callRetrofit(id: String, tx: TextView):String
+        {
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
 
             api.getRemitentes(id)
@@ -201,35 +243,31 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         if (tam!!.equals(1)) {
                             val nom1 = response.body()!![0].UsuarioNombreCompleto
                             aux = nom1
-                            globvar.setCadena(aux)
-
+                            tx.text = aux
                             d("-/Remitente : ", aux)
-                        }
+                            // return aux
 
+                        }
                         if (tam.equals(2)) {
                             val nom1 = response.body()!![0].UsuarioNombreCompleto
                             val nom2 = response.body()!![1].UsuarioNombreCompleto
                             aux = nom1 + ", " + nom2
-                            globvar.setCadena(aux)
+                            tx.text = aux
                             d("-//Remitente : ", aux)
+                            //return aux
                         }
-
                         if (tam > 2) {
                             aux = tam.toString() + " remitentes"
                             d("-///Remitente : ", aux)
-                            globvar.setCadena(aux)
+                            tx.text = aux
+                            //  return aux
                         }
-
                     }
-
                     override fun onFailure(call: Call<List<Remitente>>, t: Throwable) {
                         d("Mostrar Remitentes", "Algo falló")
                     }
                 })
-            ret = globvar.getCadena()
-            d("--Remitente : ", aux)
-            if (ban == true){return mostrarRemitentes(id)} else{ ban == false}
-
+            return aux
         }
         //fun op1(tam: String, n1: String, n2: String): String {
 //

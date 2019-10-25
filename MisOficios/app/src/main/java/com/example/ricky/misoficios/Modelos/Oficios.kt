@@ -96,7 +96,8 @@ class Documentos(
 )
 
 class Remitente(
-    var UsuarioNombreCompleto: String
+    var UsuarioNombreCompleto: String,
+    var FechaLectura: String
 ) {
 
 }

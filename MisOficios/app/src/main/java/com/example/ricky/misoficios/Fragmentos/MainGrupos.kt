@@ -21,8 +21,6 @@ import kotlinx.android.synthetic.main.fragment_grupos_frg.view.*
 class MainGrupos : Fragment() {
 
     lateinit var gruposRecyclerView : RecyclerView
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
