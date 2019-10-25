@@ -1,8 +1,10 @@
 package com.example.ricky.misoficios
 
 
+import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
@@ -13,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -43,6 +46,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var carpetasRecycler: RecyclerView
     lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var idrecibidos: String
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +92,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
         displayFragment(-1)
     }
+    override fun onCreateDialog(id: Int, args: Bundle?): Dialog? {
+        return MainActivity().let {
+            val builder = AlertDialog.Builder(baseContext)
+            val inflater = dialogVistos(baseContext).layoutInflater;
+            builder.setView(inflater.inflate(R.layout.dialog_views, null))
+            builder.create()
+        } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
 
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

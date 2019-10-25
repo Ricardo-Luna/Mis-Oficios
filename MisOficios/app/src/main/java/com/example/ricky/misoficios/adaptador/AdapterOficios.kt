@@ -1,8 +1,12 @@
 package com.example.ricky.misoficios.adaptador
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
+import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.ActivityChooserView
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
@@ -10,15 +14,20 @@ import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.ricky.misoficios.Almacenado.SharedPreference
+import com.example.ricky.misoficios.Fragmentos.MainFragment
+import com.example.ricky.misoficios.MainActivity
 import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.Modelos.Remitente
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.servicios.MisOficios
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
+import kotlinx.android.synthetic.main.dialog_confirm.view.*
+import kotlinx.android.synthetic.main.dialog_views.view.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import retrofit2.Call
@@ -109,6 +118,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 iv.setOnClickListener { view ->
                     Snackbar.make(view, "Nuevo Documento", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
+                    mostrarVistos()
                 }
             }
             if (data.estatus?.toInt() == 2) {
@@ -183,6 +193,28 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             }
         }
 
+        fun mostrarVistos()//id: String)
+        {
+            val dl = AlertDialog.Builder(MainActivity())
+            ShowDialog()
+        }
+
+
+        private fun ShowDialog(){
+            val mDialogView = LayoutInflater.from(MainFragment().context!!).inflate(R.layout.dialog_views, null)
+            val mBuilder= AlertDialog.Builder(MainActivity())
+                .setView(mDialogView)
+            //.setTitle("Firmar")
+            val mAlertDialog = mBuilder.show()
+            mDialogView.buttonOkViews.setOnClickListener()
+            {
+                mAlertDialog.dismiss()
+            }
+
+           // val firmar = mDialogView.findViewById<Button>(R.id.Firmar).toString()
+
+        }
+
         fun mostrarRemitentes(id: String, tx: TextView) {
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
 
@@ -226,56 +258,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                     }
                 })
         }
-
-         fun callRetrofit(id: String, tx: TextView):String
-        {
-            val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-
-            api.getRemitentes(id)
-                .enqueue(object : Callback<List<Remitente>> {
-                    override fun onResponse(
-                        call: Call<List<Remitente>>,
-                        response: Response<List<Remitente>>
-                    ) {
-                        val tam = response.body()?.size
-                        //d("Cantidad Rems: ", tam.toString())
-
-                        if (tam!!.equals(1)) {
-                            val nom1 = response.body()!![0].UsuarioNombreCompleto
-                            aux = nom1
-                            tx.text = aux
-                            d("-/Remitente : ", aux)
-                            // return aux
-
-                        }
-                        if (tam.equals(2)) {
-                            val nom1 = response.body()!![0].UsuarioNombreCompleto
-                            val nom2 = response.body()!![1].UsuarioNombreCompleto
-                            aux = nom1 + ", " + nom2
-                            tx.text = aux
-                            d("-//Remitente : ", aux)
-                            //return aux
-                        }
-                        if (tam > 2) {
-                            aux = tam.toString() + " remitentes"
-                            d("-///Remitente : ", aux)
-                            tx.text = aux
-                            //  return aux
-                        }
-                    }
-                    override fun onFailure(call: Call<List<Remitente>>, t: Throwable) {
-                        d("Mostrar Remitentes", "Algo falló")
-                    }
-                })
-            return aux
-        }
-        //fun op1(tam: String, n1: String, n2: String): String {
-//
-        //    var aux = ""
-        //    // if (tam!!.equals(1)) { val nom1 = response.body()!![0].UsuarioNombreCompleto; aux = nom1; return
-//
-//
-        //}
 
     }
 

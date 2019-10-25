@@ -75,7 +75,7 @@ class mostrarDocumento : AppCompatActivity() {
     override fun onCreateDialog(id: Int, args: Bundle?): Dialog? {
         return mostrarDocumento().let {
             val builder = AlertDialog.Builder(baseContext)
-            val inflater = dialogConfirm(baseContext).layoutInflater;
+            val inflater = dialogConfirm(baseContext).layoutInflater
 
             builder.setView(inflater.inflate(R.layout.dialog_confirm, null))
                 // Add action buttons
@@ -127,54 +127,5 @@ class mostrarDocumento : AppCompatActivity() {
 }
 
 
-//
-//     Snackbar.make(view, "Presione de nuevo para firmar documento", Snackbar.LENGTH_LONG)
-//         .setAction("Action", null).show()
-//     wb.loadUrl("https://www.amazon.com.mx/")
-// }
-
-//Para crear un dialog
-
-//dl.setTitle("Chinga tu madre Ed Maverick")
-//dl.setMessage("Seguro que quieres mandar a chingar a su madre a Ed Maverick?")
-//dl.setPositiveButton("Que chingue a su puta madre",
-//DialogInterface.OnClickListener { dialogo1, id -> aceptar() })
-//dl.setNegativeButton("Que chingue a su puta madre",
-//DialogInterface.OnClickListener { dialogo1, id -> aceptar() })
-//dl.show()
-
-
-//fun aceptar() {
-//    val t = Toast.makeText(this, "Gracias por mandar a chingar a su madre a Ed Maverick", Toast.LENGTH_SHORT)
-//    t.show()
-//}
-//fun cancelar() {
-//    finish()
-//}
-
-
-// override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//     return mostrarDocumento().let {
-//         val builder = AlertDialog.Builder(it)
-//         // Get the layout inflater
-//         val inflater = mostrarDocumento().layoutInflater;
-//
-//         // Inflate and set the layout for the dialog
-//         // Pass null as the parent view because its going in the dialog layout
-//         builder.setView(inflater.inflate(R.layout.dialog_confirm, null))
-//             // Add action buttons
-//             .setPositiveButton(R.string.signin,
-//                 DialogInterface.OnClickListener { dialog, id ->
-//                     // sign in the user ...
-//                     wb.loadUrl("file:///android_asset/ss.html")
-//                 })
-//             .setNegativeButton(R.string.cancel,
-//                 DialogInterface.OnClickListener { dialog, id ->
-//                     // getDialog().cancel()
-//                 })
-//         builder.create()
-//     } ?: throw IllegalStateException("Activity cannot be null")
-//
-// }
 
 
