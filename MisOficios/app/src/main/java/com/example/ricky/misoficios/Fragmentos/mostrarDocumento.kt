@@ -37,14 +37,17 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+//wb.loadUrl("https://www.amazon.com.mx/")
 class mostrarDocumento : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mostrar_documento)
-        //wb.loadUrl("https://www.amazon.com.mx/")
-        wb.loadUrl("file:///android_asset/ss.html")
+
+        createDoc()
+        try {
+            wb.loadUrl("file:///android_asset/data.html")
+        } catch(e : Exception){}
         wb.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR)
         wb.getSettings().setBuiltInZoomControls(true)
 
@@ -52,10 +55,8 @@ class mostrarDocumento : AppCompatActivity() {
         val fab: FloatingActionButton = findViewById(R.id.fabFirmar)
         fab.setOnClickListener { view ->
             val bundle = Bundle()
-          //  onCreateDialog(R.layout.dialog_confirm)
-            //onCreateDialog(R.layout.dialog_confirm, Bundle())
-          //  val dl = AlertDialog.Builder(this)
-            ShowDialog()
+            wb.loadUrl("file:///android_asset/data.html")
+            //ShowDialog()
         }
 
 
@@ -74,43 +75,46 @@ class mostrarDocumento : AppCompatActivity() {
 
     }
 
-    //  fun nuevoDoc() {
-    //      try {
-    //          val archivo = OutputStreamWriter(openFileOutput("notas.txt", Activity.MODE_PRIVATE))
-    //          archivo.write("Salinas mató a colosio we obvio")
-    //          archivo.flush()
-    //          archivo.close()
-    //      } catch (e: IOException) {
-    //      }
-    //  }
+    fun createDoc() {
+        val fileName = "data.html"
+        var file = File("file:///android_asset/",fileName)
+        val isNewFileCreated: Boolean = file.createNewFile()
 
-   // override fun onCreateDialog(id: Int, args: Bundle?): Dialog? {
-   //     return mostrarDocumento().let {
-   //         val builder = AlertDialog.Builder(baseContext)
-   //         val inflater = dialogConfirm(baseContext).layoutInflater
-//
-   //         builder.setView(inflater.inflate(R.layout.dialog_confirm, null))
-   //             // Add action buttons
-   //             .setPositiveButton(R.string.signin,
-   //                 DialogInterface.OnClickListener { dialog, id ->
-   //                     // sign in the user ...
-   //                     wb.loadUrl("file:///android_asset/ss.html")
-   //                 })
-   //             .setNegativeButton(R.string.cancel,
-   //                 DialogInterface.OnClickListener { dialog, id ->
-   //                     // getDialog().cancel()
-   //                 })
-   //         builder.create()
-   //     } ?: throw IllegalStateException("Activity cannot be null")
-   // }
-   lateinit var vistosList: ArrayList<Remitente>
+        if (isNewFileCreated) {
+            println("$fileName is created successfully.")
+        } else {
+            println("$fileName already exists.")
+        }
+
+        // try creating a file that already exists
+        val isFileCreated: Boolean = file.createNewFile()
+
+        if (isFileCreated) {
+            println("$fileName is created successfully.")
+        } else {
+            println("$fileName already exists.")
+        }
+        file.writeText(
+            "<HTML>\n" +
+                    "<HEAD>\n" +
+                    "<TITLE>ejemplo hola mundo</TITLE>\n" +
+                    "</HEAD>\n" +
+                    "<BODY>\n" +
+                    "<P>Hola Mundo</P>\n" +
+                    "</BODY>\n" +
+                    "</HTML>"
+        )
+
+    }
+
+    lateinit var vistosList: ArrayList<Remitente>
     lateinit var rv: RecyclerView
 
-    private fun ShowDialog(){
+    private fun ShowDialog() {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_views, null)
-        val mBuilder= AlertDialog.Builder(this)
+        val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
-            //.setTitle("Firmar")
+        //.setTitle("Firmar")
         val mAlertDialog = mBuilder.show()
         rv = mDialogView.rvVistos
         mostrarRemitentes("4ee47204-fd96-4d10-8e3d-bc4baa2af5cc")
@@ -118,19 +122,16 @@ class mostrarDocumento : AppCompatActivity() {
         {
             mAlertDialog.dismiss()
         }
-      //  val usuario = mDialogView.findViewById<TextView>(R.id.username).toString()
-      //  val password = mDialogView.findViewById<TextView>(R.id.password).toString()
-      //  val firmar = mDialogView.findViewById<Button>(R.id.Firmar).toString()
+
 
     }
-
 
     var x = 0
     fun mostrarRemitentes(id: String) {
         val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
 
         api.getRemitentes(id)
-            .enqueue(object : Callback<List<Remitentes>>{
+            .enqueue(object : Callback<List<Remitentes>> {
                 override fun onResponse(
                     call: Call<List<Remitentes>>,
                     response: Response<List<Remitentes>>
@@ -140,20 +141,20 @@ class mostrarDocumento : AppCompatActivity() {
                     rv.adapter = adapter
                     var us = response.body()!![x].UsuarioNombreCompleto
                     var fecha = response.body()!![x].FechaLectura
-                   // x++
+                    // x++
                     Log.d("Usuario ", "$us")
-                    Log.d("Fecha " , "$fecha")
+                    Log.d("Fecha ", "$fecha")
                 }
 
                 override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
-                  Log.d("Mostrar documento", "Hubo un error")
+                    Log.d("Mostrar documento", "Hubo un error")
                 }
             })
     }
 
-    fun buildVistos(G: List<Remitentes>): ArrayList<Remitente>{
-            vistosList = ArrayList()
-        for (item in G){
+    fun buildVistos(G: List<Remitentes>): ArrayList<Remitente> {
+        vistosList = ArrayList()
+        for (item in G) {
             vistosList.add(
                 Remitente(
                     item.UsuarioNombreCompleto,
@@ -161,7 +162,7 @@ class mostrarDocumento : AppCompatActivity() {
                 )
             )
         }
-        return  vistosList
+        return vistosList
     }
 }
 
@@ -181,5 +182,39 @@ class mostrarDocumento : AppCompatActivity() {
 //}
 
 
+//  fun nuevoDoc() {
+//      try {
+//          val archivo = OutputStreamWriter(openFileOutput("notas.txt", Activity.MODE_PRIVATE))
+//          archivo.write("Salinas mató a colosio we obvio")
+//          archivo.flush()
+//          archivo.close()
+//      } catch (e: IOException) {
+//      }
+//  }
 
+// override fun onCreateDialog(id: Int, args: Bundle?): Dialog? {
+//     return mostrarDocumento().let {
+//         val builder = AlertDialog.Builder(baseContext)
+//         val inflater = dialogConfirm(baseContext).layoutInflater
+//
+//         builder.setView(inflater.inflate(R.layout.dialog_confirm, null))
+//             // Add action buttons
+//             .setPositiveButton(R.string.signin,
+//                 DialogInterface.OnClickListener { dialog, id ->
+//                     // sign in the user ...
+//                     wb.loadUrl("file:///android_asset/ss.html")
+//                 })
+//             .setNegativeButton(R.string.cancel,
+//                 DialogInterface.OnClickListener { dialog, id ->
+//                     // getDialog().cancel()
+//                 })
+//         builder.create()
+//     } ?: throw IllegalStateException("Activity cannot be null")
+// }
+//  onCreateDialog(R.layout.dialog_confirm)
+//onCreateDialog(R.layout.dialog_confirm, Bundle())
+//  val dl = AlertDialog.Builder(this)
 
+//  val usuario = mDialogView.findViewById<TextView>(R.id.username).toString()
+//  val password = mDialogView.findViewById<TextView>(R.id.password).toString()
+//  val firmar = mDialogView.findViewById<Button>(R.id.Firmar).toString()
