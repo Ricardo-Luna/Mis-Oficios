@@ -13,7 +13,8 @@ import org.w3c.dom.Text
 class adapterVistos(var list: ArrayList<Remitente>) :
     RecyclerView.Adapter<adapterVistos.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_personas_vistos, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_personas_vistos, parent, false)
         return ViewHolder(view)
     }
 
@@ -30,17 +31,14 @@ class adapterVistos(var list: ArrayList<Remitente>) :
         fun bindItems(data: Remitente) {
             val nombre: TextView = itemView.findViewById(R.id.textViewDesinatario)
             val fecha: TextView = itemView.findViewById(R.id.textViewFechaLeido)
-            val img : ImageView = itemView.findViewById(R.id.imageLeido)
+            val img: ImageView = itemView.findViewById(R.id.imageLeido)
             nombre.text = data.UsuarioNombreCompleto
-            if (!data.FechaLectura.equals(""))
-            {
+            if (!data.FechaLectura.equals("")) {
                 fecha.text = data.FechaLectura
-            }
-            else {
+            } else {
                 img.setImageResource(R.drawable.no_leido)
                 fecha.text = "NO LEÍDO"
             }
-
         }
     }
 }

@@ -7,7 +7,6 @@ import retrofit2.http.*
 
 interface MisOficiosAPI {
 
-
   //  @GET("Documentos/{IdUsuarioPropietario}")
   //  fun getDocumentos(
   //      @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
@@ -50,10 +49,16 @@ interface MisOficiosAPI {
     @GET("Documentos/Destinatarios/{IdDocumento}")
     fun getRemitentes(
         @Path("IdDocumento") IdDocumento: String
-    ): Call<List<Remitente>>
+    ): Call<List<Remitentes>>
 
     @GET("CarpetaRecibidos/{IdUsuarioPropietario}")
     fun getCarpetaRecibidos(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<List<Carpetas>>
+
+    @GET("/Documentos/Destinatarios/{IdUsuarioDestinatario}/{IdDocumento}")
+    fun  getDestinatariosLeido(
+        @Path("IdUsuarioDestinatario") IdUsuarioDestinatario: String,
+        @Path("IdDocumento") IdDocumento: String
+    ): Call<List<Remitentes>>
 }

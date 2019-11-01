@@ -98,9 +98,12 @@ class Documentos(
 class Remitente(
     var UsuarioNombreCompleto: String,
     var FechaLectura: String
-) {
+)
 
-}
+class Remitentes(
+    var UsuarioNombreCompleto: String,
+    var FechaLectura: String
+)
 
 
 class Gruposrv(

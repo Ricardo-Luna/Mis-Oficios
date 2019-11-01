@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var carpetasList: ArrayList<Carpetas>
     lateinit var idrecibidos: String
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -101,7 +99,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -136,16 +133,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_grupos -> {
                 MainFragment()
-
             }
 
             // R.id.nwDoc -> {
             //     //CrearOficio()
             // }
+
             R.id.itGrupo -> {
                 NwGrupo()
             }
-
 
             else -> {
                 MainFragment()

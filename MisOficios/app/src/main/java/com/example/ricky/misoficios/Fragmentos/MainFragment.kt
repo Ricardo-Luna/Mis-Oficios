@@ -89,7 +89,6 @@ class MainFragment : Fragment() {
         return view
     }
 
-
     fun mostrarDocumentos(id: String, carpeta: String) {
 //        var usuario = SharedPreference.getInstance(context!!).idusuario
         api.getDocsCarpetas(
@@ -123,7 +122,26 @@ class MainFragment : Fragment() {
             )
     }
 
-
+    fun buildOficios(G: List<Documentos>): ArrayList<Oficios> {
+        oficiosList = ArrayList()
+        for (item in G) {
+            oficiosList.add(
+                Oficios(
+                    item.IdDocumento,
+                    item.Titulo,
+                    item.FechaEnvio,
+                    item.IdPropietario,
+                    item.idDocumentoRemitente,
+                    item.IdCarpeta,
+                    item.Codigo,
+                    item.Importancia,
+                    item.estatus,
+                    item.PropietarioNombreCompleto
+                )
+            )
+        }
+        return oficiosList
+    }
 
     fun addToDatabase(id: String, carpeta: String) {
 //        var usuario = SharedPreference.getInstance(context!!).idusuario
@@ -155,8 +173,6 @@ class MainFragment : Fragment() {
             }
             )
     }
-
-
 
     fun getIDUser(): String {
         val dbHandler = DBHelper(context!!, null)
@@ -201,27 +217,6 @@ class MainFragment : Fragment() {
             })
         d("XYXCARPETARECIBIDOS: ", idrecibidos)
         return idrecibidos
-    }
-
-    fun buildOficios(G: List<Documentos>): ArrayList<Oficios> {
-        oficiosList = ArrayList()
-        for (item in G) {
-            oficiosList.add(
-                Oficios(
-                    item.IdDocumento,
-                    item.Titulo,
-                    item.FechaEnvio,
-                    item.IdPropietario,
-                    item.idDocumentoRemitente,
-                    item.IdCarpeta,
-                    item.Codigo,
-                    item.Importancia,
-                    item.estatus,
-                    item.PropietarioNombreCompleto
-                )
-            )
-        }
-        return oficiosList
     }
 
     fun onMostrarCarpetas(id: String) {

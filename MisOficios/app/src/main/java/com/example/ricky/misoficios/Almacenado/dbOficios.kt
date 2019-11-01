@@ -14,6 +14,7 @@ class dbOficios(
     DATABASE_NAME,
     factory, DATABASE_VERSION
 )
+
 {
     override fun onCreate(db: SQLiteDatabase) {
         makeDatabase(TABLE_NAME,db)
@@ -44,11 +45,18 @@ class dbOficios(
                         "$_estatus              TEXT,"+
                         "$_propietario          TEXT,"+
                         "$_remitente            TEXT,"+
-                        "$_fechaLectura          TEXT"+
+                        "$_fechaLectura         TEXT"+
                         ")"
                 )
+        val createTableCarpetas = (
+                "Create table carpetas " +
+                        "$_idCarpeta            TEXT," +
+                        "$_nombreCarpeta        TEXT"
+                )
         db.execSQL(createTable)
+        db.execSQL(createTableCarpetas)
     }
+
 
     fun getOficiosDb(): Cursor
     {
@@ -106,6 +114,7 @@ class dbOficios(
         val _propietario          = "propietario"
         val _remitente            = "Remitente"
         val _fechaLectura         = "fechaLectura"
-
+        val _idCarpeta            = "idCarpeta"
+        val _nombreCarpeta        = "nombreCarpeta"
     }
 }
