@@ -17,6 +17,7 @@ import com.example.ricky.misoficios.Fragmentos.MainFragment
 import com.example.ricky.misoficios.MainActivity
 import com.example.ricky.misoficios.Modelos.Oficios
 import com.example.ricky.misoficios.Modelos.Remitentes
+import com.example.ricky.misoficios.Modelos.nickname
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class AdapterOficios(var list: ArrayList<Oficios>) :
     RecyclerView.Adapter<AdapterOficios.ViewHolder>() {
@@ -46,8 +48,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var rems: String = ""
-        lateinit var ret: String
         fun bindItems(data: Oficios) {
 
             //Declaración de los TextViews y otros items visuales///////////////////////
@@ -67,9 +67,15 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val blanco = "#FFFFFF"
             val pantone = "#00b0e1"
             ///////////////////////////////////////////////////////////////////////////
-
-            d("IdDocumento: ", data.IdDocumento)
-            mostrarRemitentes(data.IdDocumento!!,remitente)
+            remitente.text = data.Destinatarios
+            // d("IdDocumento: ", data.IdDocumento)
+            //mostrarRemitentes(data.IdPropietario!!, remitente)
+//
+            //if (data.IdPropietario == usuario.IdUsuario) {
+            //    mostrarDestinatarios(data.IdDocumento!!, remitente)
+            //} else {
+            //    mostrarRemitentes(data.IdPropietario!!, remitente)
+            //}
 
             asunto.text = data.Titulo
             folio.text = data.Codigo
@@ -95,28 +101,36 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         response: Response<List<Remitentes>>
                     ) {
                         try {
+                            val rs = response.message()
                             val res = response.body()
-                            if ((res!![0].FechaLectura) == "") {
-                                asunto.setTextColor(Color.parseColor(blanco))
-                                remitente.setTextColor(Color.parseColor(blanco))
-                                fecha.setTextColor(Color.parseColor(blanco))
-                                folio.setTextColor(Color.parseColor(blanco))
-                                constraint.setBackgroundColor(Color.parseColor(pantone))
+                            val fe = "+ " + res!![0].FechaLectura
+                            //per println("LEIDO: $fe")
+                            if (fe == null) {
+                                //  d("LEIDO", "EXITO EN LA LLAMADA//")
+                                // asunto.setTextColor(Color.parseColor(blanco))
+                                // remitente.setTextColor(Color.parseColor(blanco))
+                                // fecha.setTextColor(Color.parseColor(blanco))
+                                // folio.setTextColor(Color.parseColor(blanco))
+                                // constraint.setBackgroundColor(Color.parseColor(pantone))
                             }
-                        }
-                        catch (e: Exception)
-                        {
-
+                            if (fe != "") {
+                                //  d("LEIDO: ", "$fe")
+                            }
+                        } catch (e: Exception) {
+                            asunto.setTextColor(Color.parseColor(blanco))
+                            remitente.setTextColor(Color.parseColor(blanco))
+                            fecha.setTextColor(Color.parseColor(blanco))
+                            folio.setTextColor(Color.parseColor(blanco))
+                            constraint.setBackgroundColor(Color.parseColor(pantone))
                         }
                     }
 
                     override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        //     d("ERRROR", "FALLO EN LA LLAMADA")
                     }
                 })
 
             ////////////////////////////////////////////////////////////////////////////////////////
-
 
 
             // Asigna el ícono que se adapta a la importancia///////////////////////////
@@ -144,12 +158,46 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
+
+        }
+
+        //Muestra los remitentes o destinatarios según sea el caso ///////////////////////////////////////
+        fun mostrarRemitentes(id: String, tx: TextView) {
+            val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+            api.getNickName(id)
+                .enqueue(object : Callback<List<nickname>> {
+                    override fun onResponse(
+                        call: Call<List<nickname>>,
+                        response: Response<List<nickname>>
+                    ) {
+                        val rs = response.body()
+                        val ax = rs!![0].NombreCompleto
+                        tx.text = ax
+                    }
+
+                    override fun onFailure(call: Call<List<nickname>>, t: Throwable) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+                })
+            // .enqueue(object : Callback<nickname> {
+            //     override fun onResponse(call: Call<nickname>, response: Response<nickname>) {
+//             //           val jsonarray = JSONArray(response)
+//
+            //         val rs = response.body()
+            //         rs.toString()
+            //         d("REMITENTES", "${rs}")
+            //     }
+//
+            //     override fun onFailure(call: Call<nickname>, t: Throwable) {
+            //         d("ERROR", "NO REMITENTES")
+            //     }
+            // }
+
         }
 
         //Llama a la API y solicita los remitentes de cierto documento, recibe el id del documento y el textview de remitentes
-        fun mostrarRemitentes(id: String, tx: TextView) {
+        fun mostrarDestinatarios(id: String, tx: TextView) {
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-
             api.getRemitentes(id)
                 .enqueue(object : Callback<List<Remitentes>> {
                     override fun onResponse(
@@ -161,37 +209,36 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 
                         if (tam!!.equals(0)) {
                             aux = ""
-                            //al nom1 = response.body().size
-                            //ux = nom1
-                            tx.text = tam.toString()
-                            //    d("-/Remitente : ", aux)
-                            // return aux
+                            // tx.text  = response.body()!![0].UsuarioNombreCompleto
+                            try {
+                                tx.text = response.body()!![0].UsuarioNombreCompleto
+                            } catch (e: Exception) {
+                                //  d("-/Remitente : ", "Algo falló")
+                            }
 
                         }
-
-
                         if (tam!!.equals(1)) {
                             aux = ""
-                            val nom1 = response.body()!![0].UsuarioNombreCompleto
+                            val nom1 = "PARA " + response.body()!![0].UsuarioNombreCompleto
                             aux = nom1
                             tx.text = aux
-                        //    d("-/Remitente : ", aux)
+                            //    d("-/Remitente : ", aux)
                             // return aux
 
                         }
                         if (tam.equals(2)) {
                             aux = ""
-                            val nom1 = response.body()!![0].UsuarioNombreCompleto
+                            val nom1 = "PARA " + response.body()!![0].UsuarioNombreCompleto
                             val nom2 = response.body()!![1].UsuarioNombreCompleto
                             aux = nom1 + ", " + nom2
                             tx.text = aux
-                         //   d("-//Remitente : ", aux)
+                            //   d("-//Remitente : ", aux)
                             //return aux
                         }
                         if (tam > 2) {
                             aux = ""
-                            aux = tam.toString() + " remitentes"
-                        //    d("-///Remitente : ", aux)
+                            aux = "Para " + tam.toString() + " remitentes"
+                            //    d("-///Remitente : ", aux)
                             tx.text = aux
                             //  return aux
                         }
@@ -204,15 +251,26 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
         }
         //----------------------------------------------------------------------------------------------------------------------
 
+        fun comprobarVisto(
+            tx1: TextView, tx2: TextView, tx3: TextView, imageView: ImageView,
+            imageView2: ImageView, imageView3: ImageView, cns: ConstraintLayout
+        ) {
+            val blanco = "#FFFFFF"
+            tx1.setTextColor(Color.parseColor(blanco))
+            tx2.setTextColor(Color.parseColor(blanco))
+            tx3.setTextColor(Color.parseColor(blanco))
+        }
+
         fun mostrarVistos()//id: String)
         {
             val dl = AlertDialog.Builder(MainActivity())
             ShowDialog()
         }
 
-        private fun ShowDialog(){
-            val mDialogView = LayoutInflater.from(MainFragment().context!!).inflate(R.layout.dialog_views, null)
-            val mBuilder= AlertDialog.Builder(MainActivity())
+        private fun ShowDialog() {
+            val mDialogView =
+                LayoutInflater.from(MainFragment().context!!).inflate(R.layout.dialog_views, null)
+            val mBuilder = AlertDialog.Builder(MainActivity())
                 .setView(mDialogView)
             //.setTitle("Firmar")
             val mAlertDialog = mBuilder.show()
@@ -220,12 +278,11 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             {
                 mAlertDialog.dismiss()
             }
-           // val firmar = mDialogView.findViewById<Button>(R.id.Firmar).toString()
+            // val firmar = mDialogView.findViewById<Button>(R.id.Firmar).toString()
 
         }
 
-        fun comprobarLeido(idDestinatario: String,idDocumento: String)
-        {
+        fun comprobarLeido(idDestinatario: String, idDocumento: String) {
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
             api.getDestinatariosLeido(idDestinatario, idDocumento)
                 .enqueue(object : Callback<List<Remitentes>> {

@@ -1,13 +1,12 @@
 package com.example.ricky.misoficios.Almacenado
 
 import android.content.Context
-import android.util.Log
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.google.gson.Gson
 
 class SharedPreference private constructor(private val mCtx: Context) {
     private val SHARED_PREF_NAME = "spOficios"
-    public var gruposid= ""
+    var gruposid = ""
     val gson = Gson()
     val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
 

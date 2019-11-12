@@ -1,170 +1,193 @@
 package com.example.ricky.misoficios.Fragmentos
 
-import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.webkit.WebSettings
 import com.example.ricky.misoficios.R
 import kotlinx.android.synthetic.main.activity_mostrar_documento.*
 import java.io.File
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.Window
 import android.widget.Button
 import android.widget.TextView
-import java.io.IOException
-import java.io.OutputStreamWriter
 import android.widget.Toast
 import com.example.ricky.misoficios.Modelos.Remitente
-import com.example.ricky.misoficios.Modelos.Remitentes
-import com.example.ricky.misoficios.adaptador.adapterVistos
-import com.example.ricky.misoficios.servicios.MisOficiosAPI
-import com.example.ricky.misoficios.servicios.RetrofitClient
-import kotlinx.android.synthetic.main.dialog_confirm.view.*
-import kotlinx.android.synthetic.main.dialog_views.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
+import android.Manifest
 import kotlin.collections.ArrayList
+
+
 
 //wb.loadUrl("https://www.amazon.com.mx/")
 class mostrarDocumento : AppCompatActivity() {
 
+    //Variables
+    lateinit var vistosList: ArrayList<Remitente>
+    lateinit var rv: RecyclerView
+    private val PERMISSION_REQUEST = 10
+    private var permissions =
+        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+
+    ///On Create////////////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mostrar_documento)
-
-        createDoc()
-        try {
-            wb.loadUrl("file:///android_asset/data.html")
-        } catch(e : Exception){}
         wb.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR)
         wb.getSettings().setBuiltInZoomControls(true)
-
-
-        val fab: FloatingActionButton = findViewById(R.id.fabFirmar)
-        fab.setOnClickListener { view ->
-            val bundle = Bundle()
-            wb.loadUrl("file:///android_asset/data.html")
-            //ShowDialog()
+        try {
+            wb.loadUrl("file:////sdcard/ss.html")
+        } catch (e: Exception) {
         }
+        val fab: FloatingActionButton = findViewById(R.id.fabFirmar)
 
-
+        fab.setOnClickListener { view ->
+            createDoc()
+            val bundle = Bundle()
+            // wb.loadUrl("https://www.amazon.com.mx/")
+            ShowDialog()
+        }
         val faback: FloatingActionButton = findViewById(R.id.floatingActionButton)
         //  nuevoDoc()
-        faback.setOnClickListener { view ->
-            Snackbar.make(view, "Documento creado", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-
-            //  val intent = Intent(baseContext, MainActivity::class.java)
-            //  startActivity(intent)
-            //  wb.loadUrl("file:///android_asset/ss.html")
-
-
+        faback.setOnClickListener {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkPermission(this, permissions)) {
+                        Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        requestPermissions(permissions, PERMISSION_REQUEST)
+                    }
+                } else {
+                    Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                //view ->
+                //Snackbar.make(view, "Documento creado", Snackbar.LENGTH_LONG)
+                //    .setAction("Action", null).show()
+                //  val intent = Intent(baseContext, MainActivity::class.java)
+                //  startActivity(intent)
+            } catch (e: Exception) {
+                println("Falló")
+            }
         }
+    }
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+    //Permission Block////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Todo lo que tiene que ver con solicitar permisos para poder sobreescribir el documento mostrado en el webview
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST) {
+            var allSuccess = true
+            for (i in permissions.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    allSuccess = false
+                    var requestAgain =
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && shouldShowRequestPermissionRationale(
+                            permissions[i]
+                        )
+                    if (requestAgain) {
+                        Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Go to settings and enable the permission",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+            if (allSuccess)
+                Toast.makeText(this, "Permissions Granted", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun checkPermission(context: Context, permissionArray: Array<String>): Boolean {
+        var allSuccess = true
+        for (i in permissionArray.indices) {
+            if (checkCallingOrSelfPermission(permissionArray[i]) == PackageManager.PERMISSION_DENIED)
+                allSuccess = false
+        }
+        return allSuccess
     }
 
     fun createDoc() {
-        val fileName = "data.html"
-        var file = File("file:///android_asset/",fileName)
-        val isNewFileCreated: Boolean = file.createNewFile()
+        try {
 
-        if (isNewFileCreated) {
-            println("$fileName is created successfully.")
-        } else {
-            println("$fileName already exists.")
+            //makeRequest()
+            val fileName = "/sdcard/ss2.html"
+            var file = File(fileName)
+            val isNewFileCreated: Boolean = file.createNewFile()
+
+            if (isNewFileCreated) {
+                println("$fileName is created successfully.")
+            } else {
+                println("$fileName already exists.")
+            }
+            // try creating a file that already exists
+            val isFileCreated: Boolean = file.createNewFile()
+
+            if (isFileCreated) {
+                println("$fileName is created successfully.")
+            } else {
+                println("$fileName already exists.")
+            }
+            file.writeText(
+                "<HTML>\n" +
+                        "<HEAD>\n" +
+                        "<TITLE>ejemplo hola mundo</TITLE>\n" +
+                        "</HEAD>\n" +
+                        "<BODY>\n" +
+                        "<P>Hola Mundo</P>\n" +
+                        "</BODY>\n" +
+                        "</HTML>"
+            )
+            wb.loadUrl("file:////sdcard/ss2.html")
+        } catch (e: Exception) {
+            println("Fallo al crear archivo: $e")
         }
-
-        // try creating a file that already exists
-        val isFileCreated: Boolean = file.createNewFile()
-
-        if (isFileCreated) {
-            println("$fileName is created successfully.")
-        } else {
-            println("$fileName already exists.")
-        }
-        file.writeText(
-            "<HTML>\n" +
-                    "<HEAD>\n" +
-                    "<TITLE>ejemplo hola mundo</TITLE>\n" +
-                    "</HEAD>\n" +
-                    "<BODY>\n" +
-                    "<P>Hola Mundo</P>\n" +
-                    "</BODY>\n" +
-                    "</HTML>"
-        )
-
     }
 
-    lateinit var vistosList: ArrayList<Remitente>
-    lateinit var rv: RecyclerView
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    ///Funciones que muestran el dialog de firmar/////////////////////////////////////////////////////////
+    private fun showDialogOK(message: String, okListener: DialogInterface.OnClickListener) {
+        AlertDialog.Builder(this)
+            .setMessage(message)
+            .setPositiveButton("OK", okListener)
+            .setNegativeButton("Cancel", okListener)
+            .create()
+            .show()
+    }
 
     private fun ShowDialog() {
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_views, null)
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_confirm, null)
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
-        //.setTitle("Firmar")
+            .setTitle("Firmar")
         val mAlertDialog = mBuilder.show()
-        rv = mDialogView.rvVistos
-        mostrarRemitentes("4ee47204-fd96-4d10-8e3d-bc4baa2af5cc")
-        mDialogView.buttonOkViews.setOnClickListener()
-        {
-            mAlertDialog.dismiss()
+        // dialog.setContentView(R.layout.dialog_confirm)
+        val usuario = mDialogView.findViewById<TextView>(R.id.username)
+        val password = mDialogView.findViewById<TextView>(R.id.password)
+        val firmar = mDialogView.findViewById<Button>(R.id.Firmar)
+        firmar.setOnClickListener {
+            // mDialogView.dismiss()
         }
-
-
     }
-
-    var x = 0
-    fun mostrarRemitentes(id: String) {
-        val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-
-        api.getRemitentes(id)
-            .enqueue(object : Callback<List<Remitentes>> {
-                override fun onResponse(
-                    call: Call<List<Remitentes>>,
-                    response: Response<List<Remitentes>>
-                ) {
-                    val datos = response.body()
-                    val adapter = adapterVistos(buildVistos(datos!!))
-                    rv.adapter = adapter
-                    var us = response.body()!![x].UsuarioNombreCompleto
-                    var fecha = response.body()!![x].FechaLectura
-                    // x++
-                    Log.d("Usuario ", "$us")
-                    Log.d("Fecha ", "$fecha")
-                }
-
-                override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
-                    Log.d("Mostrar documento", "Hubo un error")
-                }
-            })
-    }
-
-    fun buildVistos(G: List<Remitentes>): ArrayList<Remitente> {
-        vistosList = ArrayList()
-        for (item in G) {
-            vistosList.add(
-                Remitente(
-                    item.UsuarioNombreCompleto,
-                    item.FechaLectura
-                )
-            )
-        }
-        return vistosList
-    }
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
+
 
 //private fun showDialogDEP(title: String) {
 //    val dialog = Dialog(dialogConfirm(baseContext).context)

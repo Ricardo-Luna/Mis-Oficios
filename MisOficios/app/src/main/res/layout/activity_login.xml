@@ -29,8 +29,11 @@
 
     <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="236dp"
-            android:layout_height="373dp"
+            android:layout_width="195dp"
+            android:layout_height="314dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toTopOf="@+id/imageView11"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
@@ -63,8 +66,8 @@
 
     <android.support.constraint.ConstraintLayout
             android:id="@+id/dialog_confirm"
-            android:layout_width="342dp"
-            android:layout_height="212dp"
+            android:layout_width="343dp"
+            android:layout_height="267dp"
             android:background="#889E9B94"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +97,7 @@
         <EditText
                 android:id="@+id/txpw"
                 android:layout_width="0dp"
-                android:layout_height="39dp"
+                android:layout_height="44dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -109,22 +112,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txuser" />
 
+        <Switch
+                android:id="@+id/recordarSesion"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginTop="24dp"
+                android:text="Mantener la sesión iniciada"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txpw" />
+
         <Button
                 android:id="@+id/btnIniciar"
                 style="@android:style/Widget.Holo.Light.Button"
                 android:layout_width="233dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:background="#f08119
 "
                 android:text="Iniciar sesión"
                 android:textColor="@color/blanco"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.517"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txpw"
+                app:layout_constraintTop_toBottomOf="@+id/recordarSesion"
                 tools:targetApi="lollipop" />
 
     </android.support.constraint.ConstraintLayout>

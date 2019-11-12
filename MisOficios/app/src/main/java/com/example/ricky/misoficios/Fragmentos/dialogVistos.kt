@@ -69,7 +69,8 @@ class dialogVistos(context: Context):Dialog(context) {
             vistosList.add(
                 Remitente(
                     item.UsuarioNombreCompleto,
-                    item.FechaLectura
+                    item.FechaLectura!!,
+                    item.IdDestinatario!!
                 )
             )
         }

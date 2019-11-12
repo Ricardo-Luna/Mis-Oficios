@@ -24,7 +24,7 @@ package com.example.ricky.misoficios.Modelos
 
 
 class nickname(
-    NickName: String
+    var NombreCompleto: String
 )
 
 class Carpetas(
@@ -38,7 +38,9 @@ class Carpetas(
     var FechaActualizacion: String
 )
 
-
+//106.98
+//- 4
+//
 class folder(
     var IdCarpeta: String?,
     var IdUsuarioPropietario: String?,
@@ -65,8 +67,6 @@ class recycler(
     fun isExpanded(): Boolean {
         return expanded
     }
-
-
 }
 
 class Oficios(
@@ -79,6 +79,7 @@ class Oficios(
     var Codigo: String?,
     var Importancia: String?,
     var estatus: String?,
+    var Destinatarios: String?,
     var PropietarioNombreCompleto: String
 )
 
@@ -92,17 +93,20 @@ class Documentos(
     var Codigo: String?,
     var Importancia: String?,
     var estatus: String?,
+    var Destinatarios: String?,
     var PropietarioNombreCompleto: String
 )
 
 class Remitente(
     var UsuarioNombreCompleto: String,
-    var FechaLectura: String
+    var FechaLectura: String,
+    var IdDestinatario: String
 )
 
 class Remitentes(
     var UsuarioNombreCompleto: String,
-    var FechaLectura: String
+    var FechaLectura: String?,
+    var IdDestinatario: String?
 )
 
 
@@ -146,7 +150,6 @@ data class Permiso(
     val numeroPermiso: Int
 )
 
-
 class LoginReq(
     var NickName: String,
     var Password: String
@@ -159,5 +162,6 @@ class LoginRes(
     var NickName: String?,
     var Password: String?,
     var NombreCompleto: String?,
-    var Permisos: List<Permiso>?
+    var Permisos: List<Permiso>?,
+    var Recordar: Boolean
 )

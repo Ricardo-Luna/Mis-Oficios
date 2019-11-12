@@ -7,10 +7,10 @@ import retrofit2.http.*
 
 interface MisOficiosAPI {
 
-  //  @GET("Documentos/{IdUsuarioPropietario}")
-  //  fun getDocumentos(
-  //      @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
-  //  ): Call<List<Documentos2>>
+    //  @GET("Documentos/{IdUsuarioPropietario}")
+    //  fun getDocumentos(
+    //      @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
+    //  ): Call<List<Documentos2>>
 
     @GET("GruposUsuarios/{IdGrupo}")
     fun getUsuariosGrupos(
@@ -28,7 +28,7 @@ interface MisOficiosAPI {
     @GET("getUsuarioNombre/{IdUsuario}")
     fun getNickName(
         @Path("IdUsuario") IdUsuario: String
-    ): Call<nickname>
+    ): Call<List<nickname>>
 
     @GET("DocCarpetas/{IdUsuarioPropietario}/{IdCarpeta}")
     fun getDocsCarpetas(
@@ -56,9 +56,14 @@ interface MisOficiosAPI {
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     ): Call<List<Carpetas>>
 
-    @GET("/Documentos/Destinatarios/{IdUsuarioDestinatario}/{IdDocumento}")
-    fun  getDestinatariosLeido(
+    @GET("Documentos/Destinatario/{IdUsuarioDestinatario}/{IdDocumento}")
+    fun getDestinatariosLeido(
         @Path("IdUsuarioDestinatario") IdUsuarioDestinatario: String,
         @Path("IdDocumento") IdDocumento: String
     ): Call<List<Remitentes>>
 }
+
+// Santander
+// convenio 9552
+// CEI0095356
+// UDGPLXCEI

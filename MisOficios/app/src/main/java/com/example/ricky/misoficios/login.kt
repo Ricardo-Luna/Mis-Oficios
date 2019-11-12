@@ -6,22 +6,22 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.wifi.WifiManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.text.format.Formatter
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Switch
 import android.widget.Toast
-import com.example.ricky.misoficios.Almacenado.DBHelper
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.LoginReq
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.example.ricky.misoficios.Modelos.Permiso
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Callback
+import retrofit2.Response
 
 
 class login : AppCompatActivity() {
@@ -33,17 +33,17 @@ class login : AppCompatActivity() {
     lateinit var txuser: EditText
     lateinit var txpw: EditText
     lateinit var dialog: AlertDialog
+    lateinit var sesion: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         deleteDatabase("wot")
         btnIniciar = findViewById(R.id.btnIniciar)
+        sesion = findViewById(R.id.recordarSesion)
         txuser = findViewById(R.id.txuser)
         txpw = findViewById(R.id.txpw)
-
-        btnIniciar.setOnClickListener {  validarCampos() }
-
+        btnIniciar.setOnClickListener { validarCampos() }
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.my_loading, null)
         builder.setView(dialogView)
@@ -53,8 +53,9 @@ class login : AppCompatActivity() {
         getIpAddress()
     }
 
+
     private fun validarCampos() {
-      //  d("LOGIN:", "usr: " + txuser.text.toString() + "pw: " + txpw.text.toString())
+        //  d("LOGIN:", "usr: " + txuser.text.toString() + "pw: " + txpw.text.toString())
         if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
             Toast.makeText(this, "Usuario o contraseña en blanco", Toast.LENGTH_SHORT).show()
         } else {
@@ -82,19 +83,12 @@ class login : AppCompatActivity() {
                                 val loginRes = response.body()!!
                                 loginRes.NickName = txuser.text.toString()
 
-                                //Database block--------------------------------
-
-                              //  val dbHandler = DBHelper(this@login, null)
-                              //  dbHandler.clearDatabase()
-//
-                              //  dbHandler.addID(loginRes.IdUsuario.toString())
-                              //  val cursor = dbHandler.getID()
-                              //  cursor!!.moveToFirst()
-                                //d("XXXINICIO: ", cursor.getString(0).toString())
-                                ////////////////////////////////////////////////
                                 SharedPreference.getInstance(applicationContext)
-                                    .saveUsuario(loginRes,loginRes.IdUsuario.toString())     //cursor.getString(0))
-
+                                    .saveUsuario(
+                                        loginRes,
+                                        loginRes.IdUsuario.toString()
+                                    )     //cursor.getString(0))
+                                loginRes.Recordar = true
                                 val intent = Intent(applicationContext, MainActivity::class.java)
                                 // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
@@ -129,7 +123,6 @@ class login : AppCompatActivity() {
         return false
     }
 
-
     private fun getIpAddress() {
         val IP: String
         val manager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
@@ -145,6 +138,16 @@ class login : AppCompatActivity() {
 
 
 //{Deprecated methods}
+
+//Database block--------------------------------
+//  val dbHandler = DBHelper(this@login, null)
+//  dbHandler.clearDatabase()
+//
+//  dbHandler.addID(loginRes.IdUsuario.toString())
+//  val cursor = dbHandler.getID()
+//  cursor!!.moveToFirst()
+//d("XXXINICIO: ", cursor.getString(0).toString())
+////////////////////////////////////////////////
 
 btnIniciar.setOnClickListener{
      val user = txuser.text.toString().trim()

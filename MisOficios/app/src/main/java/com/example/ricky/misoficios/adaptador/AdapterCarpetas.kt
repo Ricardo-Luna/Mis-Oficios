@@ -119,6 +119,7 @@ class AdapterCarpetas(
                         item.Codigo,
                         item.Importancia,
                         item.estatus,
+                        item.Destinatarios,
                         item.PropietarioNombreCompleto
                     )
                 )
