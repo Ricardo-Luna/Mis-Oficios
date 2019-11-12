@@ -22,7 +22,6 @@ import android.Manifest
 import kotlin.collections.ArrayList
 
 
-
 //wb.loadUrl("https://www.amazon.com.mx/")
 class mostrarDocumento : AppCompatActivity() {
 
@@ -30,8 +29,12 @@ class mostrarDocumento : AppCompatActivity() {
     lateinit var vistosList: ArrayList<Remitente>
     lateinit var rv: RecyclerView
     private val PERMISSION_REQUEST = 10
+    lateinit var dialog: AlertDialog
     private var permissions =
-        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
 
 
     ///On Create////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,8 +43,10 @@ class mostrarDocumento : AppCompatActivity() {
         setContentView(R.layout.activity_mostrar_documento)
         wb.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR)
         wb.getSettings().setBuiltInZoomControls(true)
+
+
         try {
-            wb.loadUrl("file:////sdcard/ss.html")
+            wb.loadUrl("file:////sdcard/ss2.html")
         } catch (e: Exception) {
         }
         val fab: FloatingActionButton = findViewById(R.id.fabFirmar)
@@ -61,6 +66,7 @@ class mostrarDocumento : AppCompatActivity() {
                         Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
                             .show()
                     } else {
+                        ShowDialogPermiso()
                         requestPermissions(permissions, PERMISSION_REQUEST)
                     }
                 } else {
@@ -162,13 +168,17 @@ class mostrarDocumento : AppCompatActivity() {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     ///Funciones que muestran el dialog de firmar/////////////////////////////////////////////////////////
-    private fun showDialogOK(message: String, okListener: DialogInterface.OnClickListener) {
-        AlertDialog.Builder(this)
-            .setMessage(message)
-            .setPositiveButton("OK", okListener)
-            .setNegativeButton("Cancel", okListener)
-            .create()
-            .show()
+    private fun ShowDialogPermiso() {
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_aviso_inicio, null)
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+            .setTitle("Firmar")
+        val mAlertDialog = mBuilder.show()
+        val btn = mDialogView.findViewById<Button>(R.id.Firmar)
+        btn.setOnClickListener{
+          //  mDialogView.
+        }
+
     }
 
     private fun ShowDialog() {
@@ -176,13 +186,14 @@ class mostrarDocumento : AppCompatActivity() {
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
             .setTitle("Firmar")
+            //.setCancelable(false)
         val mAlertDialog = mBuilder.show()
         // dialog.setContentView(R.layout.dialog_confirm)
         val usuario = mDialogView.findViewById<TextView>(R.id.username)
         val password = mDialogView.findViewById<TextView>(R.id.password)
         val firmar = mDialogView.findViewById<Button>(R.id.Firmar)
         firmar.setOnClickListener {
-            // mDialogView.dismiss()
+            println(mDialogView.display.toString())
         }
     }
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

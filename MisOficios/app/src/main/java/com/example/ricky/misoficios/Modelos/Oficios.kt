@@ -22,7 +22,6 @@ package com.example.ricky.misoficios.Modelos
 //    var FechaActualizacion: String?
 //)
 
-
 class nickname(
     var NombreCompleto: String
 )
@@ -56,7 +55,6 @@ class valor(
     var cantidad: Int?
 )
 
-
 class UsuariosGrupo(
     var UsuarioNombreCompleto: String
 )
@@ -68,6 +66,10 @@ class recycler(
         return expanded
     }
 }
+
+class Oficio(
+    var ContenidoHTML: String?
+)
 
 class Oficios(
     var IdDocumento: String?,
@@ -109,7 +111,6 @@ class Remitentes(
     var IdDestinatario: String?
 )
 
-
 class Gruposrv(
     var IdGrupo: String,
     var Nombre: String,
@@ -136,7 +137,6 @@ class EmpleadosGrupo(
     var nombre: String,
     var puesto: String
 )
-
 
 class usuariosGruposR(
     var UsuarioNombreCompleto: String

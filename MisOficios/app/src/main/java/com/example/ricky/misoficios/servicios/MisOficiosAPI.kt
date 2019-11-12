@@ -12,6 +12,11 @@ interface MisOficiosAPI {
     //      @Path("IdUsuarioPropietario") IdUsuarioPropietario: String
     //  ): Call<List<Documentos2>>
 
+    @GET("Oficios/{IdDocumento}")
+    fun getDocumentoHtml(
+        @Path("IdDocumento") IdDocumento: String
+    ): Call<Oficio>
+
     @GET("GruposUsuarios/{IdGrupo}")
     fun getUsuariosGrupos(
         @Path("IdGrupo") IdGrupo: String

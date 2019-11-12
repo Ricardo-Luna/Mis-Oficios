@@ -67,7 +67,7 @@ class login : AppCompatActivity() {
                     override fun onFailure(call: Call<LoginRes>, t: Throwable) {
                         if (dialog.isShowing())
                             dialog.dismiss()
-                        Log.e("Response", t.message)
+                       // Log.e("Response", t.message)
                         Toast.makeText(
                             applicationContext,
                             "[Login] Error: Indica el errror al areas de TI",
