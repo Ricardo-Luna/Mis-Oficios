@@ -1,15 +1,19 @@
 package com.example.ricky.misoficios
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.format.Formatter
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
@@ -34,7 +38,13 @@ class login : AppCompatActivity() {
     lateinit var txpw: EditText
     lateinit var dialog: AlertDialog
     lateinit var sesion: Switch
+    private val PERMISSION_REQUEST = 10
 
+    private var permissions =
+        arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -46,6 +56,37 @@ class login : AppCompatActivity() {
         btnIniciar.setOnClickListener { validarCampos() }
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.my_loading, null)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkPermission(this, permissions)) {
+                    Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_aviso_inicio, null)
+                    val mBuilder = android.support.v7.app.AlertDialog.Builder(this)
+                        .setView(mDialogView)
+                        .setTitle("Permiso")
+                    val mAlertDialog = mBuilder.show()
+                    val btn = mDialogView.findViewById<Button>(R.id.btn_permiso)
+                    btn.setOnClickListener {
+                        try {
+                            mAlertDialog.dismiss()
+                            requestPermissions(permissions, PERMISSION_REQUEST)
+                        } catch (e: Exception) {
+
+                        }
+                    }
+                }
+            } else {
+            }
+            //view ->
+            //Snackbar.make(view, "Documento creado", Snackbar.LENGTH_LONG)
+            //    .setAction("Action", null).show()
+            //  val intent = Intent(baseContext, MainActivity::class.java)
+            //  startActivity(intent)
+        } catch (e: Exception) {
+            println("Falló")
+        }
         builder.setView(dialogView)
         builder.setCancelable(false)
         dialog = builder.create()
@@ -53,7 +94,14 @@ class login : AppCompatActivity() {
         getIpAddress()
     }
 
-
+    fun checkPermission(context: Context, permissionArray: Array<String>): Boolean {
+        var allSuccess = true
+        for (i in permissionArray.indices) {
+            if (checkCallingOrSelfPermission(permissionArray[i]) == PackageManager.PERMISSION_DENIED)
+                allSuccess = false
+        }
+        return allSuccess
+    }
     private fun validarCampos() {
         //  d("LOGIN:", "usr: " + txuser.text.toString() + "pw: " + txpw.text.toString())
         if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {

@@ -2,11 +2,7 @@ package com.example.ricky.misoficios
 
 
 import android.app.Dialog
-import android.content.ContentValues
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.database.Cursor
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -19,52 +15,32 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
-import android.widget.Toast
 import com.example.ricky.misoficios.Almacenado.DBHelper
 import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
-import com.example.ricky.misoficios.Modelos.LoginRes
-import com.example.ricky.misoficios.Modelos.Oficios
+import com.example.ricky.misoficios.Modelos.Oficio
 import com.example.ricky.misoficios.servicios.MisOficios
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.lang.Exception
 
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
 
-
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-
-    lateinit var carpetasRecycler: RecyclerView
-    lateinit var carpetasList: ArrayList<Carpetas>
-    lateinit var idrecibidos: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val globvar = MisOficios()
-
-//        val ax = globvar.getIDUsuario(this.application)
-        // Log.d("XXXDOCUMENTOS: id: ", ax)
-
-        //val axx = globvar.getCarpetaInicial(this.application)
-        //Log.d("XXXDOCUMENTOS:carpeta: ", axx)
-
         val dbHandler = DBHelper(baseContext, null)
         val db = dbHandler.getCarpetaRecibidos()
-
-//        val cad = globvar.getIDUsuario(this.application)
-        //  getCarpetaInicial(ax)
-        //Log.d("XXXRESPONSECARPETA: ", "")
-
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -72,6 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Aquí se creará nuevo oficio", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+            toBeCalled()
             val intent = Intent(baseContext, mostrarDocumento::class.java)
             startActivity(intent)
         }
@@ -90,6 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
         displayFragment(-1)
     }
+
     override fun onCreateDialog(id: Int, args: Bundle?): Dialog? {
         return MainActivity().let {
             val builder = AlertDialog.Builder(baseContext)
@@ -109,16 +87,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //val inflater = menuInflater
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
@@ -129,15 +102,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fragment = when (id) {
             R.id.nav_home -> {
                 MainFragment()
-
             }
             R.id.nav_grupos -> {
                 MainFragment()
             }
-
-            // R.id.nwDoc -> {
-            //     //CrearOficio()
-            // }
 
             R.id.itGrupo -> {
                 NwGrupo()
@@ -152,16 +120,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
+
         val fragment = when (item.itemId) {
             R.id.nav_home -> {
                 MainFragment()
-
             }
             R.id.nav_grupos -> {
                 GruposFrg()
             }
-
 
             else -> {
                 MainFragment()
@@ -176,11 +142,67 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    fun toBeCalled() {
+        try {
+            val intent = Intent(baseContext!!, mostrarDocumento::class.java)
+            startActivity(intent)
+        }catch (e: Exception)
+        {
+            println("Error: $e")
+        }
+    }
 
+    fun callDocHtml(id: String) {
+        val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+        api.getDocumentoHtml(id)
+            .enqueue(object : Callback<Oficio> {
+                override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
+                    try {
+                        val tx = response.body()
+                        print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
+                        createDocText(tx?.ContenidoHTML.toString())
+                      //
+                      //
 
+                    } catch (e: Exception) {
+                        println("error: ${e.message}")
+                    }
+                    val intent = Intent(baseContext, mostrarDocumento::class.java)
+                    startActivity(intent)
+                }
 
+                override fun onFailure(call: Call<Oficio>, t: Throwable) {
+                }
+            })
+    }
 
+    fun createDocText(text: String) {
+        try {
+            val fileName = "/sdcard/ss2.html"
+            var file = File(fileName)
+            val isNewFileCreated: Boolean = file.createNewFile()
+            if (isNewFileCreated) {
+                println("$fileName is created successfully.")
+            } else {
+                println("$fileName already exists.")
+            }
+            // try creating a file that already exists
+            val isFileCreated: Boolean = file.createNewFile()
+            if (isFileCreated) {
+                println("$fileName is created successfully.")
+            } else {
+                println("$fileName already exists.")
+            }
+            file.writeText(
+                text
+            )
+        } catch (e: Exception) {
+            println("Fallo al crear archivo: $e")
+        }
+    }
+    //-------------------------------------------------------------------------------------------------------------------------
 }
+
 //    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary))
 //   var actionBar = supportActionBar
 //   //toolbar.setBackgroundColor("@drawable/gradient_blue")

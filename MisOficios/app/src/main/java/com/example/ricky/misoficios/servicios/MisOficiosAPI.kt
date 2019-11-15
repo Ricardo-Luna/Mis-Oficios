@@ -68,7 +68,3 @@ interface MisOficiosAPI {
     ): Call<List<Remitentes>>
 }
 
-// Santander
-// convenio 9552
-// CEI0095356
-// UDGPLXCEI

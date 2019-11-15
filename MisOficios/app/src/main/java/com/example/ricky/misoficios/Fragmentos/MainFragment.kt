@@ -105,18 +105,18 @@ class MainFragment : Fragment() {
                             val Documentos = response.body()
                             var fin = response.body()?.size
                             val adapter = AdapterOficios(buildOficios(Documentos!!))
-                      //      d("Tamaño de Response: ", fin.toString())
+                            //      d("Tamaño de Response: ", fin.toString())
                             oficiosRecycler.adapter = adapter
 
                         } else {
-                          //  d("Response Oficios:", "recibido vacío")
+                            //  d("Response Oficios:", "recibido vacío")
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
                     Log.e("onFailure", t.message)
-                  //  d("onResponse: ", "Response no recibido")
+                    //  d("onResponse: ", "Response no recibido")
                 }
             }
             )
@@ -162,14 +162,14 @@ class MainFragment : Fragment() {
 
 
                         } else {
-                         //   d("Response Oficios:", "recibido vacío")
+                            //   d("Response Oficios:", "recibido vacío")
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<List<Documentos>>, t: Throwable) {
                     Log.e("onFailure", t.message)
-                  //  d("onResponse: ", "Response no recibido")
+                    //  d("onResponse: ", "Response no recibido")
                 }
             }
             )
@@ -186,7 +186,7 @@ class MainFragment : Fragment() {
 
         } else //d("XXXFRAGMENT", "Error")
 
-        bd.close()
+            bd.close()
         globvar.usuarioId = id
         return id
     }
@@ -208,15 +208,15 @@ class MainFragment : Fragment() {
                         //d("XYXCARPETARECIBIDOS: ", idrecibidos)
 
                     } else {
-                      //  d("INGESU", "YA CHINGO ASU MARE COMARE")
+                        //  d("INGESU", "YA CHINGO ASU MARE COMARE")
                     }
                 }
 
                 override fun onFailure(call: Call<List<Carpetas>>, t: Throwable) {
-                 //   d("INGESU", " THIS AINT FUNNY ANYMORE")
+                    //   d("INGESU", " THIS AINT FUNNY ANYMORE")
                 }
             })
-       // d("XYXCARPETARECIBIDOS: ", idrecibidos)
+        // d("XYXCARPETARECIBIDOS: ", idrecibidos)
         return idrecibidos
     }
 
@@ -250,7 +250,7 @@ class MainFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<List<folder>>, t: Throwable) {
-               //     d("USUARIO: onFailure: ", "Fallo en MainFragment")
+                    //     d("USUARIO: onFailure: ", "Fallo en MainFragment")
                 }
 
             })
@@ -275,6 +275,7 @@ class MainFragment : Fragment() {
         }
         return carpetasList
     }
+
     override fun onDetach() {
         super.onDetach()
         listener = null
