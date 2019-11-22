@@ -136,6 +136,9 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                     .enqueue(object : Callback<Oficio> {
                         override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
                             try {
+                                val tx = response.body()
+                                print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
+                                createDocText(tx?.ContenidoHTML.toString())
                                 val date = Date()
                                 val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                                 val answer: String = formatter.format(date)
@@ -184,6 +187,30 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
+        }
+        fun createDocText(text: String) {
+            try {
+                val fileName = "/sdcard/ss2.html"
+                var file = File(fileName)
+                val isNewFileCreated: Boolean = file.createNewFile()
+                if (isNewFileCreated) {
+                    println("$fileName is created successfully.")
+                } else {
+                    println("$fileName already exists.")
+                }
+                // try creating a file that already exists
+                val isFileCreated: Boolean = file.createNewFile()
+                if (isFileCreated) {
+                    println("$fileName is created successfully.")
+                } else {
+                    println("$fileName already exists.")
+                }
+                file.writeText(
+                    text
+                )
+            } catch (e: Exception) {
+                println("Fallo al crear archivo: $e")
+            }
         }
 
         fun marcarVisto(fecha: String, id: String) {
