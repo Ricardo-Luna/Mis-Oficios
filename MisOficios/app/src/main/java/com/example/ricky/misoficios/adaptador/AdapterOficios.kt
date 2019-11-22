@@ -2,6 +2,7 @@ package com.example.ricky.misoficios.adaptador
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat.startActivity
@@ -15,17 +16,23 @@ import android.widget.TextView
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
 import com.example.ricky.misoficios.MainActivity
-import com.example.ricky.misoficios.Modelos.Oficio
-import com.example.ricky.misoficios.Modelos.Oficios
+import com.example.ricky.misoficios.Modelos.*
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
+import org.w3c.dom.Text
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
+//import android.R
+import java.sql.Time
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class AdapterOficios(var list: ArrayList<Oficios>) :
@@ -44,7 +51,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
         holder.bindItems(list[position])
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Oficios) {
             //Declaración de los TextViews y otros items visuales///////////////////////
             val asunto: TextView = itemView.findViewById(R.id.Asunto)
@@ -54,10 +61,11 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val imagenMensaje: ImageView = itemView.findViewById(R.id.imageImportancia)
             val iv: ImageView = itemView.findViewById(R.id.imageRecibido)
             val ivv: ImageView = itemView.findViewById(R.id.imageLeido)
+            val txleido: TextView = itemView.findViewById(R.id.txtLeido)
             val bm: CardView = itemView.findViewById(R.id.backgr)
             val constraint: ConstraintLayout = itemView.findViewById(R.id.cns)
             val ax = MainActivity()
-
+            // println("IdUsuario: ${data.IdPropietario}, IdCarpeta: ${data.IdCarpeta}, IdDocumento: ${data.IdDocumento}")
             //id del usuario y colores estánadares del ayuntamiento
             var usuario = SharedPreference.getInstance(itemView.context).usuario
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
@@ -68,6 +76,46 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             remitente.text = data.Destinatarios
             asunto.text = data.Titulo
             folio.text = data.Codigo
+            ///////////////////////////////////////////////////////////////////////////
+
+            api.getDestinatariosLeido(usuario.IdUsuario.toString(), data.idDocumentoRemitente!!)
+                .enqueue(object : Callback<List<Remitentes>> {
+                    override fun onResponse(
+                        call: Call<List<Remitentes>>,
+                        response: Response<List<Remitentes>>
+                    ) {
+                        try {
+                            val res = response.body()
+                            val fe = res!![0].FechaLectura
+                            //per println("LEIDO: $fe")
+                            if (fe == null || fe == "") {
+                                // println("Asunto = ${data.Titulo}, Fecha de lectura  = +$fe+, Position ${adapterPosition}")
+                                asunto.setTextColor(Color.parseColor(blanco))
+                                remitente.setTextColor(Color.parseColor(blanco))
+                                fecha.setTextColor(Color.parseColor(blanco))
+                                folio.setTextColor(Color.parseColor(blanco))
+                                iv.setImageResource(R.drawable.z_recibido)
+                                constraint.setBackgroundColor(Color.parseColor(pantone))
+                                txleido.setText(".")
+                            }
+                            if (fe != "") {
+                                // println("Asunto = ${data.Titulo}, Fecha de lectura  = +$fe!!+, Posision ${adapterPosition}")
+                            }
+                        } catch (e: Exception) {
+                            //asunto.setTextColor(Color.parseColor(blanco))
+                            //remitente.setTextColor(Color.parseColor(blanco))
+                            //fecha.setTextColor(Color.parseColor(blanco))
+                            //folio.setTextColor(Color.parseColor(blanco))
+                            //constraint.setBackgroundColor(Color.parseColor(pantone))
+                            println("Exception: $e")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
+                        println("FALLO EN LA LLAMADA")
+                    }
+                })
+
             //Adapta la fecha de envío al formato amigable para el usuario///////////////
             if (data.FechaEnvio != null) {
                 try {
@@ -79,6 +127,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                     fecha.text = data.FechaEnvio
                 }
             }
+
             /////////////////////////////////////////////////////////////////////////////
             bm.setOnClickListener {
                 val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
@@ -87,29 +136,23 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
                             try {
 
-                                val tx = response.body()
-                                print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
-                                createDocText(tx?.ContenidoHTML.toString())
-
+                                val current = LocalDateTime.now()
+                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+                                val formatted = current.format(formatter)
+                                println("Current Date and Time is: $formatted")
+                                  if (txleido.text == ".") {
+                                      marcarVisto(formatted, data.idDocumentoRemitente!!)
+                                  }
                                 val context: Context = itemView.context
                                 val intent = Intent(context, mostrarDocumento::class.java)
                                 context.startActivity(intent)
-
-                                //val intent = Intent(context, mostrarDocumento::class.java)
-                                //intent.flags =
-                                //    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                //context.startActivity(intent)
                             } catch (e: Exception) {
                                 println(e.message)
                             }
-                            //MainActivity().run {
-                            //    startActivity(Intent(this, mostrarDocumento::class.java))
-                            //    finish()
-                            //
-                            //}
                         }
 
                         override fun onFailure(call: Call<Oficio>, t: Throwable) {
+                            println("Fallo porque $t" )
                         }
                     })
             }
@@ -142,63 +185,79 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             ////////////////////////////////////////////////////////////////////////////////
         }
 
-        fun callDocHtml(id: String) {
-            val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-            api.getDocumentoHtml(id)
-                .enqueue(object : Callback<Oficio> {
-                    override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
-                        try {
-                            //context = MainActivity().baseContext
-
-                            val tx = response.body()
-                            print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
-                            createDocText(tx?.ContenidoHTML.toString())
-                            // val intent = Intent(getContext()!!, mostrarDocumento::class.java)
-                            // startActivity(intent)
-                        } catch (e: Exception) {
-                            println(e.message)
-                        }
-                        //MainActivity().run {
-                        //    startActivity(Intent(this, mostrarDocumento::class.java))
-                        //    finish()
-                        //
-                        //}
-                    }
-
-                    override fun onFailure(call: Call<Oficio>, t: Throwable) {
-                    }
-                })
-        }
-
-        fun createDocText(text: String) {
-            try {
-                val fileName = "/sdcard/ss2.html"
-                var file = File(fileName)
-                val isNewFileCreated: Boolean = file.createNewFile()
-                if (isNewFileCreated) {
-                    println("$fileName is created successfully.")
-                } else {
-                    println("$fileName already exists.")
-                }
-                // try creating a file that already exists
-                val isFileCreated: Boolean = file.createNewFile()
-                if (isFileCreated) {
-                    println("$fileName is created successfully.")
-                } else {
-                    println("$fileName already exists.")
-                }
-                file.writeText(
-                    text
-                )
-            } catch (e: Exception) {
-                println("Fallo al crear archivo: $e")
-            }
-        }
-        //-------------------------------------------------------------------------------------------------------------------------
     }
 }
 //////////////////////////////////////////////////////////////////////
 
+fun marcarVisto(fecha: String, id: String) {
+    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+    var visto = Visto(fecha, id)
+    api.setVisto(visto)
+        .enqueue(object : Callback<Visto> {
+            override fun onResponse(call: Call<Visto>, response: Response<Visto>) {
+                println("Mierda agregada")
+            }
+
+            override fun onFailure(call: Call<Visto>, t: Throwable) {
+                println("Falla: $t")
+            }
+        })
+}
+
+fun callDocHtml(id: String) {
+    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+    api.getDocumentoHtml(id)
+        .enqueue(object : Callback<Oficio> {
+            override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
+                try {
+                    //context = MainActivity().baseContext
+
+                    val tx = response.body()
+                    print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
+                    createDocText(tx?.ContenidoHTML.toString())
+                    // val intent = Intent(getContext()!!, mostrarDocumento::class.java)
+                    // startActivity(intent)
+                } catch (e: Exception) {
+                    println(e.message)
+                }
+                //MainActivity().run {
+                //    startActivity(Intent(this, mostrarDocumento::class.java))
+                //    finish()
+                //
+                //}
+            }
+
+            override fun onFailure(call: Call<Oficio>, t: Throwable) {
+            }
+        })
+}
+
+fun createDocText(text: String) {
+    try {
+        val fileName = "/sdcard/ss2.html"
+        var file = File(fileName)
+        val isNewFileCreated: Boolean = file.createNewFile()
+        if (isNewFileCreated) {
+            println("$fileName is created successfully.")
+        } else {
+            println("$fileName already exists.")
+        }
+        // try creating a file that already exists
+        val isFileCreated: Boolean = file.createNewFile()
+        if (isFileCreated) {
+            println("$fileName is created successfully.")
+        } else {
+            println("$fileName already exists.")
+        }
+        file.writeText(
+            text
+        )
+    } catch (e: Exception) {
+        println("Fallo al crear archivo: $e")
+    }
+}
+
+//-------------------------------------------------------------------------------------------------------------------------
 //private fun ShowDialog() {
 //    val mDialogView =
 //        LayoutInflater.from(MainFragment().context!!).inflate(R.layout.dialog_views, null)
@@ -213,21 +272,27 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 //    // val firmar = mDialogView.findViewById<Button>(R.id.Firmar).toString()
 //}
 //
-//fun comprobarLeido(idDestinatario: String, idDocumento: String) {
+//fun comprobarLeido(idDestinatario: String, idDocumento: String,cns: ConstraintLayout) {
 //    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-//    api.getDestinatariosLeido(idDestinatario, idDocumento)
-//        .enqueue(object : Callback<List<Remitentes>> {
-//            override fun onResponse(
-//                call: Call<List<Remitentes>>,
-//                response: Response<List<Remitentes>>
-//            ) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
+// api.getDestinatariosLeido(idDestinatario, idDocumento)
+//     .enqueue(object : Callback<List<Remitentes>> {
+//         override fun onResponse(
+//             call: Call<List<Remitentes>>,
+//             response: Response<List<Remitentes>>
+//         ) {
 //
-//            override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//            }
-//        })
+//             val rs = response.body()
+//             println("IDP: $idDestinatario, IDD: $idDocumento, ")
+//             if (rs!![1].FechaLectura == null||rs[1].FechaLectura =="") {
+//                 cns.setBackgroundColor(Color.CYAN)
+//             }
+//         }
+//
+//         override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
+//             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//         }
+//     })
+
 //}
 //fun comprobarVisto(
 //    tx1: TextView, tx2: TextView, tx3: TextView, imageView: ImageView,
@@ -319,44 +384,41 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 //}
 
 
-//api.getDestinatariosLeido(usuario.IdUsuario.toString(), data.IdDocumento!!)
-//    .enqueue(object : Callback<List<Remitentes>> {
-//        override fun onResponse(
-//            call: Call<List<Remitentes>>,
-//            response: Response<List<Remitentes>>
-//        ) {
-//            try {
-//                val rs = response.message()
-//                val res = response.body()
-//                val fe = "+ " + res!![0].FechaLectura
-//                //per println("LEIDO: $fe")
-//                if (fe == null) {
-//                    //  d("LEIDO", "EXITO EN LA LLAMADA//")
-//                    // asunto.setTextColor(Color.parseColor(blanco))
-//                    // remitente.setTextColor(Color.parseColor(blanco))
-//                    // fecha.setTextColor(Color.parseColor(blanco))
-//                    // folio.setTextColor(Color.parseColor(blanco))
-//                    // constraint.setBackgroundColor(Color.parseColor(pantone))
-//                }
-//                if (fe != "") {
-//                    //  d("LEIDO: ", "$fe")
-//                }
-//            } catch (e: Exception) {
-//                asunto.setTextColor(Color.parseColor(blanco))
-//                remitente.setTextColor(Color.parseColor(blanco))
-//                fecha.setTextColor(Color.parseColor(blanco))
-//                folio.setTextColor(Color.parseColor(blanco))
-//                constraint.setBackgroundColor(Color.parseColor(pantone))
-//            }
-//        }
-
-//        override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
-//            //     d("ERRROR", "FALLO EN LA LLAMADA")
-//        }
-//    })
-
 /////////////////////////////////////////////////////////////////////
-
+//api.getDestinatariosLeido(usuario.IdUsuario.toString(), data.IdDocumento!!)
+//.enqueue(object : Callback<List<Remitentes>> {
+//    override fun onResponse(
+//        call: Call<List<Remitentes>>,
+//        response: Response<List<Remitentes>>
+//    ) {
+//        try {
+//            val rs = response.message()
+//            val res = response.body()
+//            val fe = "+ " + res!![0].FechaLectura
+//            //per println("LEIDO: $fe")
+//            if (fe == null) {
+//                //  d("LEIDO", "EXITO EN LA LLAMADA//")
+//                // asunto.setTextColor(Color.parseColor(blanco))
+//                // remitente.setTextColor(Color.parseColor(blanco))
+//                // fecha.setTextColor(Color.parseColor(blanco))
+//                // folio.setTextColor(Color.parseColor(blanco))
+//                // constraint.setBackgroundColor(Color.parseColor(pantone))
+//            }
+//            if (fe != "") {
+//                //  d("LEIDO: ", "$fe")
+//            }
+//        } catch (e: Exception) {
+//            asunto.setTextColor(Color.parseColor(blanco))
+//            remitente.setTextColor(Color.parseColor(blanco))
+//            fecha.setTextColor(Color.parseColor(blanco))
+//            folio.setTextColor(Color.parseColor(blanco))
+//            constraint.setBackgroundColor(Color.parseColor(pantone))
+//        }
+//    }
+//    override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
+//        //     d("ERRROR", "FALLO EN LA LLAMADA")
+//    }
+//})
 
 // .enqueue(object : Callback<nickname> {
 //     override fun onResponse(call: Call<nickname>, response: Response<nickname>) {
@@ -444,5 +506,4 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 //  }
 
 
-
-
+//596

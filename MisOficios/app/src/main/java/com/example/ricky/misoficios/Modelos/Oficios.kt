@@ -71,6 +71,16 @@ class Oficio(
     var ContenidoHTML: String?
 )
 
+class Visto(
+    var FechaLectura: String,
+    var IdDocumento: String?
+)
+
+class VistoPost(
+    var FechaLectura: String,
+    var IdDocumento: String?
+)
+
 class Oficios(
     var IdDocumento: String?,
     var Titulo: String?,

@@ -1,9 +1,43 @@
 package com.example.ricky.misoficios.Modelos
 
+import android.content.Context
+import android.graphics.Color
+import com.example.ricky.misoficios.Almacenado.SharedPreference
+import com.example.ricky.misoficios.MainActivity
+import com.example.ricky.misoficios.servicios.MisOficiosAPI
+import com.example.ricky.misoficios.servicios.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.Exception
+import java.security.AccessController.getContext
+
 lateinit var oficios : ArrayList<Oficios>
 lateinit var grupos: ArrayList<Grupos>
 lateinit var empleado : ArrayList<Empleados>
 lateinit var empleadosGrupo: ArrayList<EmpleadosGrupo>
+lateinit var leidos: ArrayList<Remitente>
+
+//fun buildRemitentes(IdDocumento: String): ArrayList<Remitente>{
+//    var usuario = SharedPreference.getInstance(MainActivity()).usuario
+//    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+//    api.getDestinatariosLeido(usuario.IdUsuario.toString(), IdDocumento)
+//        .enqueue(object : Callback<List<Remitentes>> {
+//            override fun onResponse(
+//                call: Call<List<Remitentes>>,
+//                response: Response<List<Remitentes>>
+//            ) {
+//                   var cont = 0
+//                    val res = response.body()
+//                    val fe =  res!![0].FechaLectura
+//                    leidos = ArrayList()
+//
+//            }
+//            override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
+//                println("FALLO EN LA LLAMADA")
+//            }
+//        })
+//}
 
 //fun buildOficios() : ArrayList<Oficios>{
 //    oficios = ArrayList()

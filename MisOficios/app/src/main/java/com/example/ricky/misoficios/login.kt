@@ -58,7 +58,7 @@ class login : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.my_loading, null)
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkPermission(this, permissions)) {
+                if (checkPermission(permissions)) {
                     Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
                         .show()
                 } else {
@@ -79,11 +79,6 @@ class login : AppCompatActivity() {
                 }
             } else {
             }
-            //view ->
-            //Snackbar.make(view, "Documento creado", Snackbar.LENGTH_LONG)
-            //    .setAction("Action", null).show()
-            //  val intent = Intent(baseContext, MainActivity::class.java)
-            //  startActivity(intent)
         } catch (e: Exception) {
             println("Falló")
         }
@@ -94,7 +89,7 @@ class login : AppCompatActivity() {
         getIpAddress()
     }
 
-    fun checkPermission(context: Context, permissionArray: Array<String>): Boolean {
+    fun checkPermission(permissionArray: Array<String>): Boolean {
         var allSuccess = true
         for (i in permissionArray.indices) {
             if (checkCallingOrSelfPermission(permissionArray[i]) == PackageManager.PERMISSION_DENIED)
@@ -102,6 +97,7 @@ class login : AppCompatActivity() {
         }
         return allSuccess
     }
+
     private fun validarCampos() {
         //  d("LOGIN:", "usr: " + txuser.text.toString() + "pw: " + txpw.text.toString())
         if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
@@ -183,10 +179,7 @@ class login : AppCompatActivity() {
 
 
 /*
-
-
 //{Deprecated methods}
-
 //Database block--------------------------------
 //  val dbHandler = DBHelper(this@login, null)
 //  dbHandler.clearDatabase()
@@ -194,17 +187,14 @@ class login : AppCompatActivity() {
 //  dbHandler.addID(loginRes.IdUsuario.toString())
 //  val cursor = dbHandler.getID()
 //  cursor!!.moveToFirst()
-//d("XXXINICIO: ", cursor.getString(0).toString())
+//d("INICIO: ", cursor.getString(0).toString())
 ////////////////////////////////////////////////
-
 btnIniciar.setOnClickListener{
      val user = txuser.text.toString().trim()
      val pw = txpw.text.toString().trim()
      if(user.isEmpty() || pw.toString().isEmpty())
      {Toast.makeText(this,"Usuario o contraseña en blanco", Toast.LENGTH_SHORT).show()}
-
  }
-
 private fun validarIn() {
     if (txuser.text.toString().isEmpty() || txpw.text.toString().isEmpty()) {
         Toast.makeText(
@@ -223,9 +213,6 @@ override fun onStart() {
             val intent = Intent(applicationContext, MainActivity::class.java)
            // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-
     }
-
-
  */
 

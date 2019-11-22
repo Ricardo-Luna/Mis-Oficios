@@ -25,6 +25,11 @@ interface MisOficiosAPI {
     @POST("Usuarios/Login")
     fun getLogin(@Body loginReq: LoginReq): Call<LoginRes>
 
+    @POST("MarcarLeido")
+    fun setVisto(
+        @Body visto: Visto
+    ):  Call<Visto>
+
     @GET("DocumentosCantidad/{IdUsuarioPropietario}")
     fun getCantidadDocs(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String

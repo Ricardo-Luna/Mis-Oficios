@@ -25,6 +25,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class splash : AppCompatActivity() {
     val DURACION = 3000
     lateinit var btnIniciar: Button
@@ -39,6 +40,10 @@ class splash : AppCompatActivity() {
         val im1: ImageView = findViewById(R.id.imageView4)
         val text: TextView = findViewById(R.id.oficiosText)
         val im: ImageView = findViewById(R.id.imageView5)
+
+
+
+
 
         im1.setOnClickListener {
             text.visibility = View.GONE
@@ -74,10 +79,10 @@ class splash : AppCompatActivity() {
         try {
             val usuario = SharedPreference.getInstance(applicationContext).usuario
             val com = SharedPreference.getInstance(applicationContext).isLoggedIn.toString()
-            val pw  = PasswordTransformationMethod.getInstance().toString()
+            val pw = PasswordTransformationMethod.getInstance().toString()
             println("${usuario.IdUsuario.toString()}, ${usuario.Password.toString()}, $pw")
             Log.d("Estado de sesión: ", "$com")
-            validarCampos(usuario.IdUsuario.toString(),"123")
+            validarCampos(usuario.IdUsuario.toString(), "123")
 
         } catch (e: Exception) {
             val intent = Intent(baseContext, login::class.java)
