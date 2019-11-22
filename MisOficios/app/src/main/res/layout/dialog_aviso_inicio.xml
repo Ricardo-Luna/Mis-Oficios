@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:text="En orden de poder mostrar sus documentos se le pedirá a continuación permiso para escribir en su almacenamiento interno"
             android:textAlignment="center"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

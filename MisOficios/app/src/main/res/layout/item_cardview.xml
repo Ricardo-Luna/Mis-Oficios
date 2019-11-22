@@ -65,6 +65,7 @@
                     android:layout_height="20sp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toStartOf="@+id/imageRecibido"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/archivos" />
@@ -77,7 +78,7 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toStartOf="@+id/imageLeido"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/recibido" />
+                    app:srcCompat="@drawable/enviado" />
 
             <ImageView
                     android:id="@+id/imageLeido"
@@ -87,7 +88,7 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/leido" />
+                    app:srcCompat="@drawable/no_leido" />
 
             <TextView
                     android:id="@+id/Asunto"

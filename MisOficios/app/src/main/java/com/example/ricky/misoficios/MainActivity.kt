@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val globvar = MisOficios()
         val dbHandler = DBHelper(baseContext, null)
         val db = dbHandler.getCarpetaRecibidos()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -93,7 +92,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+          //  R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -105,10 +104,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_grupos -> {
                 MainFragment()
-            }
-
-            R.id.itGrupo -> {
-                NwGrupo()
             }
 
             else -> {
@@ -152,54 +147,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun callDocHtml(id: String) {
-        val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-        api.getDocumentoHtml(id)
-            .enqueue(object : Callback<Oficio> {
-                override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
-                    try {
-                        val tx = response.body()
-                        print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
-                        createDocText(tx?.ContenidoHTML.toString())
-                      //
-                      //
-
-                    } catch (e: Exception) {
-                        println("error: ${e.message}")
-                    }
-                    val intent = Intent(baseContext, mostrarDocumento::class.java)
-                    startActivity(intent)
-                }
-
-                override fun onFailure(call: Call<Oficio>, t: Throwable) {
-                }
-            })
-    }
-
-    fun createDocText(text: String) {
-        try {
-            val fileName = "/sdcard/ss2.html"
-            var file = File(fileName)
-            val isNewFileCreated: Boolean = file.createNewFile()
-            if (isNewFileCreated) {
-                println("$fileName is created successfully.")
-            } else {
-                println("$fileName already exists.")
-            }
-            // try creating a file that already exists
-            val isFileCreated: Boolean = file.createNewFile()
-            if (isFileCreated) {
-                println("$fileName is created successfully.")
-            } else {
-                println("$fileName already exists.")
-            }
-            file.writeText(
-                text
-            )
-        } catch (e: Exception) {
-            println("Fallo al crear archivo: $e")
-        }
-    }
     //-------------------------------------------------------------------------------------------------------------------------
 }
 

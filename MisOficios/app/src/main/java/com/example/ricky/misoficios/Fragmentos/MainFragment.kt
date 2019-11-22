@@ -33,6 +33,8 @@ import com.example.ricky.misoficios.servicios.RetrofitClient.retrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
+import java.util.concurrent.ExecutorCompletionService
 
 class MainFragment : Fragment() {
 
@@ -40,10 +42,7 @@ class MainFragment : Fragment() {
     lateinit var carpetasRecycler: RecyclerView
     lateinit var oficiosList: ArrayList<Oficios>
     lateinit var carpetasList: ArrayList<Carpetas>
-    lateinit var txtFecha: TextView
-    lateinit var carpetaSeleccionada: String
     var nombreCarpeta: String = "Recibidos"
-    lateinit var idrecibidos: String
     val globvar = MisOficios()
 
     //lateinit var id: String
@@ -66,8 +65,9 @@ class MainFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = nombreCarpeta
         oficiosRecycler = view.findViewById(R.id.oficiosRecycler)
         carpetasRecycler = view.findViewById(R.id.recyclerCarpetas)
+
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
-        d("UsuarioOFICIOS", "${usuario.NombreCompleto}")
+
         getCarpetaInicial(usuario.IdUsuario!!)
         onMostrarCarpetas(usuario.IdUsuario!!)
         mostrarDocumentos(usuario.IdUsuario!!, carpetasSelected)
@@ -76,6 +76,15 @@ class MainFragment : Fragment() {
         llm.orientation = LinearLayout.VERTICAL
         oficiosRecycler.layoutManager = llm
         carpetasRecycler.layoutManager = llm2
+
+        try {
+            val nombreusuario: TextView = view.findViewById(R.id.textviewNombreUsuario)
+            nombreusuario.text = usuario.NombreCompleto
+        }catch(e: Exception)
+        {
+
+        }
+
         // --Aquí alterno entre los métodos siguientes
 //      --Método que actualiza el layout arrastándolo hacia abajo
 
@@ -86,6 +95,7 @@ class MainFragment : Fragment() {
 
             swipeRefreshLayout.setRefreshing(false)
         })
+
         return view
     }
 

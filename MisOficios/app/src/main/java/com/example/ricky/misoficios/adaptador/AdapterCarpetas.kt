@@ -2,6 +2,7 @@ package com.example.ricky.misoficios.adaptador
 
 
 import android.content.Context
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -65,14 +66,14 @@ class AdapterCarpetas(
             tvCarpetas.text = data.Nombre
             globvar.setCarpetaSeleccionada(id!!)
             tvCarpetas.setOnClickListener {
-                mostrarDocumentos(id)
-                (activity).supportActionBar?.title = carpeta
+                mostrarDocumentos(id,carpeta!!)
+
             }
         }
 
         var usuario = SharedPreference.getInstance(context).usuario
 
-        fun mostrarDocumentos(id: String) {
+        fun mostrarDocumentos(id: String, nm: String) {
             val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
             api.getDocsCarpetas(usuario.IdUsuario.toString(), id)
                 .enqueue(object : Callback<List<Documentos>> {
@@ -85,6 +86,7 @@ class AdapterCarpetas(
                                 val Documentos = response.body()
                                 val adapter = AdapterOficios(buildOficios(Documentos!!))
                                 rv.adapter = adapter
+                                (activity).supportActionBar?.title = nm
                             } else {
                                 Log.d("Response Oficios:", "recibido vacío")
                                 Toast.makeText(

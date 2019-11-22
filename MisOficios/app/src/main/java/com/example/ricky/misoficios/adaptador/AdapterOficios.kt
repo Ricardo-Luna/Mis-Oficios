@@ -31,6 +31,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 //import android.R
 import java.sql.Time
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -135,14 +136,14 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                     .enqueue(object : Callback<Oficio> {
                         override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
                             try {
-
-                                val current = LocalDateTime.now()
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-                                val formatted = current.format(formatter)
-                                println("Current Date and Time is: $formatted")
-                                  if (txleido.text == ".") {
-                                      marcarVisto(formatted, data.idDocumentoRemitente!!)
-                                  }
+                                val date = Date()
+                                val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                                val answer: String = formatter.format(date)
+                                println("answer $answer")
+                                println("Cuerpo ${response.body()!!.ContenidoHTML}")
+                                if (txleido.text == ".") {
+                                    marcarVisto(answer, data.idDocumentoRemitente!!)
+                                }
                                 val context: Context = itemView.context
                                 val intent = Intent(context, mostrarDocumento::class.java)
                                 context.startActivity(intent)
@@ -152,7 +153,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                         }
 
                         override fun onFailure(call: Call<Oficio>, t: Throwable) {
-                            println("Fallo porque $t" )
+                            println("Fallo porque $t")
                         }
                     })
             }
@@ -185,75 +186,22 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             ////////////////////////////////////////////////////////////////////////////////
         }
 
-    }
-}
-//////////////////////////////////////////////////////////////////////
+        fun marcarVisto(fecha: String, id: String) {
+            val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+            var visto = Visto(fecha, id)
+            api.setVisto(visto)
+                .enqueue(object : Callback<Visto> {
+                    override fun onResponse(call: Call<Visto>, response: Response<Visto>) {
+                        println("Mierda agregada")
+                    }
 
-fun marcarVisto(fecha: String, id: String) {
-    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-    var visto = Visto(fecha, id)
-    api.setVisto(visto)
-        .enqueue(object : Callback<Visto> {
-            override fun onResponse(call: Call<Visto>, response: Response<Visto>) {
-                println("Mierda agregada")
-            }
-
-            override fun onFailure(call: Call<Visto>, t: Throwable) {
-                println("Falla: $t")
-            }
-        })
-}
-
-fun callDocHtml(id: String) {
-    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-    api.getDocumentoHtml(id)
-        .enqueue(object : Callback<Oficio> {
-            override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
-                try {
-                    //context = MainActivity().baseContext
-
-                    val tx = response.body()
-                    print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
-                    createDocText(tx?.ContenidoHTML.toString())
-                    // val intent = Intent(getContext()!!, mostrarDocumento::class.java)
-                    // startActivity(intent)
-                } catch (e: Exception) {
-                    println(e.message)
-                }
-                //MainActivity().run {
-                //    startActivity(Intent(this, mostrarDocumento::class.java))
-                //    finish()
-                //
-                //}
-            }
-
-            override fun onFailure(call: Call<Oficio>, t: Throwable) {
-            }
-        })
-}
-
-fun createDocText(text: String) {
-    try {
-        val fileName = "/sdcard/ss2.html"
-        var file = File(fileName)
-        val isNewFileCreated: Boolean = file.createNewFile()
-        if (isNewFileCreated) {
-            println("$fileName is created successfully.")
-        } else {
-            println("$fileName already exists.")
+                    override fun onFailure(call: Call<Visto>, t: Throwable) {
+                        println("Falla: $t")
+                    }
+                })
         }
-        // try creating a file that already exists
-        val isFileCreated: Boolean = file.createNewFile()
-        if (isFileCreated) {
-            println("$fileName is created successfully.")
-        } else {
-            println("$fileName already exists.")
-        }
-        file.writeText(
-            text
-        )
-    } catch (e: Exception) {
-        println("Fallo al crear archivo: $e")
+
+
     }
 }
 
@@ -272,6 +220,62 @@ fun createDocText(text: String) {
 //    // val firmar = mDialogView.findViewById<Button>(R.id.Firmar).toString()
 //}
 //
+
+//     fun callDocHtml(id: String) {
+//         val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+//         api.getDocumentoHtml(id)
+//             .enqueue(object : Callback<Oficio> {
+//                 override fun onResponse(call: Call<Oficio>, response: Response<Oficio>) {
+//                     try {
+//                         //context = MainActivity().baseContext
+//
+//                         val tx = response.body()
+//                         print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
+//                         createDocText(tx?.ContenidoHTML.toString())
+//                         // val intent = Intent(getContext()!!, mostrarDocumento::class.java)
+//                         // startActivity(intent)
+//                     } catch (e: Exception) {
+//                         println(e.message)
+//                     }
+//                     //MainActivity().run {
+//                     //    startActivity(Intent(this, mostrarDocumento::class.java))
+//                     //    finish()
+//                     //
+//                     //}
+//                 }
+//
+//                 override fun onFailure(call: Call<Oficio>, t: Throwable) {
+//                 }
+//             })
+//     }
+//
+//     fun createDocText(text: String) {
+//         try {
+//             val fileName = "/sdcard/ss2.html"
+//             var file = File(fileName)
+//             val isNewFileCreated: Boolean = file.createNewFile()
+//             if (isNewFileCreated) {
+//                 println("$fileName is created successfully.")
+//             } else {
+//                 println("$fileName already exists.")
+//             }
+//             // try creating a file that already exists
+//             val isFileCreated: Boolean = file.createNewFile()
+//             if (isFileCreated) {
+//                 println("$fileName is created successfully.")
+//             } else {
+//                 println("$fileName already exists.")
+//             }
+//             file.writeText(
+//                 text
+//             )
+//         } catch (e: Exception) {
+//             println("Fallo al crear archivo: $e")
+//         }
+//     }
+//
+// }
+//////////////////////////////////////////////////////////////////////
 //fun comprobarLeido(idDestinatario: String, idDocumento: String,cns: ConstraintLayout) {
 //    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
 // api.getDestinatariosLeido(idDestinatario, idDocumento)

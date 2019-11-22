@@ -26,6 +26,8 @@ import com.example.ricky.misoficios.servicios.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class login : AppCompatActivity() {
@@ -59,8 +61,8 @@ class login : AppCompatActivity() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkPermission(permissions)) {
-                    Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
-                        .show()
+                  //  Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
+                  //      .show()
                 } else {
                     val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_aviso_inicio, null)
                     val mBuilder = android.support.v7.app.AlertDialog.Builder(this)
@@ -82,6 +84,7 @@ class login : AppCompatActivity() {
         } catch (e: Exception) {
             println("Falló")
         }
+
         builder.setView(dialogView)
         builder.setCancelable(false)
         dialog = builder.create()
