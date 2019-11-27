@@ -140,6 +140,7 @@ class MainFragment : Fragment() {
                     item.IdDocumento,
                     item.Titulo,
                     item.FechaEnvio,
+                    item.FechaCreacion,
                     item.IdPropietario,
                     item.idDocumentoRemitente,
                     item.IdCarpeta,
@@ -147,7 +148,8 @@ class MainFragment : Fragment() {
                     item.Importancia,
                     item.estatus,
                     item.Destinatarios,
-                    item.PropietarioNombreCompleto
+                    item.PropietarioNombreCompleto,
+                    item.cadenaOriginal
                 )
             )
         }
@@ -166,11 +168,8 @@ class MainFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
-
                             val Documentos = response.body()
                             var fin = response.body()?.size
-
-
                         } else {
                             //   d("Response Oficios:", "recibido vacío")
                         }

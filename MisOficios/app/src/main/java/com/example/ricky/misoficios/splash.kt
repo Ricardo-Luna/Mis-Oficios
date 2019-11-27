@@ -1,16 +1,11 @@
 package com.example.ricky.misoficios
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.media.Image
 import android.net.wifi.WifiManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.text.format.Formatter
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -20,7 +15,6 @@ import android.widget.*
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Modelos.*
 import com.example.ricky.misoficios.servicios.RetrofitClient
-import kotlinx.android.synthetic.main.activity_splash.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -80,11 +80,17 @@ class VistoPost(
     var FechaLectura: String,
     var IdDocumento: String?
 )
+class hash(
+    var cadenaOriginal: String,
+    var IdPropietario: String
+)
+
 
 class Oficios(
     var IdDocumento: String?,
     var Titulo: String?,
     var FechaEnvio: String?,
+    var FechaCreacion: String,
     var IdPropietario: String?,
     var idDocumentoRemitente: String?,
     var IdCarpeta: String?,
@@ -92,13 +98,15 @@ class Oficios(
     var Importancia: String?,
     var estatus: String?,
     var Destinatarios: String?,
-    var PropietarioNombreCompleto: String
+    var PropietarioNombreCompleto: String,
+    var cadenaOriginal: String?
 )
 
 class Documentos(
     var IdDocumento: String?,
     var Titulo: String?,
     var FechaEnvio: String?,
+    var FechaCreacion: String,
     var IdPropietario: String?,
     var idDocumentoRemitente: String?,
     var IdCarpeta: String?,
@@ -106,7 +114,8 @@ class Documentos(
     var Importancia: String?,
     var estatus: String?,
     var Destinatarios: String?,
-    var PropietarioNombreCompleto: String
+    var PropietarioNombreCompleto: String,
+    var cadenaOriginal: String?
 )
 
 class Remitente(

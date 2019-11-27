@@ -30,6 +30,11 @@ interface MisOficiosAPI {
         @Body visto: Visto
     ):  Call<Visto>
 
+    @POST("hash")
+    fun genHash(
+        @Body hash: hash
+    ): Call<hash>
+
     @GET("DocumentosCantidad/{IdUsuarioPropietario}")
     fun getCantidadDocs(
         @Path("IdUsuarioPropietario") IdUsuarioPropietario: String

@@ -66,7 +66,7 @@ class AdapterCarpetas(
             tvCarpetas.text = data.Nombre
             globvar.setCarpetaSeleccionada(id!!)
             tvCarpetas.setOnClickListener {
-                mostrarDocumentos(id,carpeta!!)
+                mostrarDocumentos(id, carpeta!!)
 
             }
         }
@@ -115,6 +115,7 @@ class AdapterCarpetas(
                         item.IdDocumento,
                         item.Titulo,
                         item.FechaEnvio,
+                        item.FechaCreacion,
                         item.IdPropietario,
                         item.idDocumentoRemitente,
                         item.IdCarpeta,
@@ -122,7 +123,8 @@ class AdapterCarpetas(
                         item.Importancia,
                         item.estatus,
                         item.Destinatarios,
-                        item.PropietarioNombreCompleto
+                        item.PropietarioNombreCompleto,
+                        item.cadenaOriginal
                     )
                 )
             }

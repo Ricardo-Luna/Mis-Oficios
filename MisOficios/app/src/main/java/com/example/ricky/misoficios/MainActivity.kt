@@ -13,21 +13,11 @@ import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.example.ricky.misoficios.Almacenado.DBHelper
 import com.example.ricky.misoficios.Fragmentos.*
-import com.example.ricky.misoficios.Modelos.Carpetas
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
-import com.example.ricky.misoficios.Modelos.Oficio
-import com.example.ricky.misoficios.servicios.MisOficios
-import com.example.ricky.misoficios.servicios.MisOficiosAPI
-import com.example.ricky.misoficios.servicios.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.File
 import java.lang.Exception
 
 //Temas:
@@ -146,6 +136,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             println("Error: $e")
         }
     }
+
+   //fun getHashMD5()
+   //{
+   //    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+   //    val vl1 =
+   //    api.genHash()
+   //}
 
     //-------------------------------------------------------------------------------------------------------------------------
 }

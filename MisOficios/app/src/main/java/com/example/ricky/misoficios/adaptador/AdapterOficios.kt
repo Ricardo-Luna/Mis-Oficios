@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -20,7 +19,6 @@ import com.example.ricky.misoficios.Modelos.*
 import com.example.ricky.misoficios.R
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
-import org.w3c.dom.Text
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import retrofit2.Call
@@ -29,11 +27,6 @@ import retrofit2.Response
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
-//import android.R
-import java.sql.Time
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 class AdapterOficios(var list: ArrayList<Oficios>) :
@@ -65,7 +58,6 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val txleido: TextView = itemView.findViewById(R.id.txtLeido)
             val bm: CardView = itemView.findViewById(R.id.backgr)
             val constraint: ConstraintLayout = itemView.findViewById(R.id.cns)
-            val ax = MainActivity()
             // println("IdUsuario: ${data.IdPropietario}, IdCarpeta: ${data.IdCarpeta}, IdDocumento: ${data.IdDocumento}")
             //id del usuario y colores estánadares del ayuntamiento
             var usuario = SharedPreference.getInstance(itemView.context).usuario
@@ -74,11 +66,20 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val pantone = "#00b0e1"
 
             ///////////////////////////////////////////////////////////////////////////
+
             remitente.text = data.Destinatarios
             asunto.text = data.Titulo
             folio.text = data.Codigo
             ///////////////////////////////////////////////////////////////////////////
-
+            try {
+                genHash(data.cadenaOriginal!!,usuario.IdUsuario!!)
+            }
+            catch(e: Exception)
+            {
+                println("Cadena original vacia en ${data.idDocumentoRemitente}")
+            }
+            ///////////////////////////////////////////////////////////////////////////
+            println("ID: ${data.IdDocumento},TITULO: ${data.Titulo},ID REM: ${data.idDocumentoRemitente}")
             api.getDestinatariosLeido(usuario.IdUsuario.toString(), data.idDocumentoRemitente!!)
                 .enqueue(object : Callback<List<Remitentes>> {
                     override fun onResponse(
@@ -118,14 +119,14 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 })
 
             //Adapta la fecha de envío al formato amigable para el usuario///////////////
-            if (data.FechaEnvio != null) {
+            if (data.FechaCreacion != null) {
                 try {
                     val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                     val formatter = SimpleDateFormat("HH:mm, dd/MM/yyyy")
-                    val formattedDate = formatter.format(parser.parse(data.FechaEnvio))
+                    val formattedDate = formatter.format(parser.parse(data.FechaCreacion))
                     fecha.text = formattedDate
                 } catch (e: Exception) {
-                    fecha.text = data.FechaEnvio
+                    fecha.text = data.FechaCreacion
                 }
             }
 
@@ -188,6 +189,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             }
             ////////////////////////////////////////////////////////////////////////////////
         }
+
         fun createDocText(text: String) {
             try {
                 val fileName = "/sdcard/ss2.html"
@@ -224,6 +226,22 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 
                     override fun onFailure(call: Call<Visto>, t: Throwable) {
                         println("Falla: $t")
+                    }
+                })
+        }
+
+        fun genHash(cadena: String, id: String) {
+            val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+            val hashAx = hash(cadena, id)
+            api.genHash(hashAx)
+                .enqueue(object : Callback<hash> {
+                    override fun onResponse(call: Call<hash>, response: Response<hash>) {
+                        val res = response.message()
+                        println("Mensaje: $res")
+                    }
+
+                    override fun onFailure(call: Call<hash>, t: Throwable) {
+                        println("Error en la solicitud: $t")
                     }
                 })
         }
