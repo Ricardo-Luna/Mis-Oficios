@@ -21,6 +21,7 @@ class SharedPreference private constructor(private val mCtx: Context) {
         val serializedUser = sharedPreferences.getString("carpetaSeleccionada",null)
         return  gson.fromJson(serializedUser,LoginRes::class.java)
     }
+
     val isLoggedIn: Boolean
         get() {
             return sharedPreferences.getInt("Status", -1) != -1
@@ -31,6 +32,7 @@ class SharedPreference private constructor(private val mCtx: Context) {
         sharedPreferences.edit().putString("Usuario", serializedUser).apply()
         sharedPreferences.edit().putString("Id",id).apply()
     }
+
     fun limpiar() {
         val editor = sharedPreferences.edit()
         editor.clear()

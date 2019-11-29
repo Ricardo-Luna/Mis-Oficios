@@ -9,7 +9,6 @@
 
     <fragment
             android:id="@+id/fragment2"
-            android:name="com.example.ricky.misoficios.Fragmentos.CreateDoc"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"

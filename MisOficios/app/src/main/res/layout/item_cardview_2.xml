@@ -56,7 +56,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                    android:id="@+id/imageAchivos"
+                    android:id="@+id/imgTipo"
                     android:layout_width="24sp"
                     android:layout_height="20sp"
                     android:layout_marginTop="8dp"

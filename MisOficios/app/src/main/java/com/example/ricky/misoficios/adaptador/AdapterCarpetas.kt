@@ -124,7 +124,8 @@ class AdapterCarpetas(
                         item.estatus,
                         item.Destinatarios,
                         item.PropietarioNombreCompleto,
-                        item.cadenaOriginal
+                        item.cadenaOriginal,
+                        item.Tipo
                     )
                 )
             }

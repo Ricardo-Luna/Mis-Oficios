@@ -23,9 +23,12 @@ import com.example.ricky.misoficios.Modelos.LoginReq
 import com.example.ricky.misoficios.Modelos.LoginRes
 import com.example.ricky.misoficios.Modelos.Permiso
 import com.example.ricky.misoficios.servicios.RetrofitClient
+import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.math.BigInteger
+import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -64,7 +67,7 @@ class login : AppCompatActivity() {
                   //  Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
                   //      .show()
                 } else {
-                    val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_aviso_inicio, null)
+                    val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_aviso_inicio,null)
                     val mBuilder = android.support.v7.app.AlertDialog.Builder(this)
                         .setView(mDialogView)
                         .setTitle("Permiso")
@@ -117,7 +120,7 @@ class login : AppCompatActivity() {
                        // Log.e("Response", t.message)
                         Toast.makeText(
                             applicationContext,
-                            "[Login] Error: Indica el errror al areas de TI",
+                            "Error en la red, vuelve a intentarlo",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -135,9 +138,9 @@ class login : AppCompatActivity() {
                                         loginRes,
                                         loginRes.IdUsuario.toString()
                                     )     //cursor.getString(0))
-                                loginRes.Recordar = true
+                                loginRes.Recordar = recordarSesion.isChecked
                                 val intent = Intent(applicationContext, MainActivity::class.java)
-                                // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(

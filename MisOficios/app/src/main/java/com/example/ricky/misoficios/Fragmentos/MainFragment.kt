@@ -149,7 +149,8 @@ class MainFragment : Fragment() {
                     item.estatus,
                     item.Destinatarios,
                     item.PropietarioNombreCompleto,
-                    item.cadenaOriginal
+                    item.cadenaOriginal,
+                    item.Tipo
                 )
             )
         }

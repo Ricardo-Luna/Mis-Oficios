@@ -25,6 +25,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.math.BigInteger
+import java.security.MessageDigest
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,6 +50,8 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItems(data: Oficios) {
             //Declaración de los TextViews y otros items visuales///////////////////////
+            lateinit var hash: String
+            lateinit var hs: String
             val asunto: TextView = itemView.findViewById(R.id.Asunto)
             val remitente: TextView = itemView.findViewById(R.id.Remitentes)
             val fecha: TextView = itemView.findViewById(R.id.Fecha)
@@ -57,6 +61,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             val ivv: ImageView = itemView.findViewById(R.id.imageLeido)
             val txleido: TextView = itemView.findViewById(R.id.txtLeido)
             val bm: CardView = itemView.findViewById(R.id.backgr)
+            val tipo: ImageView = itemView.findViewById(R.id.imgTipo)
             val constraint: ConstraintLayout = itemView.findViewById(R.id.cns)
             // println("IdUsuario: ${data.IdPropietario}, IdCarpeta: ${data.IdCarpeta}, IdDocumento: ${data.IdDocumento}")
             //id del usuario y colores estánadares del ayuntamiento
@@ -70,16 +75,38 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             remitente.text = data.Destinatarios
             asunto.text = data.Titulo
             folio.text = data.Codigo
+
             ///////////////////////////////////////////////////////////////////////////
             try {
-                genHash(data.cadenaOriginal!!,usuario.IdUsuario!!)
+                hash = data.cadenaOriginal!! + data.IdPropietario //usuario.IdUsuario
+                hs = hash.md5()
+                println("Hash de ${data.Titulo}: $hs")
+            } catch (e: Exception) {
+             //   println("Cadena original vacia en ${data.idDocumentoRemitente}")
             }
-            catch(e: Exception)
-            {
-                println("Cadena original vacia en ${data.idDocumentoRemitente}")
+            if (data.Tipo == "1") {
+                tipo.setImageResource(R.drawable.borrador)
             }
+            if (data.Tipo == "2") {
+                tipo.setImageResource(R.drawable.oficio)
+            }
+            if (data.Tipo == "3") {
+                tipo.setImageResource(R.drawable.copia)
+            }
+            if (data.estatus == "1") {
+                iv.setImageResource(R.drawable.nw)
+            }
+            if (data.estatus == "2") {
+                iv.setImageResource(R.drawable.enviado)
+            }
+            if (data.estatus == "3") {
+                iv.setImageResource(R.drawable.recibido)
+            }
+
+            println("Titulo: ${data.Titulo} estatus de documento: ${data.estatus}")
+
             ///////////////////////////////////////////////////////////////////////////
-            println("ID: ${data.IdDocumento},TITULO: ${data.Titulo},ID REM: ${data.idDocumentoRemitente}")
+          //  println("ID: ${data.IdDocumento},TITULO: ${data.Titulo},ID REM: ${data.idDocumentoRemitente}")
             api.getDestinatariosLeido(usuario.IdUsuario.toString(), data.idDocumentoRemitente!!)
                 .enqueue(object : Callback<List<Remitentes>> {
                     override fun onResponse(
@@ -96,23 +123,41 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                                 remitente.setTextColor(Color.parseColor(blanco))
                                 fecha.setTextColor(Color.parseColor(blanco))
                                 folio.setTextColor(Color.parseColor(blanco))
-                                iv.setImageResource(R.drawable.z_recibido)
                                 constraint.setBackgroundColor(Color.parseColor(pantone))
+                                if (data.Tipo == "2") {
+                                    tipo.setImageResource(R.drawable.z_oficio)
+                                }
+                                if (data.Tipo == "3") {
+                                    tipo.setImageResource(R.drawable.z_copia)
+                                }
+                                if (data.estatus == "1") {
+                                    iv.setImageResource(R.drawable.nw)
+                                }
+                                if (data.estatus == "2") {
+                                    iv.setImageResource(R.drawable.z_enviado)
+                                }
+                                if (data.estatus == "3") {
+                                    iv.setImageResource(R.drawable.z_recibido)
+                                }
+                                ivv.setImageResource(R.drawable.z_no_leido)
                                 txleido.setText(".")
+                                if (data.Importancia == "1") {
+                                    imagenMensaje.setImageResource(R.drawable.z_importancia_baja)
+                                }
+                                if (data.Importancia == "2") {
+                                    imagenMensaje.setImageResource(R.drawable.z_importancia_normal)
+                                }
+                                if (data.Importancia == "3") {
+                                    imagenMensaje.setImageResource(R.drawable.z_importancia_alta)
+                                }
                             }
                             if (fe != "") {
                                 // println("Asunto = ${data.Titulo}, Fecha de lectura  = +$fe!!+, Posision ${adapterPosition}")
                             }
                         } catch (e: Exception) {
-                            //asunto.setTextColor(Color.parseColor(blanco))
-                            //remitente.setTextColor(Color.parseColor(blanco))
-                            //fecha.setTextColor(Color.parseColor(blanco))
-                            //folio.setTextColor(Color.parseColor(blanco))
-                            //constraint.setBackgroundColor(Color.parseColor(pantone))
-                            println("Exception: $e")
+
                         }
                     }
-
                     override fun onFailure(call: Call<List<Remitentes>>, t: Throwable) {
                         println("FALLO EN LA LLAMADA")
                     }
@@ -143,8 +188,8 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                                 val date = Date()
                                 val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                                 val answer: String = formatter.format(date)
-                                println("answer $answer")
-                                println("Cuerpo ${response.body()!!.ContenidoHTML}")
+                  //              println("answer $answer")
+                  //              println("Cuerpo ${response.body()!!.ContenidoHTML}")
                                 if (txleido.text == ".") {
                                     marcarVisto(answer, data.idDocumentoRemitente!!)
                                 }
@@ -188,6 +233,11 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 }
             }
             ////////////////////////////////////////////////////////////////////////////////
+        }
+
+        fun String.md5(): String {
+            val md = MessageDigest.getInstance("MD5")
+            return BigInteger(1, md.digest(toByteArray())).toString(16).padStart(32, '0')
         }
 
         fun createDocText(text: String) {

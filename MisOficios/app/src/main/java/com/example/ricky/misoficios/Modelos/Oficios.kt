@@ -99,7 +99,8 @@ class Oficios(
     var estatus: String?,
     var Destinatarios: String?,
     var PropietarioNombreCompleto: String,
-    var cadenaOriginal: String?
+    var cadenaOriginal: String?,
+    var Tipo: String?
 )
 
 class Documentos(
@@ -115,7 +116,8 @@ class Documentos(
     var estatus: String?,
     var Destinatarios: String?,
     var PropietarioNombreCompleto: String,
-    var cadenaOriginal: String?
+    var cadenaOriginal: String?,
+    var Tipo: String?
 )
 
 class Remitente(
