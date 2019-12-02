@@ -34,10 +34,16 @@ class splash : AppCompatActivity() {
         val im1: ImageView = findViewById(R.id.imageView4)
         val text: TextView = findViewById(R.id.oficiosText)
         val im: ImageView = findViewById(R.id.imageView5)
-        val usuario = SharedPreference.getInstance(applicationContext).usuario
-        val com = SharedPreference.getInstance(applicationContext).isLoggedIn.toString()
-        val pw = PasswordTransformationMethod.getInstance().toString()
-        println("${usuario.NickName.toString()}, ${usuario.Password.toString()}, $pw")
+
+        try {
+            val usuario = SharedPreference.getInstance(applicationContext).usuario
+            val com = SharedPreference.getInstance(applicationContext).isLoggedIn.toString()
+            val pw = PasswordTransformationMethod.getInstance().toString()
+            getIpAddress()
+            println("${usuario.NickName.toString()}, ${usuario.Password.toString()}, $pw")
+        } catch (e: Exception) {
+            print("Excepcion en splash: $e ")
+        }
         im1.setOnClickListener {
             text.visibility = View.GONE
             AnimationUtils.loadAnimation(this, R.anim.animacion_escalacion)
@@ -53,9 +59,21 @@ class splash : AppCompatActivity() {
         val background = object : Thread() {
             override fun run() {
                 try {
-                    sleep(5000)
+                    sleep(1000)
+                    if (SharedPreference.getInstance(applicationContext).isLoggedIn) {
+                        var usuario = SharedPreference.getInstance(applicationContext).usuario
 
-                    iniciar()
+                        if (usuario.Recordar) {
+                            validarCampos(usuario.NickName!!, usuario.Password!!)
+                        } else {
+                            SharedPreference.getInstance(applicationContext).limpiar()
+                            startActivity(Intent(applicationContext, login::class.java))
+                        }
+                    } else {
+                        SharedPreference.getInstance(applicationContext).limpiar()
+                        startActivity(Intent(applicationContext, login::class.java))
+                    }
+                    //iniciar()
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -85,14 +103,14 @@ class splash : AppCompatActivity() {
 
     //////////////////////////////////////////////////////////////////////////////////
     private fun validarCampos(nickname: String, password: String) {
-      //  dialog.show()
+        //  dialog.show()
         var loginReq = LoginReq(nickname, password)
 
         RetrofitClient.instance.getLogin(loginReq)
             .enqueue(object : Callback<LoginRes> {
                 override fun onFailure(call: Call<LoginRes>, t: Throwable) {
-                 //   if (dialog.isShowing())
-                 //       dialog.dismiss()
+                    //   if (dialog.isShowing())
+                    //       dialog.dismiss()
                     Log.e("Response", t.message)
                     Toast.makeText(
                         applicationContext,
@@ -104,8 +122,8 @@ class splash : AppCompatActivity() {
                 ////////////////////////////////////////////////////////////////////////////////////////////////
                 override fun onResponse(call: Call<LoginRes>, response: Response<LoginRes>) =
                     if (response.isSuccessful) {
-                    //    if (dialog.isShowing())
-                    //        dialog.dismiss()
+                        //    if (dialog.isShowing())
+                        //        dialog.dismiss()
                         if (validarPermisos(response.body()!!.Permisos!!)) {
                             val loginRes = response.body()!!
                             val intent = Intent(applicationContext, MainActivity::class.java)
@@ -118,8 +136,8 @@ class splash : AppCompatActivity() {
                             ).show()
                         }
                     } else {
-                   //    if (dialog.isShowing())
-                   //        dialog.dismiss()
+                        //    if (dialog.isShowing())
+                        //        dialog.dismiss()
                         Toast.makeText(
                             applicationContext,
                             "El nombre de usuario o la contraseña son incorrectos",

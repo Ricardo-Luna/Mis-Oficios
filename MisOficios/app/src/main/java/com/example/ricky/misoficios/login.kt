@@ -42,7 +42,7 @@ class login : AppCompatActivity() {
     lateinit var txuser: EditText
     lateinit var txpw: EditText
     lateinit var dialog: AlertDialog
-    lateinit var sesion: Switch
+    lateinit var sAlSession: Switch
     private val PERMISSION_REQUEST = 10
 
     private var permissions =
@@ -50,12 +50,13 @@ class login : AppCompatActivity() {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
         )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         deleteDatabase("wot")
         btnIniciar = findViewById(R.id.btnIniciar)
-        sesion = findViewById(R.id.recordarSesion)
+        sAlSession = findViewById(R.id.recordarSesion)
         txuser = findViewById(R.id.txuser)
         txpw = findViewById(R.id.txpw)
         btnIniciar.setOnClickListener { validarCampos() }
@@ -64,10 +65,11 @@ class login : AppCompatActivity() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkPermission(permissions)) {
-                  //  Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
-                  //      .show()
+                    //  Toast.makeText(this, "Permission are already provided", Toast.LENGTH_SHORT)
+                    //      .show()
                 } else {
-                    val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_aviso_inicio,null)
+                    val mDialogView =
+                        LayoutInflater.from(this).inflate(R.layout.dialog_aviso_inicio, null)
                     val mBuilder = android.support.v7.app.AlertDialog.Builder(this)
                         .setView(mDialogView)
                         .setTitle("Permiso")
@@ -114,33 +116,33 @@ class login : AppCompatActivity() {
 
             RetrofitClient.instance.getLogin(loginReq)
                 .enqueue(object : Callback<LoginRes> {
-                    override fun onFailure(call: Call<LoginRes>, t: Throwable) {
-                        if (dialog.isShowing())
-                            dialog.dismiss()
-                       // Log.e("Response", t.message)
-                        Toast.makeText(
-                            applicationContext,
-                            "Error en la red, vuelve a intentarlo",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-
                     override fun onResponse(call: Call<LoginRes>, response: Response<LoginRes>) =
                         if (response.isSuccessful) {
                             if (dialog.isShowing())
                                 dialog.dismiss()
                             if (validarPermisos(response.body()!!.Permisos!!)) {
-                                val loginRes = response.body()!!
-                                loginRes.NickName = txuser.text.toString()
 
+                                val loginRes = response.body()!!
+                                loginRes.Password = txpw.text.toString()
+                                loginRes!!.Recordar = sAlSession.isChecked
+                                loginRes.NickName = txuser.text.toString()
+                                println(
+                                    "Nickname:${loginRes.NickName}\n" +
+                                            "PW: ${loginRes.Password}\n" +
+                                            "Recordar: ${loginRes.Recordar}\n" +
+                                            "Nickname: ${loginRes.NickName} \n" +
+                                            "NombreCompleto: ${loginRes.NombreCompleto} \n" +
+                                            "IdUsuario: ${loginRes.IdUsuario}\n" +
+                                            "Carpeta Inicial: ${loginRes.CarpetaInicial} \n" +
+                                            "Permisos: ${loginRes.Permisos} \n" +
+                                            "Carpeta Seleccionada: ${loginRes.carpetaSeleccionada}\n"
+
+                                )
                                 SharedPreference.getInstance(applicationContext)
-                                    .saveUsuario(
-                                        loginRes,
-                                        loginRes.IdUsuario.toString()
-                                    )     //cursor.getString(0))
-                                loginRes.Recordar = recordarSesion.isChecked
+                                    .saveUsuario(loginRes)
                                 val intent = Intent(applicationContext, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(
@@ -159,8 +161,18 @@ class login : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
 
                             ).show()
-
                         }
+
+                    override fun onFailure(call: Call<LoginRes>, t: Throwable) {
+                        if (dialog.isShowing())
+                            dialog.dismiss()
+                        // Log.e("Response", t.message)
+                        Toast.makeText(
+                            applicationContext,
+                            "Error en la red, vuelve a intentarlo",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 })
         }
     }

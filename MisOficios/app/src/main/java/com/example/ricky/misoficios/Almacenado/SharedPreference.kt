@@ -16,28 +16,28 @@ class SharedPreference private constructor(private val mCtx: Context) {
             return gson.fromJson(serializedUser, LoginRes::class.java)
         }
 
-    val carpeta: LoginRes
-    get(){
-        val serializedUser = sharedPreferences.getString("carpetaSeleccionada",null)
-        return  gson.fromJson(serializedUser,LoginRes::class.java)
+    fun saveUsuario(usuario: LoginRes) {
+        val serializedUser = gson.toJson(usuario)
+        sharedPreferences.edit().putString("Usuario", serializedUser).apply()
     }
+
+    val carpeta: LoginRes
+        get() {
+            val serializedUser = sharedPreferences.getString("carpetaSeleccionada", null)
+            return gson.fromJson(serializedUser, LoginRes::class.java)
+        }
 
     val isLoggedIn: Boolean
         get() {
-            return sharedPreferences.getInt("Status", -1) != -1
+            return sharedPreferences.getString("Usuario", null) != null
         }
-
-    fun saveUsuario(usuario: LoginRes,id: String) {
-        val serializedUser = gson.toJson(usuario)
-        sharedPreferences.edit().putString("Usuario", serializedUser).apply()
-        sharedPreferences.edit().putString("Id",id).apply()
-    }
 
     fun limpiar() {
         val editor = sharedPreferences.edit()
         editor.clear()
         editor.apply()
     }
+
     companion object {
         private var mInstance: SharedPreference? = null
         @Synchronized

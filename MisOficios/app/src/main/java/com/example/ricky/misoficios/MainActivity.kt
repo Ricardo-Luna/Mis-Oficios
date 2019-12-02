@@ -16,9 +16,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import com.example.ricky.misoficios.Almacenado.DBHelper
+import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
-import java.lang.Exception
+
 
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val db = dbHandler.getCarpetaRecibidos()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
 
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->
@@ -79,9 +81,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
-
+    var usuario = SharedPreference.getInstance(baseContext).usuario
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+
+
           //  R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
@@ -92,9 +96,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> {
                 MainFragment()
             }
-            R.id.nav_grupos -> {
-                MainFragment()
-            }
+           // R.id.nav_grupos -> {
+           //     MainFragment()
+           // }
 
             else -> {
                 MainFragment()
@@ -110,21 +114,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> {
                 MainFragment()
             }
-            R.id.nav_grupos -> {
-                GruposFrg()
-            }
+            //R.id.nav_grupos -> {
+            //    GruposFrg()
+            //}
 
             else -> {
                 MainFragment()
             }
         }
-
         supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
             .commit()
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+
     }
 
     fun toBeCalled() {
