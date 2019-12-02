@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
+import android.widget.Switch
 import com.example.ricky.misoficios.Almacenado.DBHelper
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.*
@@ -25,15 +26,16 @@ import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var switch: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//
         val dbHandler = DBHelper(baseContext, null)
         val db = dbHandler.getCarpetaRecibidos()
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
 
         val fab: FloatingActionButton = findViewById(R.id.nwDoc)
         fab.setOnClickListener { view ->
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         displayFragment(-1)
     }
 
+
     override fun onCreateDialog(id: Int, args: Bundle?): Dialog? {
         return MainActivity().let {
             val builder = AlertDialog.Builder(baseContext)
@@ -81,12 +84,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
-    var usuario = SharedPreference.getInstance(baseContext).usuario
+
+    //
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
 
-
-          //  R.id.action_settings -> true
+            //  R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -96,9 +99,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> {
                 MainFragment()
             }
-           // R.id.nav_grupos -> {
-           //     MainFragment()
-           // }
+            // R.id.nav_grupos -> {
+            //     MainFragment()
+            // }
 
             else -> {
                 MainFragment()
@@ -112,19 +115,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val fragment = when (item.itemId) {
             R.id.nav_home -> {
-                MainFragment()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.linearLayoutContentMain, MainFragment())
+                    .commit()
             }
-            //R.id.nav_grupos -> {
-            //    GruposFrg()
-            //}
+
+            R.id.nav_cerrar -> {
+                SharedPreference.getInstance(applicationContext).limpiar()
+                val intent = Intent(baseContext!!, login::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+            }
+
+            // R.id.switch_sesion -> {
+            //     try {
+//
+            //         var usuario = SharedPreference.getInstance(baseContext).usuario
+            //         usuario.Recordar = switch.isChecked
+            //     } catch (e: Exception) {
+            //         println("Exception: $e")
+            //     }
+            // }
 
             else -> {
-                MainFragment()
+                val intent = Intent(baseContext!!, login::class.java)
+                startActivity(intent)
             }
+
         }
-        supportFragmentManager.beginTransaction().replace(R.id.linearLayoutContentMain, fragment)
-            .commit()
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+
+        val drawerLayout
+                : DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
 
@@ -134,18 +155,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         try {
             val intent = Intent(baseContext!!, mostrarDocumento::class.java)
             startActivity(intent)
-        }catch (e: Exception)
-        {
+        } catch (e: Exception) {
             println("Error: $e")
         }
     }
 
-   //fun getHashMD5()
-   //{
-   //    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-   //    val vl1 =
-   //    api.genHash()
-   //}
+    //fun getHashMD5()
+    //{
+    //    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+    //    val vl1 =
+    //    api.genHash()
+    //}
 
     //-------------------------------------------------------------------------------------------------------------------------
 }
@@ -169,8 +189,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                      //Log.d("XXXCARPETARECIBIDOS: ", fold[0].IdCarpeta.toString())
 //                      idrecibidos = fold[0].IdCarpeta.toString()
 //
-//
-//
 //                      //Database block--------------------------------------
 //                      val dbHandler = DBHelper(baseContext, null)
 //                      dbHandler.addCarpetaRecibidos(fold[0].IdCarpeta.toString())
@@ -184,22 +202,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //                      } catch (e: Exception) {
 //                          Log.d("XXXEXCEPTION : ", e.toString())
 //                      }
-//                      ///////////////////////////////////////////////////////
-//
-//
-//
-//
+//                      ////////////////////////////////////////////////////////////
 //                  } else {
 //                      Log.d("INGESU", "YA CHINGO ASU MARE COMARE")
 //                  }
 //              }
-//
 //              override fun onFailure(call: Call<List<Carpetas>>, t: Throwable) {
 //                  Log.d("INGESU", " THIS AINT FUNNY ANYMORE")
 //              }
 //          })
-//
-//
 //  }
 
 // val fold = response.body()!!

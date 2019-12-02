@@ -11,9 +11,9 @@
                 android:icon="@drawable/rrr"
                 android:title="Mis Oficios"/>
         <item
-                android:id="@+id/app_bar_switch"
-                android:title="Recordar Sesion"
-                app:actionLayout="@layout/switch_item" />
+                android:id="@+id/nav_cerrar"
+                android:icon="@drawable/rrr"
+                android:title="Cerrar Sesion" />
 
 
     </group>

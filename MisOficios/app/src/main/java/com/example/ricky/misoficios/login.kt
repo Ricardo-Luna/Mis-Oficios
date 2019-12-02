@@ -89,7 +89,6 @@ class login : AppCompatActivity() {
         } catch (e: Exception) {
             println("Falló")
         }
-
         builder.setView(dialogView)
         builder.setCancelable(false)
         dialog = builder.create()
@@ -126,18 +125,20 @@ class login : AppCompatActivity() {
                                 loginRes.Password = txpw.text.toString()
                                 loginRes!!.Recordar = sAlSession.isChecked
                                 loginRes.NickName = txuser.text.toString()
-                                println(
-                                    "Nickname:${loginRes.NickName}\n" +
-                                            "PW: ${loginRes.Password}\n" +
-                                            "Recordar: ${loginRes.Recordar}\n" +
-                                            "Nickname: ${loginRes.NickName} \n" +
-                                            "NombreCompleto: ${loginRes.NombreCompleto} \n" +
-                                            "IdUsuario: ${loginRes.IdUsuario}\n" +
-                                            "Carpeta Inicial: ${loginRes.CarpetaInicial} \n" +
-                                            "Permisos: ${loginRes.Permisos} \n" +
-                                            "Carpeta Seleccionada: ${loginRes.carpetaSeleccionada}\n"
 
-                                )
+                               // println(
+                               //     "Nickname:${loginRes.NickName}\n" +
+                               //             "PW: ${loginRes.Password}\n" +
+                               //             "Recordar: ${loginRes.Recordar}\n" +
+                               //             "Nickname: ${loginRes.NickName} \n" +
+                               //             "NombreCompleto: ${loginRes.NombreCompleto} \n" +
+                               //             "IdUsuario: ${loginRes.IdUsuario}\n" +
+                               //             "Carpeta Inicial: ${loginRes.CarpetaInicial} \n" +
+                               //             "Permisos: ${loginRes.Permisos} \n" +
+                               //             "Carpeta Seleccionada: ${loginRes.carpetaSeleccionada}\n"
+//
+                               // )
+
                                 SharedPreference.getInstance(applicationContext)
                                     .saveUsuario(loginRes)
                                 val intent = Intent(applicationContext, MainActivity::class.java)
