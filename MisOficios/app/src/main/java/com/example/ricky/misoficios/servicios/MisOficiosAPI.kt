@@ -19,6 +19,9 @@ interface MisOficiosAPI {
     @POST("MarcarLeido")
     fun setVisto(@Body visto: Visto): Call<Visto>
 
+    @POST("FirmarDocumento")
+    fun firmar(@Body firmar: Firmar): Call<Firmar>
+
     @POST("hash")
     fun genHash(@Body hash: hash): Call<hash>
 

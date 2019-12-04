@@ -20,6 +20,8 @@ import com.example.ricky.misoficios.Almacenado.DBHelper
 import com.example.ricky.misoficios.Almacenado.SharedPreference
 import com.example.ricky.misoficios.Fragmentos.*
 import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
+import com.example.ricky.misoficios.servicios.MisOficiosAPI
+import com.example.ricky.misoficios.servicios.RetrofitClient
 
 
 //Temas:
@@ -61,11 +63,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         displayFragment(-1)
     }
 
-
     override fun onCreateDialog(id: Int, args: Bundle?): Dialog? {
         return MainActivity().let {
             val builder = AlertDialog.Builder(baseContext)
-            val inflater = dialogVistos(baseContext).layoutInflater;
+            val inflater = dialogVistos(baseContext).layoutInflater
             builder.setView(inflater.inflate(R.layout.dialog_views, null))
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -84,7 +85,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
-
     //
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -111,6 +111,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .commit()
     }
 
+    //abb57a4189ffccdcb4e010be096b2d35
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         val fragment = when (item.itemId) {
@@ -160,12 +161,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    //fun getHashMD5()
-    //{
-    //    val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
-    //    val vl1 =
-    //    api.genHash()
-    //}
+    //  fun getHashMD5()
+    //  {
+    //      val api = RetrofitClient.retrofit.create(MisOficiosAPI::class.java)
+    //      //val vl1 =
+    //      api.genHash()
+    //  }
 
     //-------------------------------------------------------------------------------------------------------------------------
 }

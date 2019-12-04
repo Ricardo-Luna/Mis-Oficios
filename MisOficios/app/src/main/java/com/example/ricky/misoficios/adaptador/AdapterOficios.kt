@@ -77,13 +77,15 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             folio.text = data.Codigo
 
             ///////////////////////////////////////////////////////////////////////////
+
             try {
                 hash = data.cadenaOriginal!! + data.IdPropietario //usuario.IdUsuario
                 hs = hash.md5()
                 println("Hash de ${data.Titulo}: $hs")
             } catch (e: Exception) {
-             //   println("Cadena original vacia en ${data.idDocumentoRemitente}")
+                println("Cadena original vacia en ${data.idDocumentoRemitente}")
             }
+
             if (data.Tipo == "1") {
                 tipo.setImageResource(R.drawable.borrador)
             }
@@ -184,7 +186,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                             try {
                                 val tx = response.body()
                                 print("Doc creado:  ${tx?.ContenidoHTML.toString()}")
-                                createDocText(tx?.ContenidoHTML.toString())
+                                createDocText(tx?.ContenidoHTML.toString()+".")
                                 val date = Date()
                                 val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                                 val answer: String = formatter.format(date)
@@ -195,12 +197,12 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                                 }
                                 val context: Context = itemView.context
                                 val intent = Intent(context, mostrarDocumento::class.java)
+                                intent.putExtra("Tipo", data.Tipo)
                                 context.startActivity(intent)
                             } catch (e: Exception) {
                                 println(e.message)
                             }
                         }
-
                         override fun onFailure(call: Call<Oficio>, t: Throwable) {
                             println("Fallo porque $t")
                         }

@@ -21,27 +21,39 @@ import android.Manifest
 import android.content.Intent
 import com.example.ricky.misoficios.MainActivity
 import kotlin.collections.ArrayList
+import android.support.v4.app.SupportActivity
+import android.support.v4.app.SupportActivity.ExtraData
+import android.support.v4.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.View
+
+//import android.R
+
 
 class mostrarDocumento : AppCompatActivity() {
 
     //Variables
-    lateinit var vistosList: ArrayList<Remitente>
-    lateinit var rv: RecyclerView
-    private val PERMISSION_REQUEST = 10
-
-    private var permissions =
-        arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+    //lateinit var vistosList: ArrayList<Remitente>
+    //lateinit var rv: RecyclerView
+    //private val PERMISSION_REQUEST = 10
+    //
+    //private var permissions =
+    //    arrayOf(
+    //        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    //        Manifest.permission.READ_EXTERNAL_STORAGE
+    //    )
 
     ///On Create////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mostrar_documento)
         wb.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR)
+        val tipo: String = intent.getStringExtra("Tipo")
         wb.getSettings().setBuiltInZoomControls(true)
+        if(tipo!="1") fabFirmar.hide()
 
+        println("Tipo: $tipo")
         try {
             wb.loadUrl("file:////sdcard/ss2.html")
         } catch (e: Exception) {
@@ -74,7 +86,7 @@ class mostrarDocumento : AppCompatActivity() {
         firmar.setOnClickListener {
             mAlertDialog.dismiss()
         }
-        cancelar.setOnClickListener{
+        cancelar.setOnClickListener {
             mAlertDialog.dismiss()
         }
 

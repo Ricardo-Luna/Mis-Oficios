@@ -148,6 +148,11 @@ class Grupos(
     var PropietarioNombreCompleto: String,
     var idUsuarioPropietario: String
 )
+class Firmar(
+    var SelloDigital: String,
+    var IdDocumento: String?
+)
+
 
 class Empleados(
     var nombre: String,
