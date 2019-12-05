@@ -23,10 +23,10 @@ import com.example.ricky.misoficios.Fragmentos.mostrarDocumento
 import com.example.ricky.misoficios.servicios.MisOficiosAPI
 import com.example.ricky.misoficios.servicios.RetrofitClient
 
-
 //Temas:
 //Azul: #3f4d60 , Gris: #72767c , Negro: #141216
 
+@Suppress("IMPLICIT_CAST_TO_ANY")
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var switch: Switch
 
@@ -111,7 +111,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .commit()
     }
 
-    //abb57a4189ffccdcb4e010be096b2d35
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         val fragment = when (item.itemId) {
@@ -121,22 +120,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }
 
+            R.id.nav_informacion ->
+            {
+                val intent = Intent(baseContext!!, Info::class.java)
+                startActivity(intent)
+            }
+
             R.id.nav_cerrar -> {
                 SharedPreference.getInstance(applicationContext).limpiar()
                 val intent = Intent(baseContext!!, login::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
             }
-
-            // R.id.switch_sesion -> {
-            //     try {
-//
-            //         var usuario = SharedPreference.getInstance(baseContext).usuario
-            //         usuario.Recordar = switch.isChecked
-            //     } catch (e: Exception) {
-            //         println("Exception: $e")
-            //     }
-            // }
 
             else -> {
                 val intent = Intent(baseContext!!, login::class.java)
@@ -170,7 +165,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     //-------------------------------------------------------------------------------------------------------------------------
 }
-
+// R.id.switch_sesion -> {
+//     try {
+//
+//         var usuario = SharedPreference.getInstance(baseContext).usuario
+//         usuario.Recordar = switch.isChecked
+//     } catch (e: Exception) {
+//         println("Exception: $e")
+//     }
+// }
 //    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary))
 //   var actionBar = supportActionBar
 //   //toolbar.setBackgroundColor("@drawable/gradient_blue")

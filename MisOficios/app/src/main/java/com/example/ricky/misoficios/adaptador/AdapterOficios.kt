@@ -81,9 +81,9 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
             try {
                 hash = data.cadenaOriginal!! + data.IdPropietario //usuario.IdUsuario
                 hs = hash.md5()
-                println("Hash de ${data.Titulo}: $hs")
+             //   println("Hash de ${data.Titulo}: $hs")
             } catch (e: Exception) {
-                println("Cadena original vacia en ${data.idDocumentoRemitente}")
+              //  println("Cadena original vacia en ${data.idDocumentoRemitente}")
             }
 
             if (data.Tipo == "1") {
@@ -105,7 +105,7 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                 iv.setImageResource(R.drawable.recibido)
             }
 
-            println("Titulo: ${data.Titulo} estatus de documento: ${data.estatus}")
+          //  println("Titulo: ${data.Titulo} estatus de documento: ${data.estatus}")
 
             ///////////////////////////////////////////////////////////////////////////
           //  println("ID: ${data.IdDocumento},TITULO: ${data.Titulo},ID REM: ${data.idDocumentoRemitente}")

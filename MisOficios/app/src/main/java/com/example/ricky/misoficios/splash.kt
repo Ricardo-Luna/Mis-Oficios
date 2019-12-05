@@ -54,12 +54,21 @@ class splash : AppCompatActivity() {
         }
 
         im.setOnClickListener {
-            iniciar()
+
+            try {
+                var usuario = SharedPreference.getInstance(applicationContext).usuario
+                validarCampos(usuario.NickName!!, usuario.Password!!)
+            } catch (e: Exception) {
+                startActivity(Intent(applicationContext, login::class.java))
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
         }
+
         val background = object : Thread() {
             override fun run() {
                 try {
-                    sleep(1000)
+                    sleep(3000)
                     if (SharedPreference.getInstance(applicationContext).isLoggedIn) {
                         var usuario = SharedPreference.getInstance(applicationContext).usuario
 
@@ -67,10 +76,14 @@ class splash : AppCompatActivity() {
                             validarCampos(usuario.NickName!!, usuario.Password!!)
                         } else {
                             SharedPreference.getInstance(applicationContext).limpiar()
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(Intent(applicationContext, login::class.java))
                         }
                     } else {
                         SharedPreference.getInstance(applicationContext).limpiar()
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(Intent(applicationContext, login::class.java))
                     }
                     //iniciar()
@@ -85,21 +98,21 @@ class splash : AppCompatActivity() {
 
     //////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-    private fun iniciar() {
-        try {
-            val usuario = SharedPreference.getInstance(applicationContext).usuario
-            val com = SharedPreference.getInstance(applicationContext).isLoggedIn.toString()
-            val pw = PasswordTransformationMethod.getInstance().toString()
-            println("${usuario.IdUsuario.toString()}, ${usuario.Password.toString()}, $pw")
-            Log.d("Estado de sesión: ", "$com, Usr =$usuario PW= $pw ")
-            validarCampos(usuario.IdUsuario.toString(), "123")
-
-        } catch (e: Exception) {
-            println("Excepcion: $e")
-            val intent = Intent(baseContext, login::class.java)
-            startActivity(intent)
-        }
-    }
+    // private fun iniciar() {
+    //     try {
+    //         val usuario = SharedPreference.getInstance(applicationContext).usuario
+    //         val com = SharedPreference.getInstance(applicationContext).isLoggedIn.toString()
+    //         val pw = PasswordTransformationMethod.getInstance().toString()
+    //         println("${usuario.IdUsuario.toString()}, ${usuario.Password.toString()}, $pw")
+    //         Log.d("Estado de sesión: ", "$com, Usr =$usuario PW= $pw ")
+    //         validarCampos(usuario.IdUsuario.toString(), "123")
+//
+    //     } catch (e: Exception) {
+    //         println("Excepcion: $e")
+    //         val intent = Intent(baseContext, login::class.java)
+    //         startActivity(intent)
+    //     }
+    // }
 
     //////////////////////////////////////////////////////////////////////////////////
     private fun validarCampos(nickname: String, password: String) {
@@ -168,6 +181,7 @@ class splash : AppCompatActivity() {
 
     }
 }
+
 // loginRes.NickName = txuser.text.toString()
 // SharedPreference.getInstance(applicationContext)
 //     .saveUsuario(

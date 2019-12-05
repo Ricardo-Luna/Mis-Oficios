@@ -25,7 +25,14 @@ import android.support.v4.app.SupportActivity
 import android.support.v4.app.SupportActivity.ExtraData
 import android.support.v4.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.util.Log
 import android.view.View
+import com.example.ricky.misoficios.Modelos.LoginReq
+import com.example.ricky.misoficios.Modelos.LoginRes
+import com.example.ricky.misoficios.servicios.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 //import android.R
 
@@ -48,10 +55,10 @@ class mostrarDocumento : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mostrar_documento)
-        wb.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR)
+        wb.settings.defaultZoom = WebSettings.ZoomDensity.FAR
         val tipo: String = intent.getStringExtra("Tipo")
-        wb.getSettings().setBuiltInZoomControls(true)
-        if(tipo!="1") fabFirmar.hide()
+        wb.settings.builtInZoomControls = true
+        if (tipo != "1") fabFirmar.hide()
 
         println("Tipo: $tipo")
         try {
@@ -60,7 +67,8 @@ class mostrarDocumento : AppCompatActivity() {
         }
         val fab = findViewById<FloatingActionButton>(R.id.fabFirmar)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
+            //view ->
             ShowDialog()
         }
 
@@ -78,18 +86,40 @@ class mostrarDocumento : AppCompatActivity() {
             .setTitle("Firmar")
             .setCancelable(false)
         val mAlertDialog = mBuilder.show()
-        // dialog.setContentView(R.layout.dialog_confirm)
         val usuario = mDialogView.findViewById<TextView>(R.id.username)
         val password = mDialogView.findViewById<TextView>(R.id.password)
         val firmar = mDialogView.findViewById<Button>(R.id.Firmar)
         val cancelar = mDialogView.findViewById<Button>(R.id.cancelarFirma)
         firmar.setOnClickListener {
+            validarCampos(usuario.text.toString(), password.text.toString())
             mAlertDialog.dismiss()
         }
         cancelar.setOnClickListener {
             mAlertDialog.dismiss()
         }
+    }
 
+    fun validarCampos(nickname: String, password: String) {
+        var loginReq = LoginReq(nickname, password)
+        RetrofitClient.instance.getLogin(loginReq)
+            .enqueue(object : Callback<LoginRes> {
+                override fun onFailure(call: Call<LoginRes>, t: Throwable) {
+                    Log.e("Response", t.message)
+                    Toast.makeText(
+                        applicationContext,
+                        "Revisa tus credenciales e inténtalo de nuevo",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                override fun onResponse(call: Call<LoginRes>, response: Response<LoginRes>) =
+                    if (response.isSuccessful) {
+                        Toast.makeText(applicationContext, "Documento firmado", Toast.LENGTH_LONG).show()
+                    } else {
+
+                    }
+
+            })
     }
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }

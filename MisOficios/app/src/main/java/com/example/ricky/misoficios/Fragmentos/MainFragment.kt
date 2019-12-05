@@ -80,8 +80,7 @@ class MainFragment : Fragment() {
         try {
             val nombreusuario: TextView = view.findViewById(R.id.textviewNombreUsuario)
             nombreusuario.text = usuario.NombreCompleto
-        }catch(e: Exception)
-        {
+        } catch (e: Exception) {
 
         }
 
@@ -240,21 +239,21 @@ class MainFragment : Fragment() {
                     if (response.isSuccessful) {
                         if (!response.body().isNullOrEmpty()) {
                             val folder = response.body()
-                            //d("Response recibido", "onResponse: ${response.body()!![1].Nombre}")
-                            val adapter2 =
-                                AdapterCarpetas(
-                                    oficiosRecycler,
-                                    buildCarpetas(folder!!),
-                                    context!!,
-                                    activity as AppCompatActivity
+                            try {
+                                val adapter2 = AdapterCarpetas(
+                                    oficiosRecycler, buildCarpetas(folder!!)
+                                    , context!!, activity as AppCompatActivity
                                 )
-                            carpetasRecycler.adapter = adapter2
+                                carpetasRecycler.adapter = adapter2
+                            }
+                            catch (e: Exception)
+                            {
+                                println("Problema en $e")
+                            }
+
                         } else {
-                            Toast.makeText(
-                                context,
-                                "Sin carpetas para mostrar",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(context, "Sin carpetas para mostrar", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
