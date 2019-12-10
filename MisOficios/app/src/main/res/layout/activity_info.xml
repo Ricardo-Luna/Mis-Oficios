@@ -34,8 +34,8 @@
 
             <TextView
                     android:id="@+id/textView12"
-                    android:layout_width="117dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="50dp"
                     android:text="Importancia Baja"
@@ -44,8 +44,8 @@
 
             <TextView
                     android:id="@+id/textView13"
-                    android:layout_width="133dp"
-                    android:layout_height="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="50dp"
                     android:text="Importancia Normal"
@@ -197,8 +197,8 @@
 
             <TextView
                     android:id="@+id/textView37"
-                    android:layout_width="94dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
                     android:text="Copia Digital"
                     app:layout_constraintStart_toStartOf="@+id/textView36"

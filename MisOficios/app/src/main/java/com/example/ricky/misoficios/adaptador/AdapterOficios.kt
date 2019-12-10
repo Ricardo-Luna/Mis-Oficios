@@ -88,24 +88,51 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
 
             if (data.Tipo == "1") {
                 tipo.setImageResource(R.drawable.borrador)
+                tipo.setOnClickListener { view ->
+                    Snackbar.make(view, "Borrador", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show()
+                }
             }
             if (data.Tipo == "2") {
                 tipo.setImageResource(R.drawable.oficio)
+                tipo.setOnClickListener { view ->
+                    Snackbar.make(view, "Oficio", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show()
+                }
             }
             if (data.Tipo == "3") {
                 tipo.setImageResource(R.drawable.copia)
+                tipo.setOnClickListener { view ->
+                    Snackbar.make(view, "Copia Digital", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show()
+                }
             }
             if (data.estatus == "1") {
                 iv.setImageResource(R.drawable.nw)
+                iv.setOnClickListener { view ->
+                    Snackbar.make(view, "Nuevo", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show()
+                }
             }
             if (data.estatus == "2") {
                 iv.setImageResource(R.drawable.enviado)
+                iv.setOnClickListener { view ->
+                    Snackbar.make(view, "Enviado", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show()
+                }
             }
-            if (data.estatus == "3") {
+            if (data.estatus == "3" || data.estatus == "4") {
                 iv.setImageResource(R.drawable.recibido)
+                iv.setOnClickListener { view ->
+                    Snackbar.make(view, "Recibido", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show()
+                }
             }
-
-          //  println("Titulo: ${data.Titulo} estatus de documento: ${data.estatus}")
+            ivv.setOnClickListener { view ->
+                Snackbar.make(view, "Leído", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show()
+            }
+            println("Titulo: ${data.Titulo} estatus de documento: ${data.estatus}, tipo de documento: ${data.Tipo}")
 
             ///////////////////////////////////////////////////////////////////////////
           //  println("ID: ${data.IdDocumento},TITULO: ${data.Titulo},ID REM: ${data.idDocumentoRemitente}")
@@ -128,20 +155,46 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                                 constraint.setBackgroundColor(Color.parseColor(pantone))
                                 if (data.Tipo == "2") {
                                     tipo.setImageResource(R.drawable.z_oficio)
+                                    tipo.setOnClickListener { view ->
+                                        Snackbar.make(view, "Oficio", Snackbar.LENGTH_SHORT)
+                                            .setAction("Action", null).show()
+                                    }
                                 }
                                 if (data.Tipo == "3") {
                                     tipo.setImageResource(R.drawable.z_copia)
+                                    tipo.setOnClickListener { view ->
+                                        Snackbar.make(view, "Copia Digital", Snackbar.LENGTH_SHORT)
+                                            .setAction("Action", null).show()
+                                    }
                                 }
+
                                 if (data.estatus == "1") {
                                     iv.setImageResource(R.drawable.nw)
+                                    iv.setOnClickListener { view ->
+                                        Snackbar.make(view, "Nuevo", Snackbar.LENGTH_SHORT)
+                                            .setAction("Action", null).show()
+                                    }
                                 }
+
                                 if (data.estatus == "2") {
                                     iv.setImageResource(R.drawable.z_enviado)
+                                    iv.setOnClickListener { view ->
+                                        Snackbar.make(view, "Enviado", Snackbar.LENGTH_SHORT)
+                                            .setAction("Action", null).show()
+                                    }
                                 }
                                 if (data.estatus == "3") {
                                     iv.setImageResource(R.drawable.z_recibido)
+                                    iv.setOnClickListener { view ->
+                                        Snackbar.make(view, "Recibido", Snackbar.LENGTH_SHORT)
+                                            .setAction("Action", null).show()
+                                    }
                                 }
                                 ivv.setImageResource(R.drawable.z_no_leido)
+                                ivv.setOnClickListener { view ->
+                                    Snackbar.make(view, "No leído", Snackbar.LENGTH_SHORT)
+                                        .setAction("Action", null).show()
+                                }
                                 txleido.setText(".")
                                 if (data.Importancia == "1") {
                                     imagenMensaje.setImageResource(R.drawable.z_importancia_baja)
@@ -176,6 +229,9 @@ class AdapterOficios(var list: ArrayList<Oficios>) :
                     fecha.text = data.FechaCreacion
                 }
             }
+
+
+
 
             /////////////////////////////////////////////////////////////////////////////
             bm.setOnClickListener {

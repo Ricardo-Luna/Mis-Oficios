@@ -39,8 +39,8 @@
 
             <ImageView
                     android:id="@+id/imageImportancia"
-                    android:layout_width="24dp"
-                    android:layout_height="20sp"
+                    android:layout_width="36sp"
+                    android:layout_height="40sp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -61,47 +61,46 @@
 
             <ImageView
                     android:id="@+id/imgTipo"
-                    android:layout_width="24sp"
-                    android:layout_height="20sp"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="36sp"
+                    android:layout_height="40sp"
                     android:layout_marginEnd="8dp"
                     android:visibility="visible"
-                    app:layout_constraintEnd_toStartOf="@+id/imageRecibido"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageLeido"
+                    app:layout_constraintTop_toTopOf="@+id/imageRecibido"
                     app:srcCompat="@drawable/oficio" />
 
             <ImageView
                     android:id="@+id/imageRecibido"
-                    android:layout_width="24sp"
-                    android:layout_height="20sp"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="36sp"
+                    android:layout_height="40sp"
+                    android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageLeido"
+                    app:layout_constraintEnd_toStartOf="@+id/imgTipo"
                     app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                     android:id="@+id/imageLeido"
-                    android:layout_width="24sp"
-                    android:layout_height="20sp"
-                    android:layout_marginTop="8dp"
+                    android:layout_width="36sp"
+                    android:layout_height="40sp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageRecibido"
                     app:srcCompat="@drawable/leido" />
 
             <TextView
                     android:id="@+id/Asunto"
                     android:layout_width="match_parent"
-                    android:layout_height="34sp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:maxLines="3"
                     android:text="Se convoca a reunión del Reglamento de Tecnologías de la Información"
                     android:textColor="@android:color/background_dark"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Folio" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageImportancia" />
 
             <TextView
                     android:id="@+id/Remitentes"

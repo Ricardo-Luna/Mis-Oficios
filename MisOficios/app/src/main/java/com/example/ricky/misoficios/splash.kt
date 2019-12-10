@@ -19,7 +19,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class splash : AppCompatActivity() {
     val DURACION = 3000
     lateinit var btnIniciar: Button
@@ -28,6 +27,7 @@ class splash : AppCompatActivity() {
     lateinit var dialog: AlertDialog
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
